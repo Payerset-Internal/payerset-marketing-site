@@ -1,0 +1,563 @@
+---
+/**
+ * FeatureShowcase.astro
+ *
+ * Sticky-scroll showcase for Rate Explorer features. Dark background section
+ * with 3 text blocks on the left that scroll while a visualization panel
+ * stays sticky on the right, crossfading between visualizations.
+ *
+ * Each viz component is rendered ONCE and moved between mobile (inline) and
+ * desktop (sticky panel) containers via JS to avoid duplicate-ID issues.
+ *
+ * Dependencies: ClaimsDataViz, ExploreRatesViz, AnalysisActionViz
+ */
+import ClaimsDataViz from './ClaimsDataViz.astro';
+import ExploreRatesViz from './ExploreRatesViz.astro';
+import AnalysisActionViz from './AnalysisActionViz.astro';
+---
+
+<section class="feat-scroll" id="featScroll" aria-label="Rate Explorer features">
+  <!-- Background layers -->
+  <div class="feat-scroll__bg">
+    <div class="feat-scroll__bg-grad"></div>
+    <div class="feat-scroll__bg-glow1"></div>
+    <div class="feat-scroll__bg-glow2"></div>
+    <svg class="feat-scroll__bg-grid" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <pattern id="fsGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="0.5" fill="var(--color-brand-secondary)" opacity="0.10" />
+        </pattern>
+      </defs>
+      <rect width="800" height="600" fill="url(#fsGrid)" />
+    </svg>
+  </div>
+
+  <div class="feat-scroll__inner">
+    <!-- Section header -->
+    <div class="feat-scroll__header" data-reveal>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">
+        The <span class="text-brand-secondary">healthcare price transparency</span> solution built for clarity &amp; speed
+      </h2>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="feat-scroll__grid">
+      <!-- Left: scrolling text blocks -->
+      <div class="feat-scroll__text-col">
+
+        <!-- 01 — Explore Rates -->
+        <div class="feat-scroll__text" data-section="0">
+          <div class="feat-scroll__badge">01</div>
+          <h3 class="text-2xl sm:text-3xl font-semibold text-white mb-4">
+            Explore Every Rate With Ease
+          </h3>
+          <p class="text-lg text-slate-400 mb-6">
+            Analyze any combination of payers, providers, &amp; services without writing a single line of code.
+          </p>
+          <ul class="feat-scroll__bullets">
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Intuitive, no-code interface for teams leveraging healthcare cost transparency</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Access historical rates to benchmark rate changes over time</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Enriched metadata for apples-to-apples comparisons</span>
+            </li>
+          </ul>
+          <a href="/get-started" class="feat-scroll__cta">
+            Request a demo
+          </a>
+          <!-- Viz slot: inline on mobile, moved to sticky panel on desktop -->
+          <div class="feat-scroll__viz-slot" data-viz="0"></div>
+        </div>
+
+        <!-- 02 — Claims Data -->
+        <div class="feat-scroll__text" data-section="1">
+          <div class="feat-scroll__badge">02</div>
+          <h3 class="text-2xl sm:text-3xl font-semibold text-white mb-4">
+            Use Claims to Reveal the Full Story
+          </h3>
+          <p class="text-lg text-slate-400 mb-6">
+            Layer in all-payer claims data with volumes, billed amounts, &amp; remits directly alongside negotiated rates.
+          </p>
+          <ul class="feat-scroll__bullets">
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Seamlessly integrate claims directly into your rate analysis</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Compare billed vs. paid amounts side-by-side</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Identify changes over time with historical trending</span>
+            </li>
+          </ul>
+          <a href="/get-started" class="feat-scroll__cta">
+            Request a demo
+          </a>
+          <div class="feat-scroll__viz-slot" data-viz="1"></div>
+        </div>
+
+        <!-- 03 — Analysis to Action -->
+        <div class="feat-scroll__text" data-section="2">
+          <div class="feat-scroll__badge">03</div>
+          <h3 class="text-2xl sm:text-3xl font-semibold text-white mb-4">
+            Move From Analysis to Action
+          </h3>
+          <p class="text-lg text-slate-400 mb-6">
+            Empower managed care directors &amp; finance teams with the detail needed for trusted negotiations and pricing decisions.
+          </p>
+          <ul class="feat-scroll__bullets">
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Flexible templates for common analysis like contract benchmarking &amp; trending</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Instantly identify pricing outliers with dynamic filters and data slices</span>
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              <span>Automatically surface recommended actions &amp; insights</span>
+            </li>
+          </ul>
+          <a href="/get-started" class="feat-scroll__cta">
+            Request a demo
+          </a>
+          <div class="feat-scroll__viz-slot" data-viz="2"></div>
+        </div>
+      </div>
+
+      <!-- Right: sticky visualization panel (desktop only) -->
+      <div class="feat-scroll__viz-col">
+        <div class="feat-scroll__viz-sticky" id="fsVizSticky"></div>
+      </div>
+    </div>
+
+    <!-- Single instance of each viz, rendered here then moved by JS -->
+    <div class="feat-scroll__viz-source" aria-hidden="true">
+      <div class="feat-scroll__viz-item feat-showcase__panel" data-viz="0">
+        <ExploreRatesViz />
+      </div>
+      <div class="feat-scroll__viz-item feat-showcase__panel" data-viz="1">
+        <ClaimsDataViz />
+      </div>
+      <div class="feat-scroll__viz-item feat-showcase__panel" data-viz="2">
+        <AnalysisActionViz />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ── */
+  .feat-scroll {
+    position: relative;
+    overflow: clip;
+    background: var(--color-brand-dark-deep);
+    padding: 5rem 0 6rem;
+  }
+
+  /* ── Background layers ── */
+  .feat-scroll__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .feat-scroll__bg-grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, var(--color-brand-dark-deep), var(--color-brand-dark), var(--color-brand-dark-deeper));
+  }
+
+  .feat-scroll__bg-glow1 {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(0, 146, 202, 0.12), transparent 60%);
+  }
+
+  .feat-scroll__bg-glow2 {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 80%, rgba(0, 183, 253, 0.06), transparent 50%);
+  }
+
+  .feat-scroll__bg-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  /* ── Inner ── */
+  .feat-scroll__inner {
+    position: relative;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .feat-scroll__inner { padding: 0 1.5rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__inner { padding: 0 2rem; }
+  }
+
+  /* ── Header ── */
+  .feat-scroll__header {
+    margin-bottom: 1.5rem;
+    max-width: 56rem;
+  }
+
+  /* ── Two-column grid ── */
+  .feat-scroll__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  /* ── Left: scrolling text blocks ── */
+  .feat-scroll__text-col {
+    position: relative;
+  }
+
+  /* Vertical connector line */
+  .feat-scroll__text-col::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 2rem;
+    bottom: 2rem;
+    width: 2px;
+    background: rgba(0, 183, 253, 0.12);
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__text-col::before {
+      top: calc(35vh - 12rem);
+    }
+  }
+
+  .feat-scroll__text {
+    position: relative;
+    padding: 3rem 0 3rem 3.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__text {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0.3;
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .feat-scroll__text.is-active {
+      opacity: 1;
+    }
+  }
+
+  /* Number badge */
+  .feat-scroll__badge {
+    position: absolute;
+    left: 0;
+    top: 3rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-brand-primary));
+    color: var(--color-brand-dark-deep);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__badge {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  /* Bullet list */
+  .feat-scroll__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feat-scroll__bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--color-slate-400, #94a3b8);
+    line-height: 1.5;
+  }
+
+  /* CTA button */
+  .feat-scroll__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-dark-deep);
+    background: #fff;
+    border-radius: 0.5rem;
+    transition: background 0.2s ease;
+    text-decoration: none;
+  }
+
+  .feat-scroll__cta:hover {
+    background: #f1f5f9;
+  }
+
+  /* ── Viz slots (inline on mobile) ── */
+  .feat-scroll__viz-slot {
+    margin-top: 2rem;
+    min-height: 340px;
+    position: relative;
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__viz-slot {
+      display: none;
+    }
+  }
+
+  /* ── Right: sticky viz panel (desktop) ── */
+  .feat-scroll__viz-col {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .feat-scroll__viz-col {
+      display: block;
+    }
+  }
+
+  .feat-scroll__viz-sticky {
+    position: sticky;
+    top: 15vh;
+    height: 70vh;
+  }
+
+  /* Viz items when inside the sticky panel (desktop) */
+  .feat-scroll__viz-sticky .feat-scroll__viz-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+  }
+
+  .feat-scroll__viz-sticky .feat-scroll__viz-item.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Hidden source container (emptied by JS on load) */
+  .feat-scroll__viz-source {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* ── Mobile adjustments ── */
+  @media (max-width: 639px) {
+    .feat-scroll {
+      padding: 3rem 0 4rem;
+    }
+
+    .feat-scroll__header {
+      margin-bottom: 1rem;
+    }
+
+    .feat-scroll__text {
+      padding: 2rem 0 2rem 3rem;
+      min-height: auto;
+    }
+
+    .feat-scroll__text-col::before {
+      left: 14px;
+    }
+
+    .feat-scroll__badge {
+      width: 30px;
+      height: 30px;
+      font-size: 11px;
+      border-radius: 8px;
+      top: 2rem;
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .feat-scroll__text {
+      opacity: 1;
+      transition: none;
+    }
+
+    .feat-scroll__viz-sticky .feat-scroll__viz-item {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.getElementById('featScroll');
+    if (!section) return;
+
+    const textBlocks = section.querySelectorAll<HTMLElement>('.feat-scroll__text');
+    const vizItems = section.querySelectorAll<HTMLElement>('.feat-scroll__viz-item');
+    const vizSlots = section.querySelectorAll<HTMLElement>('.feat-scroll__viz-slot');
+    const stickyPanel = document.getElementById('fsVizSticky');
+    const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
+
+    let activeIdx = -1;
+    let currentLayout: 'mobile' | 'desktop' | null = null;
+
+    // Move viz items into the correct container for current viewport
+    function placeVizItems() {
+      const layout = isDesktop() ? 'desktop' : 'mobile';
+      if (layout === currentLayout) return;
+      currentLayout = layout;
+
+      vizItems.forEach((item) => {
+        const idx = item.dataset.viz || '0';
+        if (layout === 'desktop' && stickyPanel) {
+          stickyPanel.appendChild(item);
+        } else {
+          const slot = section.querySelector<HTMLElement>(`.feat-scroll__viz-slot[data-viz="${idx}"]`);
+          slot?.appendChild(item);
+        }
+      });
+
+      // Clear inline styles when switching to mobile
+      if (layout === 'mobile') {
+        textBlocks.forEach((block) => { block.style.opacity = ''; });
+        vizItems.forEach((viz) => {
+          viz.style.opacity = '';
+          viz.style.pointerEvents = '';
+        });
+      }
+    }
+
+    // Use inline styles for crossfade — bypasses any CSS specificity issues
+    function activateDesktop(idx: number) {
+      if (idx === activeIdx) return;
+
+      // Dim/highlight text blocks via inline style
+      textBlocks.forEach((block, i) => {
+        block.style.opacity = i === idx ? '1' : '0.3';
+      });
+
+      // Crossfade viz items via inline style
+      vizItems.forEach((viz, i) => {
+        const shouldActivate = i === idx;
+        viz.style.opacity = shouldActivate ? '1' : '0';
+        viz.style.pointerEvents = shouldActivate ? 'auto' : 'none';
+
+        if (shouldActivate && i !== activeIdx) {
+          viz.dispatchEvent(new CustomEvent('viz:activate', { bubbles: true }));
+        }
+      });
+
+      activeIdx = idx;
+    }
+
+    // Desktop: scroll listener finds which text block is most centered
+    let rafId = 0;
+    function onDesktopScroll() {
+      if (!isDesktop()) return;
+      const viewCenter = window.innerHeight / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+
+      textBlocks.forEach((block, i) => {
+        const rect = block.getBoundingClientRect();
+        const blockCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(blockCenter - viewCenter);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = i;
+        }
+      });
+
+      activateDesktop(bestIdx);
+    }
+
+    function scheduleScroll() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        onDesktopScroll();
+      });
+    }
+
+    window.addEventListener('scroll', scheduleScroll, { passive: true });
+
+    // Mobile: IntersectionObserver on viz slots
+    const mobileObserver = new IntersectionObserver(
+      (entries) => {
+        if (isDesktop()) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const vizItem = entry.target.querySelector<HTMLElement>('.feat-scroll__viz-item');
+            vizItem?.dispatchEvent(new CustomEvent('viz:activate', { bubbles: true }));
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    vizSlots.forEach((slot) => mobileObserver.observe(slot));
+
+    // Handle viewport changes
+    const mql = window.matchMedia('(min-width: 1024px)');
+    mql.addEventListener('change', () => {
+      placeVizItems();
+      if (isDesktop()) {
+        activeIdx = -1; // force re-activate
+        onDesktopScroll();
+      }
+    });
+
+    // Initial setup
+    placeVizItems();
+    if (isDesktop()) {
+      onDesktopScroll();
+    }
+  });
+</script>

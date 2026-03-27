@@ -1,0 +1,14 @@
+# Wix blog URL patterns — Wix sometimes uses /blog/ prefix
+/blog/*  /insights  301
+
+# Common Wix URL variations
+/insights/categories/industry-insights  /insights/categories/industry-insights  200
+/insights/categories/parsing-payer-mrfs  /insights/categories/parsing-payer-mrfs  200
+/insights/categories/payercast  /insights/categories/payercast  200
+/insights/categories/news  /insights/categories/news  200
+
+# Wix asset redirects (Wix serves static from _files)
+/_files/*  /  404
+
+# Ensure non-www redirects to www
+https://payerset.com/*  https://www.payerset.com/:splat  301

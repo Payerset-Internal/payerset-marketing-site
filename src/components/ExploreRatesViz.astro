@@ -1,0 +1,409 @@
+---
+/**
+ * ExploreRatesViz.astro
+ *
+ * Interactive filter/search mock demonstrating the no-code rate exploration
+ * experience. Auto-populating filter pills and result cards appear with
+ * staggered animations, cycling through different query configurations.
+ *
+ * Activated via `viz:activate` custom event from FeatureShowcase.
+ */
+---
+
+<div class="explore-viz" id="exploreViz">
+  <div class="explore-viz__card">
+    <!-- Filter bar -->
+    <div class="explore-viz__filter-bar">
+      <div class="explore-viz__filter-btn" id="evFilter0">
+        <span class="explore-viz__filter-icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 3h10M3 6h6M5 9h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="explore-viz__filter-text" id="evFilterText0">Payer</span>
+        <svg class="explore-viz__filter-chevron" width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><path d="M2 3l2 2 2-2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="explore-viz__filter-btn" id="evFilter1">
+        <span class="explore-viz__filter-icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="explore-viz__filter-text" id="evFilterText1">Provider</span>
+        <svg class="explore-viz__filter-chevron" width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><path d="M2 3l2 2 2-2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="explore-viz__filter-btn" id="evFilter2">
+        <span class="explore-viz__filter-icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M4 4h4M4 6h2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+        </span>
+        <span class="explore-viz__filter-text" id="evFilterText2">Billing Code</span>
+        <svg class="explore-viz__filter-chevron" width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><path d="M2 3l2 2 2-2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <!-- Applied pills -->
+    <div class="explore-viz__pills" id="evPills"></div>
+
+    <!-- Separator -->
+    <div class="explore-viz__sep"></div>
+
+    <!-- Results -->
+    <div class="explore-viz__results" id="evResults"></div>
+
+    <!-- Footer -->
+    <div class="explore-viz__footer">
+      <span class="explore-viz__ticker-dot"></span>
+      <span id="evFooter">Showing 0 results</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .explore-viz {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .explore-viz.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .explore-viz__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Filter bar ── */
+  .explore-viz__filter-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .explore-viz__filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: default;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .explore-viz__filter-btn.is-selected {
+    border-color: rgba(0, 183, 253, 0.3);
+    background: rgba(0, 183, 253, 0.06);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .explore-viz__filter-icon {
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+  }
+
+  .explore-viz__filter-text {
+    font-weight: 500;
+  }
+
+  .explore-viz__filter-chevron {
+    opacity: 0.3;
+  }
+
+  /* ── Pills ── */
+  .explore-viz__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 28px;
+    margin-bottom: 12px;
+  }
+
+  /* ── Separator ── */
+  .explore-viz__sep {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin-bottom: 12px;
+  }
+
+  /* ── Results ── */
+  .explore-viz__results {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 160px;
+  }
+
+  /* ── Footer ── */
+  .explore-viz__footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .explore-viz__ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00e87b;
+    box-shadow: 0 0 8px #00e87b;
+    animation: evTickerPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes evTickerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .explore-viz__card {
+      padding: 14px;
+    }
+
+    .explore-viz__filter-btn {
+      padding: 5px 8px;
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .explore-viz {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .explore-viz__ticker-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const viz = document.getElementById('exploreViz');
+  if (viz) {
+
+    const filterSets = [
+      {
+        pills: [
+          { type: 'Payer', value: 'Aetna' },
+          { type: 'Provider', value: 'Cleveland Clinic' },
+          { type: 'Code', value: 'CPT 27447' },
+        ],
+        results: [
+          { payer: 'Aetna', provider: 'Cleveland Clinic', code: 'CPT 27447', name: 'Total Knee Replacement', rate: 32150 },
+          { payer: 'Aetna', provider: 'Cleveland Clinic', code: 'CPT 27447', name: 'Total Knee (Outpatient)', rate: 28900 },
+          { payer: 'Aetna', provider: 'Cleveland Clinic FL', code: 'CPT 27447', name: 'Total Knee Replacement', rate: 35210 },
+        ],
+        total: 847,
+      },
+      {
+        pills: [
+          { type: 'Payer', value: 'UnitedHealthcare' },
+          { type: 'Code', value: 'CPT 99213' },
+        ],
+        results: [
+          { payer: 'UnitedHealthcare', provider: 'Northwestern Memorial', code: 'CPT 99213', name: 'Office Visit, Est.', rate: 142 },
+          { payer: 'UnitedHealthcare', provider: 'Mass General Brigham', code: 'CPT 99213', name: 'Office Visit, Est.', rate: 168 },
+          { payer: 'UnitedHealthcare', provider: 'Advocate Aurora Health', code: 'CPT 99213', name: 'Office Visit, Est.', rate: 131 },
+        ],
+        total: 2413,
+      },
+      {
+        pills: [
+          { type: 'Provider', value: 'HCA Healthcare' },
+          { type: 'Code', value: 'CPT 70553' },
+        ],
+        results: [
+          { payer: 'Aetna', provider: 'HCA Healthcare', code: 'CPT 70553', name: 'MRI Brain w/ Contrast', rate: 3575 },
+          { payer: 'BCBS FL', provider: 'HCA Healthcare', code: 'CPT 70553', name: 'MRI Brain w/ Contrast', rate: 2980 },
+          { payer: 'Cigna', provider: 'HCA Healthcare', code: 'CPT 70553', name: 'MRI Brain w/ Contrast', rate: 3150 },
+        ],
+        total: 1086,
+      },
+    ];
+
+    let currentIdx = -1;
+    let cycleTimer: ReturnType<typeof setInterval> | null = null;
+    let hasActivated = false;
+
+    const pillsContainer = document.getElementById('evPills') as HTMLElement;
+    const resultsContainer = document.getElementById('evResults') as HTMLElement;
+    const footerText = document.getElementById('evFooter') as HTMLElement;
+    const filterBtns = viz.querySelectorAll<HTMLElement>('.explore-viz__filter-btn');
+
+    function formatRate(n: number): string {
+      return '$' + n.toLocaleString('en-US');
+    }
+
+    function createPill(pill: { type: string; value: string }, delay: number): HTMLElement {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        display: inline-flex; align-items: center; gap: 4px;
+        padding: 4px 10px; border-radius: 6px;
+        background: rgba(0, 183, 253, 0.1);
+        border: 1px solid rgba(0, 183, 253, 0.2);
+        font-size: 11px; color: rgba(255, 255, 255, 0.8);
+        font-weight: 500; white-space: nowrap;
+        opacity: 0; transform: scale(0.9);
+        transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      `;
+      const typeSpan = document.createElement('span');
+      typeSpan.style.cssText = 'font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-brand-secondary); opacity: 0.7;';
+      typeSpan.textContent = pill.type;
+      const valSpan = document.createElement('span');
+      valSpan.textContent = pill.value;
+      if (pill.type === 'Code') valSpan.style.fontFamily = 'ui-monospace, SFMono-Regular, monospace';
+      const xSpan = document.createElement('span');
+      xSpan.style.cssText = 'opacity: 0.3; font-size: 10px; margin-left: 2px;';
+      xSpan.textContent = '×';
+      el.appendChild(typeSpan);
+      el.appendChild(valSpan);
+      el.appendChild(xSpan);
+
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1)';
+      }, delay);
+
+      return el;
+    }
+
+    function createResultRow(result: { payer: string; provider: string; code: string; name: string; rate: number }, maxRate: number, delay: number): HTMLElement {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        padding: 10px 12px; border-radius: 8px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        opacity: 0; transform: translateX(16px);
+        transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                    background 0.2s ease;
+      `;
+      el.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+          <span style="font-size: 9px; color: var(--color-brand-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">${result.payer} → ${result.provider}</span>
+          <span style="font-size: 16px; font-weight: 700; color: #fff; font-family: ui-monospace, SFMono-Regular, monospace; letter-spacing: -0.5px;">${formatRate(result.rate)}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span style="font-size: 10px; color: rgba(255,255,255,0.4);"><span style="font-family: ui-monospace, SFMono-Regular, monospace;">${result.code}</span> · ${result.name}</span>
+        </div>
+        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;">
+          <div class="ev-bar-fill" style="height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary)); width: 0%; transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1);"></div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateX(0)';
+        const bar = el.querySelector('.ev-bar-fill') as HTMLElement;
+        if (bar) bar.style.width = ((result.rate / maxRate) * 100) + '%';
+      }, delay);
+
+      return el;
+    }
+
+    function showFilterSet(idx: number) {
+      if (idx === currentIdx) return;
+      currentIdx = idx;
+      const set = filterSets[idx];
+
+      // Clear previous
+      pillsContainer.innerHTML = '';
+      resultsContainer.innerHTML = '';
+
+      // Reset filter buttons
+      filterBtns.forEach((btn) => btn.classList.remove('is-selected'));
+
+      // Highlight active filter buttons
+      set.pills.forEach((pill) => {
+        const filterIdx = pill.type === 'Payer' ? 0 : pill.type === 'Provider' ? 1 : 2;
+        filterBtns[filterIdx]?.classList.add('is-selected');
+      });
+
+      // Create pills with stagger
+      set.pills.forEach((pill, i) => {
+        pillsContainer.appendChild(createPill(pill, 200 + i * 200));
+      });
+
+      // Create result rows with stagger (after pills)
+      const maxRate = Math.max(...set.results.map(r => r.rate));
+      const pillDelay = 200 + set.pills.length * 200;
+      set.results.forEach((result, i) => {
+        resultsContainer.appendChild(createResultRow(result, maxRate, pillDelay + 100 + i * 120));
+      });
+
+      // Footer
+      const totalDelay = pillDelay + 100 + set.results.length * 120;
+      setTimeout(() => {
+        footerText.textContent = `Showing ${set.results.length} of ${set.total.toLocaleString()} results`;
+      }, pillDelay);
+    }
+
+    function activate() {
+      if (hasActivated) return;
+      hasActivated = true;
+      viz.classList.add('is-active');
+      showFilterSet(0);
+
+      cycleTimer = setInterval(() => {
+        const next = (currentIdx + 1) % filterSets.length;
+        showFilterSet(next);
+      }, 6000);
+    }
+
+    function deactivate() {
+      if (cycleTimer) {
+        clearInterval(cycleTimer);
+        cycleTimer = null;
+      }
+      hasActivated = false;
+      currentIdx = -1;
+      pillsContainer.innerHTML = '';
+      resultsContainer.innerHTML = '';
+      filterBtns.forEach((btn) => btn.classList.remove('is-selected'));
+    }
+
+    // Listen for activation from FeatureShowcase
+    const panel = viz.closest('.feat-showcase__panel');
+    panel?.addEventListener('viz:activate', () => {
+      deactivate();
+      setTimeout(activate, 200);
+    });
+
+    // Self-activate when scrolled into view (for standalone usage outside FeatureShowcase)
+    if (panel?.classList.contains('homepage-viz')) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting && !hasActivated) {
+            activate();
+          }
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(panel);
+    }
+  }
+</script>

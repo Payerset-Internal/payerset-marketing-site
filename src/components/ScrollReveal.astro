@@ -1,0 +1,74 @@
+<!--
+  ScrollReveal — shared scroll-reveal animation system.
+  Include once per page (or in a layout) to enable data-reveal attributes.
+
+  Usage on any element:
+    data-reveal            → fade in + slide up (default)
+    data-reveal="left"     → slide from left
+    data-reveal="right"    → slide from right
+    data-reveal="scale"    → scale up from 0.96
+    data-reveal-delay="ms" → stagger delay in milliseconds
+-->
+
+<style is:global>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-reveal="left"] {
+    transform: translateX(-32px);
+  }
+  [data-reveal="left"].is-revealed {
+    transform: translateX(0);
+  }
+  [data-reveal="right"] {
+    transform: translateX(32px);
+  }
+  [data-reveal="right"].is-revealed {
+    transform: translateX(0);
+  }
+  [data-reveal="scale"] {
+    transform: scale(0.96);
+  }
+  [data-reveal="scale"].is-revealed {
+    transform: scale(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('[data-reveal]');
+    if (!reveals.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = parseInt(el.dataset.revealDelay || '0', 10);
+            setTimeout(() => {
+              el.classList.add('is-revealed');
+            }, delay);
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+  });
+</script>

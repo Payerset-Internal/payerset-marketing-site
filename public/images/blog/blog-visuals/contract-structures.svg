@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#001F29"/>
+      <stop offset="50%" stop-color="#044261"/>
+      <stop offset="100%" stop-color="#032d44"/>
+    </linearGradient>
+    <linearGradient id="badge3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00B7FD"/>
+      <stop offset="100%" stop-color="#0092CA"/>
+    </linearGradient>
+    <pattern id="dots3" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.6" fill="#00B7FD" opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="360" fill="url(#bg3)" rx="16"/>
+  <rect width="800" height="360" fill="url(#dots3)" rx="16"/>
+
+  <!-- Card 1: Fee Schedule -->
+  <g transform="translate(30, 25)">
+    <rect width="360" height="145" rx="12" fill="#0a2e3d" stroke="rgba(100,194,185,0.2)" stroke-width="1"/>
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="url(#badge3)"/>
+    <text x="32" y="37" text-anchor="middle" fill="#001F29" font-size="12" font-weight="700" font-family="monospace">01</text>
+    <text x="60" y="37" fill="white" font-size="15" font-weight="600">Fee Schedule</text>
+    <!-- Visual: simple horizontal bar representing a fixed dollar amount -->
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="300" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+      <rect x="0" y="0" width="180" height="6" rx="3" fill="#64C2B9" opacity="0.5"/>
+      <text x="190" y="5" fill="#64C2B9" font-size="10" font-weight="600">$142</text>
+    </g>
+    <!-- Complexity: 1 dot -->
+    <circle cx="310" cy="130" r="5" fill="#64C2B9"/>
+    <circle cx="326" cy="130" r="5" fill="rgba(255,255,255,0.06)"/>
+    <circle cx="342" cy="130" r="5" fill="rgba(255,255,255,0.06)"/>
+  </g>
+
+  <!-- Card 2: % of Charge -->
+  <g transform="translate(410, 25)">
+    <rect width="360" height="145" rx="12" fill="#0a2e3d" stroke="rgba(0,146,202,0.2)" stroke-width="1"/>
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="url(#badge3)"/>
+    <text x="32" y="37" text-anchor="middle" fill="#001F29" font-size="12" font-weight="700" font-family="monospace">02</text>
+    <text x="60" y="37" fill="white" font-size="15" font-weight="600">% of Billed Charges</text>
+    <!-- Visual: full bar with a percentage slice -->
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="300" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+      <rect x="0" y="0" width="195" height="6" rx="3" fill="#0092CA" opacity="0.5"/>
+      <text x="205" y="5" fill="#0092CA" font-size="10" font-weight="600">65%</text>
+    </g>
+    <!-- Complexity: 2 dots -->
+    <circle cx="310" cy="130" r="5" fill="#0092CA"/>
+    <circle cx="326" cy="130" r="5" fill="#0092CA"/>
+    <circle cx="342" cy="130" r="5" fill="rgba(255,255,255,0.06)"/>
+  </g>
+
+  <!-- Card 3: Case Rates -->
+  <g transform="translate(30, 190)">
+    <rect width="360" height="145" rx="12" fill="#0a2e3d" stroke="rgba(0,183,253,0.2)" stroke-width="1"/>
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="url(#badge3)"/>
+    <text x="32" y="37" text-anchor="middle" fill="#001F29" font-size="12" font-weight="700" font-family="monospace">03</text>
+    <text x="60" y="37" fill="white" font-size="15" font-weight="600">Case Rates</text>
+    <!-- Visual: grouped segments in a single bar -->
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="300" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+      <rect x="0" y="0" width="90" height="6" rx="3" fill="#00B7FD" opacity="0.5"/>
+      <rect x="94" y="0" width="60" height="6" fill="#00B7FD" opacity="0.35"/>
+      <rect x="158" y="0" width="45" height="6" fill="#00B7FD" opacity="0.2"/>
+      <rect x="207" y="0" width="30" height="6" rx="0 3 3 0" fill="#00B7FD" opacity="0.12"/>
+    </g>
+    <!-- Complexity: 3 dots -->
+    <circle cx="310" cy="130" r="5" fill="#00B7FD"/>
+    <circle cx="326" cy="130" r="5" fill="#00B7FD"/>
+    <circle cx="342" cy="130" r="5" fill="#00B7FD"/>
+  </g>
+
+  <!-- Card 4: Carve-outs -->
+  <g transform="translate(410, 190)">
+    <rect width="360" height="145" rx="12" fill="#0a2e3d" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="url(#badge3)"/>
+    <text x="32" y="37" text-anchor="middle" fill="#001F29" font-size="12" font-weight="700" font-family="monospace">04</text>
+    <text x="60" y="37" fill="white" font-size="15" font-weight="600">Carve-outs</text>
+    <!-- Visual: bar with gaps/missing segments -->
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="300" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+      <rect x="0" y="0" width="80" height="6" rx="3" fill="#f59e0b" opacity="0.4"/>
+      <!-- gap -->
+      <rect x="100" y="0" width="50" height="6" fill="#f59e0b" opacity="0.15"/>
+      <!-- gap -->
+      <rect x="170" y="0" width="40" height="6" fill="#f59e0b" opacity="0.4"/>
+      <!-- gap to end -->
+    </g>
+    <!-- Complexity: 3 dots -->
+    <circle cx="310" cy="130" r="5" fill="#f59e0b"/>
+    <circle cx="326" cy="130" r="5" fill="#f59e0b"/>
+    <circle cx="342" cy="130" r="5" fill="#f59e0b"/>
+  </g>
+</svg>

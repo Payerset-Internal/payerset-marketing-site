@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Brand Colors - Payerset */
+  --color-brand-primary: #0092CA;
+  --color-brand-primary-hover: #007bb0;
+  --color-brand-primary-light: rgba(0, 146, 202, 0.10);
+  --color-brand-secondary: #00B7FD;
+  --color-brand-dark: #044261;
+  --color-brand-dark-deeper: #032d44;
+  --color-brand-dark-deep: #001F29;
+  --color-brand-accent: #64C2B9;
+
+  /* Text Colors */
+  --color-text-primary: #2D2D2D;
+  --color-text-secondary: #464646;
+  --color-text-muted: #6D6D6D;
+
+  /* Surface Colors */
+  --color-surface-light: #F6F6F6;
+  --color-surface-blue-tint: rgba(0, 146, 202, 0.08);
+  --color-surface-gray-tint: rgba(232, 230, 230, 0.35);
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2 {
+  font-family: var(--font-heading);
+}

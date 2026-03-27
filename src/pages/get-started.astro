@@ -1,0 +1,192 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="Get Started"
+  description="Request your demo & learn how price transparency can transform your pricing strategy & contract negotiations."
+>
+  <!-- Hero Section with Form -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <!-- Left Column: Content -->
+        <div>
+          <h1 class="text-4xl sm:text-5xl lg:text-5xl font-semibold text-white leading-tight">
+            Start Leveraging<br />
+            <span class="text-brand-primary">Price Transparency Data</span> Today
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-xl">
+            Request your demo &amp; learn how price transparency can transform your pricing strategy &amp; contract negotiations.
+          </p>
+          <ul class="space-y-3 mt-8">
+            {[
+              'All payer-provider negotiated rates along with claims',
+              'Access every health plan with historical rates for trending',
+              'Self-service platform or direct data integration',
+            ].map((item) => (
+              <li class="flex items-start gap-3 text-slate-300">
+                <svg class="w-5 h-5 text-brand-primary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Right Column: Custom Form → HubSpot API -->
+        <div class="bg-white rounded-xl shadow-xl p-8">
+          <h2 class="text-xl font-semibold text-slate-900 mb-6">
+            Request Your Demo
+          </h2>
+          <form id="get-started-form" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="gs-firstname" class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
+                <input
+                  type="text"
+                  id="gs-firstname"
+                  name="firstname"
+                  required
+                  placeholder="First name"
+                  class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                />
+              </div>
+              <div>
+                <label for="gs-lastname" class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
+                <input
+                  type="text"
+                  id="gs-lastname"
+                  name="lastname"
+                  required
+                  placeholder="Last name"
+                  class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                />
+              </div>
+            </div>
+            <div>
+              <label for="gs-email" class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
+              <input
+                type="email"
+                id="gs-email"
+                name="email"
+                required
+                placeholder="Work email"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              />
+            </div>
+            <div>
+              <label for="gs-phone" class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
+              <input
+                type="tel"
+                id="gs-phone"
+                name="phone"
+                placeholder="Phone number"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              />
+            </div>
+            <div>
+              <label for="gs-role" class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
+              <select
+                id="gs-role"
+                name="role"
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              >
+                <option value="">What is your role?</option>
+                <option value="Healthcare provider">Healthcare provider</option>
+                <option value="Healthcare solution">Healthcare solution</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Health plan">Health plan</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="gs-usecase" class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
+              <textarea
+                id="gs-usecase"
+                name="usecase"
+                rows="3"
+                placeholder="Describe your use case..."
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"
+              ></textarea>
+            </div>
+            <div class="pt-2">
+              <button
+                type="button"
+                class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Request a Demo
+              </button>
+            </div>
+            <p id="get-started-form-error" class="text-sm text-red-600 hidden"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('get-started-form');
+    if (!form) return;
+
+    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+
+    var btn = form.querySelector('button[type="button"]');
+    btn.addEventListener('click', function() {
+      var errorEl = document.getElementById('get-started-form-error');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var email = form.querySelector('[name="email"]').value.toLowerCase();
+      var domain = email.split('@')[1] || '';
+      if (blockedDomains.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      var payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
+          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
+          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
+          { objectTypeId: '0-1', name: 'phone', value: form.querySelector('[name="phone"]').value || '' },
+          { objectTypeId: '0-1', name: 'jobtitle', value: form.querySelector('[name="role"]').value || '' },
+          { objectTypeId: '0-1', name: 'message', value: form.querySelector('[name="usecase"]').value || '' },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Submission failed');
+        window.location.href = '/thank-you';
+      })
+      .catch(function() {
+        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Request a Demo';
+      });
+    });
+  })();
+</script>

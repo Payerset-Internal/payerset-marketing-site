@@ -1,0 +1,167 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = ['All', 'Industry Insights', 'Parsing Payer MRFs', 'Payercast', 'News'];
+---
+
+<PageLayout
+  title="Insights"
+  description="Healthcare price transparency insights, analysis, and updates from the Payerset team."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+          Insights
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+          Healthcare price transparency insights, analysis, &amp; updates from the Payerset team.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Filters -->
+  <section class="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex gap-2 py-4 overflow-x-auto">
+        {categories.map((category, index) => {
+          const slug = category === 'All' ? '/insights' : `/insights/categories/${category.toLowerCase().replace(/ /g, '-')}`;
+          return (
+            <a
+              href={slug}
+              class:list={[
+                'category-tab whitespace-nowrap px-5 py-2 text-sm font-semibold rounded-lg transition-colors',
+                index === 0
+                  ? 'bg-brand-primary text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+              ]}
+              data-category={category}
+            >
+              {category}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Posts Grid -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {sortedPosts.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedPosts.map((post) => (
+            <a
+              href={`/post/${post.id.replace(/\.md$/, '')}`}
+              class="post-card group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg hover:border-brand-primary/30 transition-all duration-200"
+              data-category={post.data.category}
+            >
+              <div class="aspect-video bg-slate-100 flex items-center justify-center">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div class="text-slate-400 text-sm">
+                    <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div class="p-6">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-primary bg-brand-primary/10 rounded-full">
+                    {post.data.category}
+                  </span>
+                  {post.data.readTime && (
+                    <span class="text-xs text-slate-400">{post.data.readTime}</span>
+                  )}
+                </div>
+                <h3 class="text-lg font-semibold text-slate-900 group-hover:text-brand-primary transition-colors mb-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-slate-600 leading-relaxed line-clamp-2">
+                  {post.data.description}
+                </p>
+                <div class="mt-4 flex items-center justify-between">
+                  <span class="text-xs text-slate-400">
+                    {post.data.date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </span>
+                  <span class="text-xs text-slate-400">{post.data.author}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map(() => (
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+              <div class="aspect-video bg-slate-50 flex items-center justify-center">
+                <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <div class="p-6">
+                <div class="h-4 w-24 bg-slate-100 rounded mb-3"></div>
+                <div class="h-5 w-full bg-slate-100 rounded mb-2"></div>
+                <div class="h-5 w-3/4 bg-slate-100 rounded mb-3"></div>
+                <div class="h-4 w-full bg-slate-50 rounded mb-1"></div>
+                <div class="h-4 w-2/3 bg-slate-50 rounded"></div>
+                <div class="mt-4 text-center">
+                  <p class="text-sm text-slate-400">Blog posts coming soon</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.category-tab');
+    const postCards = document.querySelectorAll('.post-card');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const category = tab.getAttribute('data-category');
+
+        // Update tab styles
+        tabs.forEach((t) => {
+          t.classList.remove('bg-brand-primary', 'text-white');
+          t.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+          t.setAttribute('aria-pressed', 'false');
+        });
+        tab.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+        tab.classList.add('bg-brand-primary', 'text-white');
+        tab.setAttribute('aria-pressed', 'true');
+
+        // Filter post cards
+        postCards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+          if (category === 'All' || cardCategory === category) {
+            (card as HTMLElement).style.display = '';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,103 @@
+<svg viewBox="0 0 1200 627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Base gradient -->
+    <linearGradient id="lbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#001F29"/>
+      <stop offset="40%" stop-color="#044261"/>
+      <stop offset="100%" stop-color="#032d44"/>
+    </linearGradient>
+
+    <!-- Accent glow - primary blue -->
+    <radialGradient id="gA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0092CA" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0092CA" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Accent glow - secondary blue -->
+    <radialGradient id="gB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00B7FD" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#00B7FD" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Accent glow - teal -->
+    <radialGradient id="gC" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#64C2B9" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#64C2B9" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Thin line gradient -->
+    <linearGradient id="lineG1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0092CA" stop-opacity="0"/>
+      <stop offset="40%" stop-color="#0092CA" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#00B7FD" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00B7FD" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="lineG2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#64C2B9" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#64C2B9" stop-opacity="0.25"/>
+      <stop offset="70%" stop-color="#0092CA" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#0092CA" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="lineG3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00B7FD" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00B7FD" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#64C2B9" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#lbg)"/>
+
+  <!-- Large ambient glows - creates depth -->
+  <ellipse cx="320" cy="250" rx="350" ry="280" fill="url(#gA)"/>
+  <ellipse cx="850" cy="380" rx="400" ry="300" fill="url(#gC)"/>
+  <ellipse cx="600" cy="310" rx="280" ry="220" fill="url(#gB)"/>
+
+  <!-- Geometric shapes - thin stroked, low opacity -->
+  <!-- Large diamond left of center -->
+  <polygon points="380,140 520,313 380,486 240,313"
+           fill="none" stroke="#0092CA" stroke-width="0.8" opacity="0.18"/>
+
+  <!-- Offset diamond slightly overlapping -->
+  <polygon points="420,180 540,313 420,446 300,313"
+           fill="none" stroke="#00B7FD" stroke-width="0.6" opacity="0.12"/>
+
+  <!-- Right side rectangle, rotated -->
+  <rect x="680" y="180" width="220" height="220" rx="2"
+        fill="none" stroke="#64C2B9" stroke-width="0.7" opacity="0.15"
+        transform="rotate(15 790 290)"/>
+
+  <!-- Smaller rectangle overlapping -->
+  <rect x="720" y="220" width="160" height="160" rx="2"
+        fill="none" stroke="#0092CA" stroke-width="0.6" opacity="0.12"
+        transform="rotate(25 800 300)"/>
+
+  <!-- Circle cluster right -->
+  <circle cx="920" cy="200" r="80" fill="none" stroke="#00B7FD" stroke-width="0.6" opacity="0.13"/>
+  <circle cx="940" cy="220" r="50" fill="none" stroke="#64C2B9" stroke-width="0.5" opacity="0.11"/>
+
+  <!-- Small triangle bottom left -->
+  <polygon points="150,450 220,520 80,520"
+           fill="none" stroke="#64C2B9" stroke-width="0.6" opacity="0.14"/>
+
+  <!-- Horizontal accent lines spanning the canvas -->
+  <line x1="0" y1="260" x2="1200" y2="260" stroke="url(#lineG1)" stroke-width="1"/>
+  <line x1="0" y1="370" x2="1200" y2="370" stroke="url(#lineG2)" stroke-width="0.8"/>
+  <line x1="0" y1="440" x2="1200" y2="440" stroke="url(#lineG3)" stroke-width="0.6"/>
+
+  <!-- Diagonal accent line -->
+  <line x1="100" y1="627" x2="700" y2="0" stroke="#0092CA" stroke-width="0.5" opacity="0.1"/>
+  <line x1="500" y1="627" x2="1100" y2="0" stroke="#64C2B9" stroke-width="0.4" opacity="0.08"/>
+
+  <!-- Tiny dot accents scattered -->
+  <circle cx="200" cy="180" r="2" fill="#00B7FD" opacity="0.4"/>
+  <circle cx="600" cy="150" r="1.5" fill="#64C2B9" opacity="0.35"/>
+  <circle cx="950" cy="400" r="2.5" fill="#0092CA" opacity="0.3"/>
+  <circle cx="400" cy="500" r="1.8" fill="#00B7FD" opacity="0.3"/>
+  <circle cx="1050" cy="150" r="2" fill="#64C2B9" opacity="0.35"/>
+  <circle cx="750" cy="500" r="1.5" fill="#0092CA" opacity="0.3"/>
+  <circle cx="100" cy="350" r="2" fill="#00B7FD" opacity="0.25"/>
+  <circle cx="1100" cy="300" r="1.8" fill="#64C2B9" opacity="0.28"/>
+</svg>

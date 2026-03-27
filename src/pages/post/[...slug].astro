@@ -1,0 +1,218 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.md$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const updatedDate = post.data.updatedDate
+  ? post.data.updatedDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+
+// Get recent posts for sidebar
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+---
+
+<PageLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  publishedDate={post.data.date.toISOString()}
+  modifiedDate={post.data.updatedDate?.toISOString()}
+  author={post.data.author}
+  image={post.data.image}
+>
+  <!-- Hero -->
+  <section class="bg-brand-dark-deep">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div class="mb-4">
+        <a
+          href={`/insights/categories/${post.data.category.toLowerCase().replace(/ /g, '-')}`}
+          class="inline-block px-3 py-1 text-xs font-semibold text-brand-secondary bg-brand-secondary/10 rounded-full hover:bg-brand-secondary/20 transition-colors"
+        >
+          {post.data.category}
+        </a>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
+        {post.data.title}
+      </h1>
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-400">
+        <span class="font-medium text-slate-300">{post.data.author}</span>
+        <span>&middot;</span>
+        <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+        {post.data.readTime && (
+          <>
+            <span>&middot;</span>
+            <span>{post.data.readTime}</span>
+          </>
+        )}
+        {updatedDate && (
+          <>
+            <span>&middot;</span>
+            <span>Updated {updatedDate}</span>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero Image -->
+  {post.data.image && (
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 mb-8">
+      <img
+        src={post.data.image}
+        alt={post.data.title}
+        class="w-full h-auto rounded-xl shadow-lg"
+        loading="eager"
+      />
+    </div>
+  )}
+
+  <!-- Content -->
+  <section class={post.data.image ? "py-8 lg:py-12" : "py-12 lg:py-16"}>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-[1fr_300px] gap-12">
+        <!-- Article Body -->
+        <article class="prose prose-slate max-w-none prose-headings:text-brand-dark prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-brand-primary hover:prose-a:text-brand-primary-hover prose-strong:text-brand-dark prose-li:leading-relaxed prose-img:rounded-xl prose-img:w-full prose-img:h-auto prose-img:object-contain">
+          <Content />
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="hidden lg:block">
+          <div class="sticky top-24 space-y-8">
+            <!-- Tags -->
+            {post.data.tags.length > 0 && (
+              <div>
+                <h3 class="text-sm font-semibold text-brand-dark uppercase tracking-wider mb-3">Tags</h3>
+                <div class="flex flex-wrap gap-2">
+                  {post.data.tags.map((tag) => (
+                    <span class="px-3 py-1 text-xs font-medium text-slate-600 bg-slate-100 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <!-- Share -->
+            <div>
+              <h3 class="text-sm font-semibold text-brand-dark uppercase tracking-wider mb-3">Share</h3>
+              <div class="flex gap-3">
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://www.payerset.com/post/${post.id.replace(/\.md$/, '')}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
+                  aria-label="Share on LinkedIn"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://www.payerset.com/post/${post.id.replace(/\.md$/, '')}`)}&text=${encodeURIComponent(post.data.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
+                  aria-label="Share on X"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <button
+                  id="copy-link-btn"
+                  class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
+                  aria-label="Copy link"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Posts -->
+            {recentPosts.length > 0 && (
+              <div>
+                <h3 class="text-sm font-semibold text-brand-dark uppercase tracking-wider mb-3">Recent Posts</h3>
+                <div class="space-y-4">
+                  {recentPosts.map((recent) => (
+                    <a
+                      href={`/post/${recent.id.replace(/\.md$/, '')}`}
+                      class="block group"
+                    >
+                      <p class="text-sm font-medium text-slate-700 group-hover:text-brand-primary transition-colors leading-snug">
+                        {recent.data.title}
+                      </p>
+                      <p class="text-xs text-slate-400 mt-1">
+                        {recent.data.date.toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-brand-dark-deep">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-4">
+        See Payerset in Action
+      </h2>
+      <p class="text-lg text-slate-300 mb-8">
+        Request your demo &amp; learn how healthcare price transparency can transform your pricing strategy.
+      </p>
+      <a
+        href="/get-started"
+        class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+      >
+        Request your demo today
+      </a>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  const copyBtn = document.getElementById('copy-link-btn');
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const originalHTML = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+      setTimeout(() => {
+        copyBtn.innerHTML = originalHTML;
+      }, 2000);
+    });
+  });
+</script>

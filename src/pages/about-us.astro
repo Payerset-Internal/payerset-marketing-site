@@ -1,0 +1,209 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { Image } from 'astro:assets';
+import logo453 from '../assets/images/logo-453.png';
+import logo454 from '../assets/images/logo-454.png';
+import logo456 from '../assets/images/logo-456.png';
+import logo457 from '../assets/images/logo-457.png';
+import logo458 from '../assets/images/logo-458.png';
+import logo460 from '../assets/images/logo-460.png';
+import logo461 from '../assets/images/logo-461.png';
+import logo462 from '../assets/images/logo-462.png';
+import logo463 from '../assets/images/logo-463.png';
+import logo464 from '../assets/images/logo-464.png';
+import logo465 from '../assets/images/logo-465.png';
+import logo466 from '../assets/images/logo-466.png';
+import jerryPhoto from '../assets/images/jerry.png';
+import jacobPhoto from '../assets/images/jacob.png';
+import sperosPhoto from '../assets/images/speros.png';
+import scottPhoto from '../assets/images/scott.png';
+---
+
+<PageLayout
+  title="About Us"
+  description="Creating fair and equitable healthcare for everyone."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl font-semibold text-white leading-tight">
+          Creating Fair &amp; Equitable Healthcare for Everyone
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted By Section — Logo Carousel -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="relative py-12">
+      <p class="text-center text-sm font-bold text-white uppercase tracking-wider mb-8">
+        Trusted by innovators across the healthcare ecosystem
+      </p>
+
+      <!-- Carousel Container -->
+      <div class="relative">
+        <!-- Gradient fade edges -->
+        <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-brand-dark-deep to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-brand-dark-deep to-transparent z-10 pointer-events-none"></div>
+
+        <!-- Scrolling track -->
+        <div class="flex gap-16 animate-scroll-about">
+          <!-- First set of logos -->
+          <div class="flex items-center gap-16 shrink-0">
+            <Image src={logo453} alt="Northwell Health" class="h-10 w-auto object-contain" />
+            <Image src={logo454} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo456} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo457} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo458} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo460} alt="Cone Health" class="h-10 w-auto object-contain" />
+            <Image src={logo461} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo462} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo463} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo464} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo465} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo466} alt="Partner logo" class="h-10 w-auto object-contain" />
+          </div>
+          <!-- Duplicate set for seamless loop -->
+          <div class="flex items-center gap-16 shrink-0">
+            <Image src={logo453} alt="Northwell Health" class="h-10 w-auto object-contain" />
+            <Image src={logo454} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo456} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo457} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo458} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo460} alt="Cone Health" class="h-10 w-auto object-contain" />
+            <Image src={logo461} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo462} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo463} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo464} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo465} alt="Partner logo" class="h-10 w-auto object-contain" />
+            <Image src={logo466} alt="Partner logo" class="h-10 w-auto object-contain" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes scroll-about {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-scroll-about {
+      animation: scroll-about 30s linear infinite;
+      will-change: transform;
+    }
+
+    .animate-scroll-about:hover {
+      animation-play-state: paused;
+    }
+  </style>
+
+  <!-- Our Story Section -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900 mb-6">
+          Our Story
+        </h2>
+        <div class="text-lg text-slate-600 leading-relaxed space-y-4">
+          <p>
+            We've set out to make price transparency a reality, and we know this is more than a technical challenge. While we've built the infrastructure to transform trillions of payer-provider rates into usable formats and continue to lead in price transparency innovation, we also know real change happens through every interaction we have with our customers and community.
+          </p>
+          <p>
+            We're a diverse group with backgrounds spanning leading technology companies (Salesforce, Google, Meta), boutique consulting firms and healthcare industry veterans. Our goal is to challenge the status quo and achieve what has long been viewed as impossible: fair and equitable healthcare for everyone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Principles Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Our Principles
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {[
+          {
+            title: 'Take Ownership',
+            desc: 'Our team of experts takes full ownership from ideation through execution to advance our shared vision of democratizing healthcare pricing for everyone.',
+          },
+          {
+            title: 'Solve the Hard Problems',
+            desc: "Don't settle for easy wins. We prioritize solving the next hardest problem for our customers, enabling them to better serve their stakeholders and communities.",
+          },
+          {
+            title: 'Transparency Is in Our DNA',
+            desc: 'Transparency guides every interaction from pricing to engaging with prospects and our customers. Our goal is to build lasting relationships built on transparency and trust.',
+          },
+          {
+            title: 'Partnerships, Not Transactions',
+            desc: "We strive to ensure our success is our customer's success. We want every touchpoint to be relationship-driven while backed with industry-leading expertise.",
+          },
+        ].map((principle) => (
+          <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-200">
+            <h3 class="text-lg font-semibold text-slate-900 mb-2">{principle.title}</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">{principle.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership Team Section -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Leadership Team
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+        {[
+          { name: 'Jerry DiMaso', role: 'Co-founder & CEO', photo: jerryPhoto },
+          { name: 'Jacob Little', role: 'Co-founder & President', photo: jacobPhoto },
+          { name: 'Speros Kokenes', role: 'Co-founder & Head of Product', photo: sperosPhoto },
+          { name: 'Scott Ponder', role: 'Head of Growth', photo: scottPhoto },
+        ].map((member) => (
+          <div class="text-center">
+            <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+              <Image src={member.photo} alt={member.name} width={128} height={128} class="w-full h-full object-cover" />
+            </div>
+            <h3 class="text-lg font-semibold text-slate-900">{member.name}</h3>
+            <p class="text-sm text-slate-600 mt-1">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 lg:py-28 bg-brand-dark-deep">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+        Join Us in Transforming Healthcare
+      </h2>
+      <p class="text-lg text-slate-300 mb-8">
+        We're building the future of healthcare price transparency. Get in touch to learn how we can help your organization.
+      </p>
+      <a
+        href="/get-started"
+        class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+      >
+        Get Started
+      </a>
+    </div>
+  </section>
+</PageLayout>

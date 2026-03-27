@@ -1,0 +1,669 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import InsightsCarousel from '../components/InsightsCarousel.astro';
+import DataLakeViz from '../components/DataLakeViz.astro';
+import RatesGridViz from '../components/RatesGridViz.astro';
+import NpiTinViz from '../components/NpiTinViz.astro';
+import EmployerCoverageViz from '../components/EmployerCoverageViz.astro';
+import NetworkViz from '../components/NetworkViz.astro';
+---
+
+<PageLayout
+  title="Healthcare Price Transparency Data Solutions for Custom Tools: Data Lake"
+  description="Build, innovate & scale faster with enriched payer & provider MRF data delivered in analytics-ready formats."
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark-deep to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-reveal="left">
+          <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
+            Payerset Data Lake&trade;
+          </p>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
+            Power Your<br />Solutions with Price Transparency Data
+          </h1>
+          <h2 class="mt-4 text-lg text-slate-100 max-w-2xl font-light">
+            Build, innovate &amp; scale faster with enriched payer &amp; provider MRF data delivered in analytics-ready formats.
+          </h2>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href="/get-started"
+              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+            >
+              Request your demo today
+            </a>
+            <a
+              href="#solutions"
+              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white border border-white/20 hover:border-white/40 hover:bg-white/5 rounded-lg transition-colors"
+            >
+              Learn more
+            </a>
+          </div>
+        </div>
+        <div data-reveal="right" data-reveal-delay="200" class="flex items-center justify-center min-h-[400px]">
+          <DataLakeViz />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Props Section -->
+  <section id="solutions" class="py-16 lg:py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10" data-reveal>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Bring price transparency data directly to your users
+        </h2>
+      </div>
+
+      <!-- Carousel -->
+      <div class="dl-viewport relative overflow-hidden" style="min-height:200px" data-reveal data-reveal-delay="200">
+        {[
+          {
+            title: 'Analytics Ready',
+            desc: 'We source negotiated rates from payer & provider MRFs & ensure they\'re fully documented and auditable.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg>`,
+          },
+          {
+            title: 'Trusted & Transparent',
+            desc: 'We fully document and publish all payer & provider MRFs & have a complete data dictionary available to the public.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>`,
+          },
+          {
+            title: 'Data Share, APIs, Parquet',
+            desc: 'We have the formats you require to either share to your data warehouse or replicate to your cloud storage, or serve via APIs.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>`,
+          },
+        ].map((card, i) => (
+          <div class="dl-card absolute top-0 left-1/2" data-index={String(i)} style="opacity:0">
+            <div class="dl-card-inner h-full rounded-2xl border bg-white p-6 sm:p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-primary/8 text-brand-primary">
+                  <Fragment set:html={card.icon} />
+                </div>
+                <h3 class="text-lg font-semibold text-text-primary">{card.title}</h3>
+              </div>
+              <p class="text-[0.9375rem] text-text-secondary leading-relaxed">{card.desc}</p>
+            </div>
+          </div>
+        ))}
+
+        <!-- Nav buttons -->
+        <button
+          class="dl-prev absolute left-2 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-full shadow-sm flex items-center justify-center hover:shadow-md hover:border-brand-primary/30 transition-all duration-200"
+          aria-label="Previous"
+        >
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="dl-next absolute right-2 sm:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-full shadow-sm flex items-center justify-center hover:shadow-md hover:border-brand-primary/30 transition-all duration-200"
+          aria-label="Next"
+        >
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dot indicators -->
+      <div class="flex justify-center gap-2.5 mt-6">
+        {[0, 1, 2].map((i) => (
+          <button
+            class="dl-dot w-2 h-2 rounded-full transition-all duration-300 bg-slate-300"
+            data-index={String(i)}
+            aria-label={`Go to card ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .dl-card {
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  filter 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+    .dl-card-inner {
+      border-color: rgba(226, 232, 240, 0.7);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .dl-card[data-active="true"] .dl-card-inner {
+      border-color: rgba(0, 146, 202, 0.18);
+      box-shadow: 0 10px 40px -10px rgba(0, 146, 202, 0.13),
+                  0 4px 16px -4px rgba(0, 0, 0, 0.06);
+    }
+  </style>
+
+  <script>
+    const dlViewport = document.querySelector('.dl-viewport') as HTMLElement;
+    const dlPrevBtn = document.querySelector('.dl-prev') as HTMLButtonElement;
+    const dlNextBtn = document.querySelector('.dl-next') as HTMLButtonElement;
+    const dlDots = document.querySelectorAll<HTMLButtonElement>('.dl-dot');
+
+    if (dlViewport) {
+      const cards = dlViewport.querySelectorAll<HTMLElement>('.dl-card');
+      const total = cards.length;
+      let activeIdx = 0;
+      let autoTimer: ReturnType<typeof setInterval> | null = null;
+
+      function getCardWidth(): number {
+        const vw = dlViewport.offsetWidth;
+        if (vw >= 1024) return Math.min(370, vw * 0.3);
+        if (vw >= 640)  return Math.min(340, vw * 0.44);
+        return Math.min(300, vw * 0.78);
+      }
+
+      function getGap(): number {
+        return window.innerWidth >= 640 ? 24 : 16;
+      }
+
+      function layout(): number {
+        const cardW = getCardWidth();
+        cards.forEach(c => { c.style.width = cardW + 'px'; });
+        let maxH = 0;
+        cards.forEach(c => { maxH = Math.max(maxH, c.offsetHeight); });
+        dlViewport.style.height = Math.ceil(maxH * 1.06 + 20) + 'px';
+        return cardW;
+      }
+
+      function goTo(idx: number) {
+        const next = ((idx % total) + total) % total;
+        activeIdx = next;
+
+        const cardW = layout();
+        const gap = getGap();
+        const step = cardW + gap;
+
+        cards.forEach((card, i) => {
+          let diff = i - next;
+          if (diff > total / 2)  diff -= total;
+          if (diff < -(total / 2)) diff += total;
+
+          const absDiff = Math.abs(diff);
+          const x = diff * step;
+
+          const currentOpacity = parseFloat(card.style.opacity || '0');
+          const wasHidden = currentOpacity < 0.1;
+          const willBeVisible = absDiff <= 1;
+
+          if (wasHidden && willBeVisible) {
+            card.style.transition = 'none';
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(${absDiff === 0 ? 1 : 0.93})`;
+            card.style.opacity = '0';
+            card.offsetHeight;
+            card.style.transition = '';
+          }
+
+          const inner = card.querySelector('.dl-card-inner') as HTMLElement;
+
+          if (absDiff === 0) {
+            card.style.transform = `translateX(-50%) scale(1)`;
+            card.style.opacity = '1';
+            card.style.filter = 'none';
+            card.style.zIndex = '3';
+            card.style.pointerEvents = 'auto';
+            card.dataset.active = 'true';
+            if (inner) inner.style.cursor = 'default';
+          } else if (absDiff === 1) {
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(0.93)`;
+            card.style.opacity = '0.4';
+            card.style.filter = 'grayscale(0.2)';
+            card.style.zIndex = '2';
+            card.style.pointerEvents = 'auto';
+            card.dataset.active = 'false';
+            if (inner) inner.style.cursor = 'pointer';
+          } else {
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(0.88)`;
+            card.style.opacity = '0';
+            card.style.filter = 'grayscale(0.3)';
+            card.style.zIndex = '1';
+            card.style.pointerEvents = 'none';
+            card.dataset.active = 'false';
+            if (inner) inner.style.cursor = 'default';
+          }
+        });
+
+        dlDots.forEach((dot, i) => {
+          if (i === next) {
+            dot.classList.remove('bg-slate-300');
+            dot.classList.add('bg-brand-primary');
+            dot.style.transform = 'scale(1.3)';
+          } else {
+            dot.classList.remove('bg-brand-primary');
+            dot.classList.add('bg-slate-300');
+            dot.style.transform = 'scale(1)';
+          }
+        });
+      }
+
+      function advance() { goTo(activeIdx + 1); }
+      function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(advance, 5000);
+      }
+      function stopAuto() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+      }
+
+      dlPrevBtn?.addEventListener('click', () => { goTo(activeIdx - 1); startAuto(); });
+      dlNextBtn?.addEventListener('click', () => { goTo(activeIdx + 1); startAuto(); });
+
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.dataset.index || '0', 10);
+          if (idx !== activeIdx) { goTo(idx); startAuto(); }
+        });
+      });
+
+      dlDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.index || '0', 10);
+          goTo(idx); startAuto();
+        });
+      });
+
+      let hovered = false;
+      dlViewport.addEventListener('mouseenter', () => { hovered = true; stopAuto(); });
+      dlViewport.addEventListener('mouseleave', () => { hovered = false; if (visible) startAuto(); });
+
+      dlViewport.setAttribute('tabindex', '0');
+      dlViewport.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'ArrowLeft')  { goTo(activeIdx - 1); startAuto(); }
+        if (e.key === 'ArrowRight') { goTo(activeIdx + 1); startAuto(); }
+      });
+
+      let touchX = 0;
+      dlViewport.addEventListener('touchstart', (e: TouchEvent) => {
+        touchX = e.touches[0].clientX;
+      }, { passive: true });
+      dlViewport.addEventListener('touchend', (e: TouchEvent) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 50) { goTo(activeIdx + (dx < 0 ? 1 : -1)); startAuto(); }
+      }, { passive: true });
+
+      let raf = 0;
+      window.addEventListener('resize', () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => { raf = 0; goTo(activeIdx); });
+      });
+
+      let visible = false;
+      const obs = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !hovered) startAuto();
+        else stopAuto();
+      }, { threshold: 0.3 });
+      obs.observe(dlViewport);
+
+      goTo(0);
+    }
+  </script>
+
+  <!-- Feature 1: Every payer & provider rate — dark section -->
+  <section class="relative overflow-hidden bg-brand-dark-deep py-20 lg:py-28">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark-deep to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,146,202,0.1),transparent_60%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div data-reveal="left">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+            Every Payer &amp; Provider Rate
+          </h2>
+          <p class="text-lg text-slate-300 mb-6">
+            Each quarter, we parse every MRF from payers and compliant hospitals and store it with full version history, building the most complete source of price transparency data.
+          </p>
+          <a
+            href="/get-started"
+            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            Learn More
+          </a>
+        </div>
+        <div class="flex items-center justify-center" data-reveal="right" data-reveal-delay="150">
+          <RatesGridViz />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 2: NPI to Tax ID mapping -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1 flex items-center justify-center" data-reveal="left" data-reveal-delay="150">
+          <NpiTinViz />
+        </div>
+        <div class="order-1 lg:order-2" data-reveal="right">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark mb-4">
+            NPI to Tax ID Mapping
+          </h2>
+          <p class="text-lg text-slate-600 mb-6">
+            We map every NPI to its corresponding Tax ID (TIN) and store it as a clean, searchable reference, making it easy to connect providers to organizations across all price transparency data.
+          </p>
+          <a
+            href="/get-started"
+            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 3: Employer to health plan coverage — dark section -->
+  <section class="relative overflow-hidden bg-brand-dark-deep py-20 lg:py-28">
+    <div class="absolute inset-0 bg-gradient-to-bl from-brand-dark via-brand-dark-deep to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,146,202,0.1),transparent_60%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div data-reveal="left">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+            Employer to Health Plan Coverage
+          </h2>
+          <p class="text-lg text-slate-300 mb-6">
+            We capture every employer plan and map it to the right health plan, establishing a clear connection between employer-sponsored coverage and payer networks.
+          </p>
+          <a
+            href="/get-started"
+            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            Learn More
+          </a>
+        </div>
+        <div class="flex items-center justify-center" data-reveal="right" data-reveal-delay="150">
+          <EmployerCoverageViz />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 4: Health plan to NPI network adequacy -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1 flex items-center justify-center" data-reveal="left" data-reveal-delay="150">
+          <NetworkViz />
+        </div>
+        <div class="order-1 lg:order-2" data-reveal="right">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark mb-4">
+            Health Plan to NPI Network Adequacy
+          </h2>
+          <p class="text-lg text-slate-600 mb-6">
+            We track every health plan and its in-network provider NPIs over time, showing which providers participate in each plan and when those NPIs move in and out of network.
+          </p>
+          <a
+            href="/get-started"
+            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Utility: Every MRF in a Single Location -->
+  <section class="relative overflow-hidden bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark-deep to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,146,202,0.12),transparent_70%)]"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 text-center" data-reveal>
+      <!-- Free resource badge -->
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-secondary/20 text-brand-secondary border border-brand-secondary/30 uppercase tracking-wider mb-6">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        Community resource
+      </span>
+
+      <!-- Icon -->
+      <div class="flex justify-center mb-6">
+        <div class="w-16 h-16 rounded-2xl bg-brand-primary/20 border border-brand-primary/30 flex items-center justify-center">
+          <svg class="w-8 h-8 text-brand-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+        Every MRF in a Single Location
+      </h2>
+      <p class="text-lg text-slate-300 font-light max-w-2xl mx-auto mb-10">
+        We track and index every payer and hospital machine-readable file so you don't have to. Links to every MRF, a complete payer compliance scorecard, and a full data dictionary.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="https://docs.payerset.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 rounded-lg transition-colors"
+        >
+          Access the resource center
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <InsightsCarousel />
+
+  <!-- CTA Section -->
+  <section class="relative overflow-hidden bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-tl from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div data-reveal="left">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+            Start Leveraging Price Transparency Data Today
+          </h2>
+          <p class="text-lg text-white mb-8 font-light">
+            Request your demo &amp; learn how <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> can accelerate your product roadmap with analytics-ready price transparency data.
+          </p>
+          <ul class="space-y-3">
+            {[
+              'Analytics-ready data delivered to your environment',
+              'All major cloud platforms &amp; Snowflake Marketplace',
+              'Enriched, normalized, and updated quarterly',
+            ].map((item) => (
+              <li class="flex items-start gap-3 text-white font-light">
+                <svg class="w-5 h-5 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span set:html={item}></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8" data-reveal="right" data-reveal-delay="200">
+          <h3 class="text-xl font-semibold text-text-primary mb-6">
+            Contact our team
+          </h3>
+          <form id="datalake-form" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
+                <input type="text" name="firstname" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
+                <input type="text" name="lastname" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
+              <input type="email" name="email" required placeholder="Work email" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
+              <input type="tel" name="phone" placeholder="Phone number" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
+              <select name="role" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]">
+                <option value="">What is your role?</option>
+                <option value="Healthcare provider">Healthcare provider</option>
+                <option value="Healthcare solution">Healthcare solution</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Health plan">Health plan</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
+              <textarea name="usecase" rows="3" placeholder="Describe your use case..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"></textarea>
+            </div>
+            <button
+              type="button"
+              class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Request a demo
+            </button>
+            <p id="datalake-form-error" class="text-sm text-red-600 hidden"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12" data-reveal>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Frequently Asked Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="0">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span class="text-base font-semibold text-brand-dark pr-4">How do you deliver the data to my environment?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            We will work with you and your technology organization. Every organization is different depending on your environment, platforms, and processes. We support all major clouds and can provide the data in various formats. Additionally, Snowflake customers can easily access and purchase our data via the Snowflake Marketplace.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="80">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span class="text-base font-semibold text-brand-dark pr-4">Does Payerset handle schema drift as upstream data structures change?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            Yes. There can be regular schema changes based on payer updates in price transparency compliance. There can also be changes based on updated CMS rules. We normalize the data before you receive it, so we handle these changes for you. We will never remove fields, as that would affect your downstream processes, but we may add fields based on new requirements.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="160">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span class="text-base font-semibold text-brand-dark pr-4">What challenges come with using price transparency data?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            Price transparency data is publicly accessible, but transforming it into usable formats demands significant technological investment and time. Payerset simplifies this process, enabling product teams to leverage the data for innovation and scaling on their core platforms.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="240">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span class="text-base font-semibold text-brand-dark pr-4">How frequently is Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> updated?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> is updated quarterly, ensuring the latest payer data structures, negotiated rates, and regulatory requirements are incorporated. These updates provide users with the most accurate and current information, while historical payer data remains fully accessible.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('datalake-form');
+    if (!form) return;
+
+    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+
+    var btn = form.querySelector('button[type="button"]');
+    btn.addEventListener('click', function() {
+      var errorEl = document.getElementById('datalake-form-error');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var email = form.querySelector('[name="email"]').value.toLowerCase();
+      var domain = email.split('@')[1] || '';
+      if (blockedDomains.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      var payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
+          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
+          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
+          { objectTypeId: '0-1', name: 'phone', value: form.querySelector('[name="phone"]').value || '' },
+          { objectTypeId: '0-1', name: 'jobtitle', value: form.querySelector('[name="role"]').value || '' },
+          { objectTypeId: '0-1', name: 'message', value: form.querySelector('[name="usecase"]').value || '' },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Submission failed');
+        window.location.href = '/thank-you';
+      })
+      .catch(function() {
+        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Request a demo';
+      });
+    });
+  })();
+</script>

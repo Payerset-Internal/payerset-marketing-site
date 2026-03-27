@@ -1,0 +1,37 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="Thank You"
+  description="Thank you for reaching out to Payerset. We'll be in touch shortly."
+>
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40 text-center">
+      <svg class="w-20 h-20 text-green-400 mx-auto mb-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h1 class="text-4xl sm:text-5xl font-semibold text-white leading-tight">
+        Thank You!
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-xl mx-auto">
+        We've received your submission. A member of our team will reach out within one business day.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+        >
+          Back to Home
+        </a>
+        <a
+          href="/insights"
+          class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-slate-300 border border-slate-600 hover:border-slate-400 hover:text-white rounded-lg transition-colors"
+        >
+          Read Our Blog
+        </a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

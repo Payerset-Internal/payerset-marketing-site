@@ -1,0 +1,234 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="Snowflake Marketplace"
+  description="Access free samples of price transparency data for United Healthcare, Kaiser Permanente, Cigna, and more."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+          Free Payer Price Transparency<br />
+          <span class="text-brand-primary">Sample Data Sets</span>
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+          Access free samples of price transparency data for United Healthcare, Kaiser Permanente, Cigna, &amp; more.
+        </p>
+        <div class="mt-8">
+          <a
+            href="/get-started"
+            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+          >
+            Get Data
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcement Section -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark mb-6">
+          Payerset Powered by Snowflake
+        </h2>
+        <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+          We are thrilled to announce that Payerset is now officially listed on the Snowflake marketplace. This collaboration aims to make payer price datasets more accessible, fostering improved decision-making processes within the healthcare industry.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dataset Cards Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark">
+          Available Sample Datasets
+        </h2>
+        <p class="mt-4 text-lg text-slate-600">
+          Explore free sample datasets from top payers on the Snowflake Marketplace.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[
+          {
+            payer: 'Kaiser Permanente',
+            type: 'Machine Readable File Data',
+            badge: 'Free Sample Dataset',
+          },
+          {
+            payer: 'Elevance',
+            type: 'Machine Readable File Data',
+            badge: 'Free Sample Dataset',
+          },
+          {
+            payer: 'United Healthcare',
+            type: 'Machine Readable File Data',
+            badge: 'Free Sample Dataset',
+          },
+          {
+            payer: 'Cigna',
+            type: 'Machine Readable File Data',
+            badge: 'Free Sample Dataset',
+          },
+          {
+            payer: 'Sentara',
+            type: 'Machine Readable File Data',
+            badge: 'Free Sample Dataset',
+          },
+        ].map((dataset) => (
+          <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-200">
+            <div class="mb-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-primary bg-brand-primary/10 rounded-full">
+                {dataset.badge}
+              </span>
+            </div>
+            <h3 class="text-lg font-semibold text-brand-dark mb-1">
+              {dataset.payer} - Price Transparency
+            </h3>
+            <p class="text-sm text-slate-600">{dataset.type}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-20 lg:py-28 bg-brand-dark-deep">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white">
+          Ready for Full Data Sets?
+        </h2>
+        <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          Connect with our team to purchase full data sets by payer, country, or region.
+        </p>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="max-w-lg mx-auto bg-white rounded-xl shadow-xl p-8">
+        <form id="snowflake-form" class="space-y-5">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="sf-firstname" class="block text-sm font-medium text-text-secondary mb-1">First Name</label>
+              <input
+                type="text"
+                id="sf-firstname"
+                name="firstname"
+                required
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                placeholder="First name"
+              />
+            </div>
+            <div>
+              <label for="sf-lastname" class="block text-sm font-medium text-text-secondary mb-1">Last Name</label>
+              <input
+                type="text"
+                id="sf-lastname"
+                name="lastname"
+                required
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                placeholder="Last name"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="sf-email" class="block text-sm font-medium text-text-secondary mb-1">Email</label>
+            <input
+              type="email"
+              id="sf-email"
+              name="email"
+              required
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              placeholder="you@company.com"
+            />
+          </div>
+          <div class="pt-2">
+            <button
+              type="button"
+              class="w-full h-12 bg-brand-primary hover:bg-brand-primary-hover text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Get Full Data Sets
+            </button>
+          </div>
+          <p id="snowflake-form-error" class="text-sm text-red-600 hidden"></p>
+        </form>
+        <div id="snowflake-form-success" class="hidden text-center py-8">
+          <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="text-xl font-semibold text-slate-900 mb-2">Thank You!</h3>
+          <p class="text-slate-600">Our team will reach out to you shortly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('snowflake-form');
+    if (!form) return;
+
+    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+
+    var btn = form.querySelector('button[type="button"]');
+    btn.addEventListener('click', function() {
+      var errorEl = document.getElementById('snowflake-form-error');
+      var successEl = document.getElementById('snowflake-form-success');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var email = form.querySelector('[name="email"]').value.toLowerCase();
+      var domain = email.split('@')[1] || '';
+      if (blockedDomains.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      var payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
+          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
+          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Submission failed');
+        window.location.href = '/thank-you';
+      })
+      .catch(function() {
+        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Get Full Data Sets';
+      });
+    });
+  })();
+</script>

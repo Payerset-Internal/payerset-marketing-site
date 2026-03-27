@@ -1,0 +1,476 @@
+---
+/**
+ * ClaimsDataViz.astro
+ *
+ * Interactive visualization showing how claims data layers onto negotiated rates.
+ * Displays Billed → Paid → Negotiated Rate for a procedure with animated
+ * number counters and auto-cycling through procedure sets.
+ *
+ * Activated via `viz:activate` custom event from FeatureShowcase.
+ */
+---
+
+<div class="claims-viz" id="claimsViz">
+  <div class="claims-viz__card">
+    <!-- Header -->
+    <div class="claims-viz__header">
+      <div class="claims-viz__code" id="cvCode"></div>
+      <div class="claims-viz__meta">
+        <span class="claims-viz__name" id="cvName"></span>
+        <span class="claims-viz__route" id="cvRoute"></span>
+      </div>
+    </div>
+
+    <!-- Data columns -->
+    <div class="claims-viz__columns">
+      <div class="claims-viz__col" id="cvCol0">
+        <div class="claims-viz__col-label">Billed</div>
+        <div class="claims-viz__col-value" id="cvVal0">$0</div>
+        <div class="claims-viz__col-bar-track">
+          <div class="claims-viz__col-bar-fill" id="cvBar0"></div>
+        </div>
+      </div>
+
+      <!-- Connector arrow -->
+      <div class="claims-viz__arrow">
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none" aria-hidden="true">
+          <path d="M0 6h20m0 0l-4-4m4 4l-4 4" stroke="var(--color-brand-secondary)" stroke-width="1" stroke-opacity="0.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="claims-viz__col" id="cvCol1">
+        <div class="claims-viz__col-label">Paid</div>
+        <div class="claims-viz__col-value" id="cvVal1">$0</div>
+        <div class="claims-viz__col-bar-track">
+          <div class="claims-viz__col-bar-fill" id="cvBar1"></div>
+        </div>
+      </div>
+
+      <!-- Connector arrow -->
+      <div class="claims-viz__arrow">
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none" aria-hidden="true">
+          <path d="M0 6h20m0 0l-4-4m4 4l-4 4" stroke="var(--color-brand-secondary)" stroke-width="1" stroke-opacity="0.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="claims-viz__col" id="cvCol2">
+        <div class="claims-viz__col-label">Negotiated Rate</div>
+        <div class="claims-viz__col-value claims-viz__col-value--accent" id="cvVal2">$0</div>
+        <div class="claims-viz__col-bar-track">
+          <div class="claims-viz__col-bar-fill" id="cvBar2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variance callout -->
+    <div class="claims-viz__variance" id="cvVariance">
+      <span class="claims-viz__variance-icon">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M6 1v6M6 9v1" stroke="var(--color-brand-accent)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span id="cvVarianceText"></span>
+    </div>
+
+    <!-- Footer -->
+    <div class="claims-viz__footer">
+      <div class="claims-viz__volume">
+        <span class="claims-viz__ticker-dot"></span>
+        <span id="cvVolume"></span>
+      </div>
+      <div class="claims-viz__payer-count" id="cvPayers"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .claims-viz {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .claims-viz.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .claims-viz__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Header ── */
+  .claims-viz__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .claims-viz__code {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-brand-primary));
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-brand-dark-deep);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .claims-viz__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .claims-viz__name {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .claims-viz__route {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Columns ── */
+  .claims-viz__columns {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+
+  .claims-viz__col {
+    flex: 1;
+    text-align: center;
+    padding: 16px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .claims-viz.is-active .claims-viz__col {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .claims-viz.is-active #cvCol0 { transition-delay: 0.15s; }
+  .claims-viz.is-active #cvCol1 { transition-delay: 0.3s; }
+  .claims-viz.is-active #cvCol2 { transition-delay: 0.45s; }
+
+  .claims-viz__arrow {
+    flex-shrink: 0;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+  }
+
+  .claims-viz.is-active .claims-viz__arrow {
+    opacity: 1;
+  }
+
+  .claims-viz__col-label {
+    font-size: 9px;
+    color: var(--color-brand-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .claims-viz__col-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+    line-height: 1;
+    min-height: 26px;
+  }
+
+  .claims-viz__col-value--accent {
+    color: var(--color-brand-secondary);
+  }
+
+  /* Bar */
+  .claims-viz__col-bar-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .claims-viz__col-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary));
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.6s;
+  }
+
+  /* ── Variance callout ── */
+  .claims-viz__variance {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(100, 194, 185, 0.06);
+    border: 1px solid rgba(100, 194, 185, 0.15);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 11px;
+    color: var(--color-brand-accent);
+    opacity: 0;
+    transition: opacity 0.5s ease 0.7s;
+  }
+
+  .claims-viz.is-active .claims-viz__variance {
+    opacity: 1;
+  }
+
+  .claims-viz__variance-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .claims-viz__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .claims-viz__volume {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .claims-viz__ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00e87b;
+    box-shadow: 0 0 8px #00e87b;
+    animation: cvTickerPulse 2s ease-in-out infinite;
+  }
+
+  .claims-viz__payer-count {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  @keyframes cvTickerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .claims-viz__card {
+      padding: 16px;
+    }
+
+    .claims-viz__col-value {
+      font-size: 17px;
+    }
+
+    .claims-viz__arrow {
+      display: none;
+    }
+
+    .claims-viz__columns {
+      gap: 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .claims-viz,
+    .claims-viz__col,
+    .claims-viz__arrow,
+    .claims-viz__variance,
+    .claims-viz__col-bar-fill {
+      transition: none;
+    }
+
+    .claims-viz,
+    .claims-viz__col,
+    .claims-viz__arrow,
+    .claims-viz__variance {
+      opacity: 1;
+      transform: none;
+    }
+
+    .claims-viz__ticker-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const viz = document.getElementById('claimsViz');
+    if (!viz) return;
+
+    const procedures = [
+      {
+        code: 'CPT 99213',
+        name: 'Office Visit, Est. Patient',
+        route: 'Aetna → Cleveland Clinic',
+        billed: 185.00,
+        paid: 142.30,
+        rate: 138.50,
+        volume: '12,847 claims',
+        payers: '23 payers in market',
+      },
+      {
+        code: 'CPT 27447',
+        name: 'Total Knee Replacement',
+        route: 'UnitedHealthcare → HCA Healthcare',
+        billed: 45200,
+        paid: 31400,
+        rate: 28400,
+        volume: '3,241 claims',
+        payers: '18 payers in market',
+      },
+      {
+        code: 'CPT 70553',
+        name: 'MRI Brain w/ & w/o Contrast',
+        route: 'BCBS MA → Mass General Brigham',
+        billed: 4850,
+        paid: 3180,
+        rate: 2980,
+        volume: '8,912 claims',
+        payers: '31 payers in market',
+      },
+    ];
+
+    let currentIdx = -1;
+    let cycleTimer: ReturnType<typeof setInterval> | null = null;
+    let hasActivated = false;
+
+    function formatCurrency(n: number): string {
+      return '$' + n.toLocaleString('en-US', { minimumFractionDigits: n < 1000 ? 2 : 0, maximumFractionDigits: n < 1000 ? 2 : 0 });
+    }
+
+    function animateValue(el: HTMLElement, target: number, duration: number) {
+      const start = performance.now();
+      const isSmall = target < 1000;
+
+      function tick(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const current = target * eased;
+        el.textContent = '$' + current.toLocaleString('en-US', {
+          minimumFractionDigits: isSmall ? 2 : 0,
+          maximumFractionDigits: isSmall ? 2 : 0,
+        });
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    function showProcedure(idx: number) {
+      if (idx === currentIdx) return;
+      currentIdx = idx;
+      const proc = procedures[idx];
+
+      // Header
+      (document.getElementById('cvCode') as HTMLElement).textContent = proc.code;
+      (document.getElementById('cvName') as HTMLElement).textContent = proc.name;
+      (document.getElementById('cvRoute') as HTMLElement).textContent = proc.route;
+
+      // Values — count up
+      const maxVal = proc.billed;
+      const vals = [proc.billed, proc.paid, proc.rate];
+      vals.forEach((v, i) => {
+        const el = document.getElementById('cvVal' + i) as HTMLElement;
+        animateValue(el, v, 800);
+        // Bar widths
+        const bar = document.getElementById('cvBar' + i) as HTMLElement;
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        void bar.offsetWidth;
+        bar.style.transition = 'width 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
+        bar.style.width = ((v / maxVal) * 100) + '%';
+      });
+
+      // Variance text
+      const pctDiff = Math.round(((proc.billed - proc.rate) / proc.billed) * 100);
+      (document.getElementById('cvVarianceText') as HTMLElement).textContent =
+        `Negotiated rate is ${pctDiff}% below billed amount`;
+
+      // Footer
+      (document.getElementById('cvVolume') as HTMLElement).textContent = proc.volume;
+      (document.getElementById('cvPayers') as HTMLElement).textContent = proc.payers;
+    }
+
+    function activate() {
+      if (hasActivated) return;
+      hasActivated = true;
+      viz.classList.add('is-active');
+      showProcedure(0);
+
+      cycleTimer = setInterval(() => {
+        const next = (currentIdx + 1) % procedures.length;
+        showProcedure(next);
+      }, 5000);
+    }
+
+    function deactivate() {
+      if (cycleTimer) {
+        clearInterval(cycleTimer);
+        cycleTimer = null;
+      }
+      hasActivated = false;
+      currentIdx = -1;
+    }
+
+    // Listen for activation from FeatureShowcase
+    const panel = viz.closest('.feat-showcase__panel');
+    panel?.addEventListener('viz:activate', () => {
+      // Reset and re-activate
+      deactivate();
+      // Small delay so the panel transition starts first
+      setTimeout(activate, 200);
+    });
+  });
+</script>

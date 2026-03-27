@@ -1,0 +1,155 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  publishedDate?: string;
+  modifiedDate?: string;
+  author?: string;
+}
+
+const {
+  title,
+  description = 'Understand every contracted rate and claim in your market. Level the playing field and turn negotiations into partnerships.',
+  image = '/images/og-default.png',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  type = 'website',
+  publishedDate,
+  modifiedDate,
+  author,
+} = Astro.props;
+
+const fullTitle = title === 'Payerset' ? title : `${title} | Payerset`;
+const ogImage = new URL(image, Astro.site).href;
+const isHomepage = Astro.url.pathname === '/';
+const isArticle = type === 'article';
+
+// JSON-LD: Organization (all pages)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Payerset',
+  url: 'https://www.payerset.com',
+  logo: 'https://www.payerset.com/images/og-default.png',
+  description: 'Healthcare price transparency solutions. Understand every contracted rate and claim in your market.',
+  sameAs: [
+    'https://www.linkedin.com/company/payerset',
+  ],
+};
+
+// JSON-LD: WebSite (homepage only)
+const websiteSchema = isHomepage ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Payerset',
+  url: 'https://www.payerset.com',
+  description,
+} : null;
+
+// JSON-LD: BlogPosting (article pages only)
+const blogPostingSchema = isArticle ? {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image: ogImage,
+  url: canonicalURL,
+  datePublished: publishedDate,
+  ...(modifiedDate && { dateModified: modifiedDate }),
+  author: {
+    '@type': 'Person',
+    name: author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Payerset',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.payerset.com/images/og-default.png',
+    },
+  },
+} : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Payerset" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {publishedDate && <meta property="article:published_time" content={publishedDate} />}
+    {modifiedDate && <meta property="article:modified_time" content={modifiedDate} />}
+    {author && <meta property="article:author" content={author} />}
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {websiteSchema && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
+    {blogPostingSchema && <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-FMZN9NHQ61"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FMZN9NHQ61');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NR5QDW4');
+    </script>
+
+    <!-- HubSpot Tracking Code -->
+    <script is:inline type="text/javascript" id="hs-script-loader" async defer src="https://js.hs-scripts.com/39914009.js"></script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NR5QDW4"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,403 @@
+---
+/**
+ * AnalysisActionViz.astro
+ *
+ * Horizontal bar chart comparing provider rates for a procedure,
+ * with a Medicare reference line and a floating "insight" callout
+ * card that surfaces recommended actions.
+ *
+ * Activated via `viz:activate` custom event from FeatureShowcase.
+ */
+---
+
+<div class="analysis-viz" id="analysisViz">
+  <div class="analysis-viz__card">
+    <!-- Header -->
+    <div class="analysis-viz__header">
+      <div class="analysis-viz__header-label">Contract Benchmark</div>
+      <div class="analysis-viz__header-row">
+        <span class="analysis-viz__code" id="avCode"></span>
+        <span class="analysis-viz__name" id="avName"></span>
+      </div>
+    </div>
+
+    <!-- Chart area -->
+    <div class="analysis-viz__chart" id="avChart"></div>
+
+    <!-- Medicare reference -->
+    <div class="analysis-viz__ref" id="avRef">
+      <div class="analysis-viz__ref-line"></div>
+      <div class="analysis-viz__ref-label">
+        <span class="analysis-viz__ref-tag">Medicare</span>
+        <span class="analysis-viz__ref-val" id="avMedicare"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating insight card -->
+  <div class="analysis-viz__insight" id="avInsight">
+    <div class="analysis-viz__insight-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 1l2.5 5 5.5.8-4 3.9.9 5.3L8 13.5 3.1 16l.9-5.3-4-3.9L5.5 6z" fill="var(--color-brand-accent)" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="analysis-viz__insight-text" id="avInsightText"></div>
+  </div>
+</div>
+
+<style>
+  .analysis-viz {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .analysis-viz.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .analysis-viz__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Header ── */
+  .analysis-viz__header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .analysis-viz__header-label {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .analysis-viz__header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .analysis-viz__code {
+    display: inline-block;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-brand-primary));
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-brand-dark-deep);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .analysis-viz__name {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Chart ── */
+  .analysis-viz__chart {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    min-height: 200px;
+  }
+
+  /* ── Medicare reference ── */
+  .analysis-viz__ref {
+    position: relative;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease 1s;
+  }
+
+  .analysis-viz.is-active .analysis-viz__ref {
+    opacity: 1;
+  }
+
+  .analysis-viz__ref-line {
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0px,
+      rgba(255, 255, 255, 0.2) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  .analysis-viz__ref-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .analysis-viz__ref-tag {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .analysis-viz__ref-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+
+  /* ── Insight card ── */
+  .analysis-viz__insight {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    max-width: 260px;
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(100, 194, 185, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(100, 194, 185, 0.08), 0 12px 32px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1) 1.2s,
+                transform 0.5s cubic-bezier(0.23, 1, 0.32, 1) 1.2s,
+                box-shadow 3s ease-in-out;
+    animation: avInsightGlow 3s ease-in-out infinite 2s;
+  }
+
+  .analysis-viz.is-active .analysis-viz__insight {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @keyframes avInsightGlow {
+    0%, 100% { box-shadow: 0 0 40px rgba(100, 194, 185, 0.08), 0 12px 32px rgba(0, 0, 0, 0.4); }
+    50% { box-shadow: 0 0 50px rgba(100, 194, 185, 0.14), 0 12px 32px rgba(0, 0, 0, 0.4); }
+  }
+
+  .analysis-viz__insight-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .analysis-viz__insight-text {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+  }
+
+  .analysis-viz__insight-text strong {
+    color: var(--color-brand-accent);
+    font-weight: 600;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .analysis-viz__insight {
+      position: relative;
+      bottom: auto;
+      right: auto;
+      max-width: 100%;
+      margin-top: 12px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .analysis-viz__card {
+      padding: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .analysis-viz,
+    .analysis-viz__ref,
+    .analysis-viz__insight {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const viz = document.getElementById('analysisViz');
+    if (!viz) return;
+
+    const benchmarks = [
+      {
+        code: 'CPT 27447',
+        name: 'Total Knee Replacement',
+        medicare: 24200,
+        rates: [
+          { provider: 'Cleveland Clinic', rate: 32150 },
+          { provider: 'HCA Healthcare', rate: 28400 },
+          { provider: 'Baptist Health', rate: 35210 },
+          { provider: 'Tenet Healthcare', rate: 26890 },
+          { provider: 'AdventHealth', rate: 30475 },
+        ],
+        insight: {
+          highlight: 'Baptist Health',
+          text: '<strong>Baptist Health</strong> is 31% above market median. Negotiate toward <strong>$29,850</strong> to align with peers.',
+        },
+      },
+      {
+        code: 'CPT 99213',
+        name: 'Office Visit, Established Patient',
+        medicare: 103,
+        rates: [
+          { provider: 'Mass General Brigham', rate: 168 },
+          { provider: 'Northwestern Memorial', rate: 142 },
+          { provider: 'Advocate Aurora', rate: 131 },
+          { provider: 'Rush University Med', rate: 155 },
+          { provider: 'Loyola Medicine', rate: 119 },
+        ],
+        insight: {
+          highlight: 'Mass General Brigham',
+          text: '<strong>Mass General Brigham</strong> is 24% above market median. Consider <strong>$145</strong> as a target benchmark.',
+        },
+      },
+    ];
+
+    let currentIdx = -1;
+    let cycleTimer: ReturnType<typeof setInterval> | null = null;
+    let hasActivated = false;
+
+    const chart = document.getElementById('avChart') as HTMLElement;
+    const insightText = document.getElementById('avInsightText') as HTMLElement;
+
+    function formatRate(n: number): string {
+      return '$' + n.toLocaleString('en-US');
+    }
+
+    function createBarRow(provider: string, rate: number, maxRate: number, isHighest: boolean, delay: number): HTMLElement {
+      const row = document.createElement('div');
+      row.style.cssText = `
+        display: flex; align-items: center; gap: 10px;
+        opacity: 0; transform: translateX(-12px);
+        transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      `;
+
+      const labelCol = document.createElement('div');
+      labelCol.style.cssText = 'width: 130px; flex-shrink: 0; text-align: right;';
+
+      const provLabel = document.createElement('div');
+      provLabel.style.cssText = `font-size: 11px; color: ${isHighest ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.55)'}; font-weight: ${isHighest ? '600' : '400'}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`;
+      provLabel.textContent = provider;
+      labelCol.appendChild(provLabel);
+
+      const barCol = document.createElement('div');
+      barCol.style.cssText = 'flex: 1; display: flex; align-items: center; gap: 8px;';
+
+      const barTrack = document.createElement('div');
+      barTrack.style.cssText = 'flex: 1; height: 8px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden;';
+
+      const barFill = document.createElement('div');
+      const borderStyle = isHighest ? 'box-shadow: 0 0 8px rgba(0, 183, 253, 0.3);' : '';
+      barFill.style.cssText = `height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary)); width: 0%; transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1); ${borderStyle}`;
+      barFill.className = 'av-bar-fill';
+      barTrack.appendChild(barFill);
+
+      const rateLabel = document.createElement('div');
+      rateLabel.style.cssText = `font-size: 13px; font-weight: 700; color: ${isHighest ? '#fff' : 'rgba(255,255,255,0.7)'}; font-family: ui-monospace, SFMono-Regular, monospace; letter-spacing: -0.3px; white-space: nowrap; min-width: 65px;`;
+      rateLabel.textContent = formatRate(rate);
+
+      barCol.appendChild(barTrack);
+      barCol.appendChild(rateLabel);
+
+      row.appendChild(labelCol);
+      row.appendChild(barCol);
+
+      setTimeout(() => {
+        row.style.opacity = '1';
+        row.style.transform = 'translateX(0)';
+        barFill.style.width = ((rate / maxRate) * 100) + '%';
+      }, delay);
+
+      return row;
+    }
+
+    function showBenchmark(idx: number) {
+      if (idx === currentIdx) return;
+      currentIdx = idx;
+      const bm = benchmarks[idx];
+
+      // Header
+      (document.getElementById('avCode') as HTMLElement).textContent = bm.code;
+      (document.getElementById('avName') as HTMLElement).textContent = bm.name;
+      (document.getElementById('avMedicare') as HTMLElement).textContent = formatRate(bm.medicare);
+
+      // Chart bars
+      chart.innerHTML = '';
+      const maxRate = Math.max(...bm.rates.map(r => r.rate));
+      const highestRate = maxRate;
+
+      bm.rates.forEach((r, i) => {
+        chart.appendChild(createBarRow(r.provider, r.rate, maxRate, r.rate === highestRate, 200 + i * 100));
+      });
+
+      // Insight
+      insightText.innerHTML = bm.insight.text;
+    }
+
+    function activate() {
+      if (hasActivated) return;
+      hasActivated = true;
+      viz.classList.add('is-active');
+      showBenchmark(0);
+
+      cycleTimer = setInterval(() => {
+        const next = (currentIdx + 1) % benchmarks.length;
+        showBenchmark(next);
+      }, 6000);
+    }
+
+    function deactivate() {
+      if (cycleTimer) {
+        clearInterval(cycleTimer);
+        cycleTimer = null;
+      }
+      hasActivated = false;
+      currentIdx = -1;
+      chart.innerHTML = '';
+    }
+
+    // Listen for activation from FeatureShowcase
+    const panel = viz.closest('.feat-showcase__panel');
+    panel?.addEventListener('viz:activate', () => {
+      deactivate();
+      setTimeout(activate, 200);
+    });
+  });
+</script>

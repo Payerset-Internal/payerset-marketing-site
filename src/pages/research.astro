@@ -1,0 +1,302 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="Payerset Academic Research"
+  description="Free access to all payer-sourced price transparency data through our Rate Explorer portal for academic research."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+          Payerset for<br />
+          <span class="text-brand-primary">Academic Research</span>
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+          Free access to all payer-sourced price transparency data through our Rate Explorer portal for academic research.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Mission to Democratization
+        </h2>
+      </div>
+      <div class="text-base text-slate-600 leading-relaxed space-y-4 max-w-3xl mx-auto">
+        <p>
+          At Payerset, our mission is to democratize price transparency in healthcare. However, continually parsing, cleaning, and serving trillions of rows of data is extremely costly. When the Transparency in Coverage (TiC) law was passed, this was not the intent.
+        </p>
+        <p>
+          Through diligent work with our partners, policymakers, and the publication of our payer compliance audit, we are working to make the data more accessible. For this reason, we are also democratizing this data for research, ensuring it can be used for the benefit of all.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Criteria Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Research Criteria
+        </h2>
+      </div>
+      <ul class="space-y-4 max-w-3xl mx-auto">
+        {[
+          'This program is intended for independent researchers with grants focused on improving the U.S. healthcare system.',
+          'Payerset will determine the duration of access.',
+          'Data accessed through Payerset\'s Rate Explorer must be used solely for non-commercial academic research.',
+          'Selling any data, derivative products, insights, consulting, or information derived from this data is strictly prohibited.',
+          'Payerset must be cited as the source in all research publications.',
+        ].map((item) => (
+          <li class="flex items-start gap-3 text-slate-600">
+            <svg class="w-5 h-5 text-brand-primary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-base leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Application Form Section -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Apply for Access
+        </h2>
+        <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+          Help democratize price transparency data TODAY. Please submit your information below for review. Upon interview &amp; approval, you will receive free access to our self-service Rate Explorer portal under our research terms &amp; conditions.
+        </p>
+      </div>
+
+      <!-- Research Application Form -->
+      <div class="max-w-2xl mx-auto bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+        <form id="research-form" class="space-y-6">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="r-firstname" class="block text-sm font-medium text-text-secondary mb-1">First Name</label>
+              <input
+                type="text"
+                id="r-firstname"
+                name="firstname"
+                required
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                placeholder="First name"
+              />
+            </div>
+            <div>
+              <label for="r-lastname" class="block text-sm font-medium text-text-secondary mb-1">Last Name</label>
+              <input
+                type="text"
+                id="r-lastname"
+                name="lastname"
+                required
+                class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+                placeholder="Last name"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="r-email" class="block text-sm font-medium text-text-secondary mb-1">Email</label>
+            <input
+              type="email"
+              id="r-email"
+              name="email"
+              required
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              placeholder="you@university.edu"
+            />
+          </div>
+          <div>
+            <label for="r-duration" class="block text-sm font-medium text-text-secondary mb-1">Desired Access Duration</label>
+            <select
+              id="r-duration"
+              name="duration"
+              required
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+            >
+              <option value="1 Month">1 Month</option>
+              <option value="3 Months">3 Months</option>
+              <option value="6 Months">6 Months</option>
+              <option value="12 Months">12 Months</option>
+            </select>
+          </div>
+          <div>
+            <label for="r-organization" class="block text-sm font-medium text-text-secondary mb-1">Affiliated University or Government Organization</label>
+            <input
+              type="text"
+              id="r-organization"
+              name="organization"
+              required
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              placeholder="Organization name"
+            />
+          </div>
+          <div>
+            <label for="r-research-use" class="block text-sm font-medium text-text-secondary mb-1">Intended Research Use</label>
+            <textarea
+              id="r-research-use"
+              name="research_use"
+              required
+              rows="4"
+              class="w-full w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"
+              placeholder="Describe your intended research use..."
+            ></textarea>
+          </div>
+          <div>
+            <label for="r-grant" class="block text-sm font-medium text-text-secondary mb-1">Grant Number</label>
+            <input
+              type="text"
+              id="r-grant"
+              name="grant_number"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]"
+              placeholder="Grant number (if applicable)"
+            />
+          </div>
+          <div class="pt-2">
+            <button
+              type="button"
+              class="w-full h-12 bg-brand-primary hover:bg-brand-primary-hover text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Submit Application
+            </button>
+          </div>
+          <p id="research-form-error" class="text-sm text-red-600 hidden"></p>
+        </form>
+        <div id="research-form-success" class="hidden text-center py-8">
+          <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="text-xl font-semibold text-slate-900 mb-2">Application Received!</h3>
+          <p class="text-slate-600">We'll review your application and be in touch shortly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-slate-900">
+          Frequently Asked Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {[
+          {
+            q: 'What is price transparency in healthcare?',
+            a: 'Price transparency in healthcare involves publicly posting the negotiated reimbursement rates between healthcare providers and insurance carriers. This is done by hospitals and payers, respectively. Historically, these rates were confidential. However, the Federal Hospital Price Transparency (2021) and Transparency in Coverage (2022) laws now require that these negotiated rates be made openly available online.',
+          },
+          {
+            q: 'What is payer price transparency data?',
+            a: 'Payer price transparency data refers to the information that health insurance companies (payers) are required to disclose about the prices they have negotiated with healthcare providers for various medical services. This data includes detailed records of rates for medical procedures, services, and items, as negotiated between payers and providers.',
+          },
+          {
+            q: 'How often is the data refreshed?',
+            a: 'Payerset refreshes its data quarterly. Every three months, Payerset updates and audits its entire data set to incorporate the latest changes in payer data structures, negotiated rates, and any new regulatory requirements.',
+          },
+        ].map((faq) => (
+          <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+            <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+              <span>{faq.q}</span>
+              <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary::marker {
+    display: none;
+    content: '';
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('research-form');
+    if (!form) return;
+
+    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+
+    var btn = form.querySelector('button[type="button"]');
+    btn.addEventListener('click', function() {
+      var errorEl = document.getElementById('research-form-error');
+      var successEl = document.getElementById('research-form-success');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var email = form.querySelector('[name="email"]').value.toLowerCase();
+      var domain = email.split('@')[1] || '';
+      if (blockedDomains.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      var payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
+          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
+          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
+          { objectTypeId: '0-1', name: 'company', value: form.querySelector('[name="organization"]').value },
+          { objectTypeId: '0-1', name: 'message', value: 'Duration: ' + form.querySelector('[name="duration"]').value + '\nResearch Use: ' + form.querySelector('[name="research_use"]').value + '\nGrant Number: ' + (form.querySelector('[name="grant_number"]').value || 'N/A') },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Submission failed');
+        window.location.href = '/thank-you';
+      })
+      .catch(function() {
+        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Submit Application';
+      });
+    });
+  })();
+</script>

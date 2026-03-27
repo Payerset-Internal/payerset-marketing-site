@@ -1,0 +1,263 @@
+---
+/**
+ * NpiTinViz.astro
+ *
+ * Mini mapping visualization for the "NPI to Tax ID Mapping" section.
+ * Dark card showing NPI badges connecting to TIN badges with animated lines.
+ * Self-activates via IntersectionObserver on scroll.
+ */
+---
+
+<div class="npi-tin" id="npiTinViz">
+  <div class="npi-tin__card">
+    <div class="npi-tin__header">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M8 4v8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"/></svg>
+      <span>NPI → TIN Mapping</span>
+    </div>
+
+    <div class="npi-tin__map">
+      <!-- NPI Column -->
+      <div class="npi-tin__col">
+        <div class="npi-tin__col-label">Provider NPIs</div>
+        <div class="npi-tin__badge npi-tin__badge--npi" data-idx="0">
+          <span class="npi-tin__badge-icon">👤</span>
+          <div class="npi-tin__badge-text">
+            <span class="npi-tin__badge-name">Dr. Sarah Chen</span>
+            <span class="npi-tin__badge-id">NPI 1234567890</span>
+          </div>
+        </div>
+        <div class="npi-tin__badge npi-tin__badge--npi" data-idx="1">
+          <span class="npi-tin__badge-icon">👤</span>
+          <div class="npi-tin__badge-text">
+            <span class="npi-tin__badge-name">Dr. James Miller</span>
+            <span class="npi-tin__badge-id">NPI 2345678901</span>
+          </div>
+        </div>
+        <div class="npi-tin__badge npi-tin__badge--npi" data-idx="2">
+          <span class="npi-tin__badge-icon">👤</span>
+          <div class="npi-tin__badge-text">
+            <span class="npi-tin__badge-name">Dr. Priya Patel</span>
+            <span class="npi-tin__badge-id">NPI 3456789012</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector lines (SVG) -->
+      <div class="npi-tin__connectors">
+        <svg width="80" height="160" viewBox="0 0 80 160" fill="none" class="npi-tin__svg">
+          <path class="npi-tin__line" data-line="0" d="M0 30 C40 30 40 30 80 30" stroke="rgba(0,183,253,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path class="npi-tin__line" data-line="1" d="M0 30 C40 30 40 100 80 100" stroke="rgba(0,183,253,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path class="npi-tin__line" data-line="2" d="M0 80 C40 80 40 30 80 30" stroke="rgba(0,183,253,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path class="npi-tin__line" data-line="3" d="M0 80 C40 80 40 100 80 100" stroke="rgba(0,183,253,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path class="npi-tin__line" data-line="4" d="M0 130 C40 130 40 100 80 100" stroke="rgba(0,183,253,0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        </svg>
+      </div>
+
+      <!-- TIN Column -->
+      <div class="npi-tin__col">
+        <div class="npi-tin__col-label">Tax IDs (TIN)</div>
+        <div class="npi-tin__badge npi-tin__badge--tin" data-idx="3">
+          <span class="npi-tin__badge-icon">🏥</span>
+          <div class="npi-tin__badge-text">
+            <span class="npi-tin__badge-name">Metro Health Group</span>
+            <span class="npi-tin__badge-id">TIN 12-3456789</span>
+          </div>
+        </div>
+        <div class="npi-tin__badge npi-tin__badge--tin" data-idx="4" style="margin-top: 20px;">
+          <span class="npi-tin__badge-icon">🏥</span>
+          <div class="npi-tin__badge-text">
+            <span class="npi-tin__badge-name">Valley Medical Assoc.</span>
+            <span class="npi-tin__badge-id">TIN 98-7654321</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .npi-tin {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .npi-tin__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .npi-tin__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .npi-tin__header svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+  }
+
+  .npi-tin__map {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .npi-tin__col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .npi-tin__col-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .npi-tin__badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 10px;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease;
+  }
+
+  .npi-tin__badge--tin {
+    transform: translateX(12px);
+  }
+
+  .npi-tin__badge.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .npi-tin__badge.is-linked {
+    border-color: rgba(0, 183, 253, 0.3);
+    background: rgba(0, 183, 253, 0.05);
+  }
+
+  .npi-tin__badge-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .npi-tin__badge-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .npi-tin__badge-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .npi-tin__badge-id {
+    font-size: 9px;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .npi-tin__connectors {
+    flex-shrink: 0;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .npi-tin__line {
+    opacity: 0;
+    transition: opacity 0.5s ease, stroke 0.4s ease;
+  }
+
+  .npi-tin__line.is-visible {
+    opacity: 1;
+    stroke: rgba(0, 183, 253, 0.5);
+  }
+
+  @media (max-width: 480px) {
+    .npi-tin__connectors {
+      width: 50px;
+    }
+    .npi-tin__badge-name {
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .npi-tin__badge, .npi-tin__line {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const ntViz = document.getElementById('npiTinViz');
+  if (ntViz) {
+    const badges = ntViz.querySelectorAll('.npi-tin__badge');
+    const lines = ntViz.querySelectorAll('.npi-tin__line');
+    let activated = false;
+
+    function activateMap() {
+      if (activated) return;
+      activated = true;
+
+      // Show badges with stagger
+      badges.forEach((badge, i) => {
+        setTimeout(() => badge.classList.add('is-visible'), 200 + i * 200);
+      });
+
+      // Show connector lines
+      lines.forEach((line, i) => {
+        setTimeout(() => line.classList.add('is-visible'), 800 + i * 150);
+      });
+
+      // Highlight linked badges
+      setTimeout(() => {
+        badges.forEach(b => b.classList.add('is-linked'));
+      }, 1600);
+
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) activateMap();
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(ntViz);
+  }
+</script>

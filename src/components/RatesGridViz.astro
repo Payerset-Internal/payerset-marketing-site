@@ -1,0 +1,210 @@
+---
+/**
+ * RatesGridViz.astro
+ *
+ * Mini data-table visualization for the "Every Payer & Provider Rate" section.
+ * Dark card showing animated rate rows with payer names, codes, and dollar amounts.
+ * Self-activates via IntersectionObserver on scroll.
+ */
+---
+
+<div class="rates-grid" id="ratesGridViz">
+  <div class="rates-grid__card">
+    <div class="rates-grid__header">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12v2H2zM2 7h12v2H2zM2 11h12v2H2z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Price Transparency Rates</span>
+    </div>
+
+    <div class="rates-grid__table">
+      <div class="rates-grid__row rates-grid__row--head">
+        <span class="rates-grid__cell rates-grid__cell--payer">Payer</span>
+        <span class="rates-grid__cell rates-grid__cell--code">Code</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">Description</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">Rate</span>
+      </div>
+      <div class="rates-grid__row" data-row="0">
+        <span class="rates-grid__cell rates-grid__cell--payer"><span class="rates-grid__payer-dot" style="background:#3b82f6"></span>Anthem</span>
+        <span class="rates-grid__cell rates-grid__cell--code">99213</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">Office Visit, Est.</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">$142.00</span>
+      </div>
+      <div class="rates-grid__row" data-row="1">
+        <span class="rates-grid__cell rates-grid__cell--payer"><span class="rates-grid__payer-dot" style="background:#06b6d4"></span>Aetna</span>
+        <span class="rates-grid__cell rates-grid__cell--code">99213</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">Office Visit, Est.</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">$128.50</span>
+      </div>
+      <div class="rates-grid__row" data-row="2">
+        <span class="rates-grid__cell rates-grid__cell--payer"><span class="rates-grid__payer-dot" style="background:#8b5cf6"></span>UHC</span>
+        <span class="rates-grid__cell rates-grid__cell--code">27447</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">Knee Replacement</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">$24,180</span>
+      </div>
+      <div class="rates-grid__row" data-row="3">
+        <span class="rates-grid__cell rates-grid__cell--payer"><span class="rates-grid__payer-dot" style="background:#f59e0b"></span>Cigna</span>
+        <span class="rates-grid__cell rates-grid__cell--code">27447</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">Knee Replacement</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">$22,650</span>
+      </div>
+      <div class="rates-grid__row" data-row="4">
+        <span class="rates-grid__cell rates-grid__cell--payer"><span class="rates-grid__payer-dot" style="background:#10b981"></span>Kaiser</span>
+        <span class="rates-grid__cell rates-grid__cell--code">70553</span>
+        <span class="rates-grid__cell rates-grid__cell--desc">MRI Brain w/ contrast</span>
+        <span class="rates-grid__cell rates-grid__cell--rate">$1,840</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .rates-grid {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rates-grid__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .rates-grid__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .rates-grid__header svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+  }
+
+  .rates-grid__table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .rates-grid__row {
+    display: grid;
+    grid-template-columns: 80px 60px 1fr 72px;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.65);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s ease;
+  }
+
+  .rates-grid__row.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .rates-grid__row:not(.rates-grid__row--head):hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .rates-grid__row--head {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 2px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .rates-grid__cell--payer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+
+  .rates-grid__payer-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .rates-grid__cell--code {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    color: var(--color-brand-secondary);
+    opacity: 0.7;
+  }
+
+  .rates-grid__cell--desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rates-grid__cell--rate {
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media (max-width: 480px) {
+    .rates-grid__row {
+      grid-template-columns: 60px 50px 1fr 60px;
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rates-grid__row {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const rgViz = document.getElementById('ratesGridViz');
+  if (rgViz) {
+    const rows = rgViz.querySelectorAll('.rates-grid__row[data-row]');
+    let activated = false;
+
+    function activateGrid() {
+      if (activated) return;
+      activated = true;
+
+      rows.forEach((row, i) => {
+        setTimeout(() => row.classList.add('is-visible'), 200 + i * 150);
+      });
+
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) activateGrid();
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(rgViz);
+  }
+</script>

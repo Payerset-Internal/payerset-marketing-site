@@ -1,0 +1,324 @@
+---
+/**
+ * EmployerCoverageViz.astro
+ *
+ * Horizontal visualization for "Employer to Health Plan Coverage" section.
+ * Employers on left, connecting lines in center, health plans on right.
+ * Self-activates via IntersectionObserver on scroll.
+ */
+---
+
+<div class="emp-cov" id="empCovViz">
+  <div class="emp-cov__card">
+    <div class="emp-cov__header">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 2h10v12H3z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M6 5h4M6 8h4M6 11h2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+      <span>Employer → Plan Coverage</span>
+    </div>
+
+    <div class="emp-cov__body">
+      <!-- Employers column -->
+      <div class="emp-cov__col">
+        <div class="emp-cov__tier-label">Employers</div>
+        <div class="emp-cov__badges">
+          <div class="emp-cov__badge emp-cov__badge--employer" data-idx="0">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="1" y="3" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><path d="M4 3V2a2 2 0 014 0v1" stroke="currentColor" stroke-width="1"/></svg>
+            <span>Acme Corp</span>
+          </div>
+          <div class="emp-cov__badge emp-cov__badge--employer" data-idx="1">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="1" y="3" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><path d="M4 3V2a2 2 0 014 0v1" stroke="currentColor" stroke-width="1"/></svg>
+            <span>NovaTech Inc</span>
+          </div>
+          <div class="emp-cov__badge emp-cov__badge--employer" data-idx="2">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="1" y="3" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><path d="M4 3V2a2 2 0 014 0v1" stroke="currentColor" stroke-width="1"/></svg>
+            <span>Summit Health</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connecting lines (drawn dynamically) -->
+      <div class="emp-cov__flow" data-flow>
+        <svg class="emp-cov__flow-svg" id="empCovSvg" fill="none"></svg>
+      </div>
+
+      <!-- Plans column -->
+      <div class="emp-cov__col">
+        <div class="emp-cov__tier-label">Health Plans</div>
+        <div class="emp-cov__badges">
+          <div class="emp-cov__badge emp-cov__badge--plan" data-idx="3">
+            <span class="emp-cov__plan-dot" style="background:#3b82f6"></span>
+            <div class="emp-cov__plan-text">
+              <span class="emp-cov__plan-name">Anthem Blue PPO</span>
+              <span class="emp-cov__plan-id">HIOS 12345VA001</span>
+            </div>
+          </div>
+          <div class="emp-cov__badge emp-cov__badge--plan" data-idx="4">
+            <span class="emp-cov__plan-dot" style="background:#06b6d4"></span>
+            <div class="emp-cov__plan-text">
+              <span class="emp-cov__plan-name">Aetna Choice POS</span>
+              <span class="emp-cov__plan-id">HIOS 67890CA003</span>
+            </div>
+          </div>
+          <div class="emp-cov__badge emp-cov__badge--plan" data-idx="5">
+            <span class="emp-cov__plan-dot" style="background:#8b5cf6"></span>
+            <div class="emp-cov__plan-text">
+              <span class="emp-cov__plan-name">UHC Navigate HMO</span>
+              <span class="emp-cov__plan-id">HIOS 24680TX002</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .emp-cov {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .emp-cov__card {
+    width: 100%;
+    max-width: 540px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .emp-cov__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .emp-cov__header svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+  }
+
+  .emp-cov__body {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .emp-cov__col {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .emp-cov__tier-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .emp-cov__badges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .emp-cov__badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 12px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .emp-cov__badge--plan {
+    transform: translateX(10px);
+  }
+
+  .emp-cov__badge.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .emp-cov__badge.is-linked {
+    border-color: rgba(0, 183, 253, 0.25);
+    background: rgba(0, 183, 253, 0.04);
+  }
+
+  .emp-cov__badge--employer {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .emp-cov__badge--employer svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .emp-cov__plan-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .emp-cov__plan-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .emp-cov__plan-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .emp-cov__plan-id {
+    font-size: 9px;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .emp-cov__flow {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 80px;
+    flex-shrink: 0;
+    padding-top: 20px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    position: relative;
+  }
+
+  .emp-cov__flow.is-visible {
+    opacity: 1;
+  }
+
+  .emp-cov__flow-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .emp-cov__badge, .emp-cov__flow {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const ecViz = document.getElementById('empCovViz');
+  if (ecViz) {
+    const badges = ecViz.querySelectorAll('.emp-cov__badge');
+    const flow = ecViz.querySelector('[data-flow]') as HTMLElement;
+    const svg = document.getElementById('empCovSvg') as unknown as SVGSVGElement;
+    let activated = false;
+    let linesDrawn = false;
+
+    // Connections: [employerIndex, planIndex, opacity]
+    const connections = [
+      [0, 0, 0.35], // Acme → Anthem
+      [0, 1, 0.2],  // Acme → Aetna
+      [1, 1, 0.35], // NovaTech → Aetna
+      [1, 2, 0.2],  // NovaTech → UHC
+      [2, 2, 0.35], // Summit → UHC
+      [2, 0, 0.12], // Summit → Anthem
+    ];
+
+    function drawLines() {
+      if (linesDrawn || !svg || !flow) return;
+      linesDrawn = true;
+
+      const employers = ecViz.querySelectorAll('.emp-cov__badge--employer');
+      const plans = ecViz.querySelectorAll('.emp-cov__badge--plan');
+      const flowRect = flow.getBoundingClientRect();
+      const w = flowRect.width;
+      const h = flowRect.height;
+
+      svg.setAttribute('width', String(w));
+      svg.setAttribute('height', String(h));
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+      connections.forEach(([eIdx, pIdx, opacity]) => {
+        const emp = employers[eIdx as number] as HTMLElement;
+        const plan = plans[pIdx as number] as HTMLElement;
+        if (!emp || !plan) return;
+
+        const empRect = emp.getBoundingClientRect();
+        const planRect = plan.getBoundingClientRect();
+
+        // Y center of each badge relative to the flow container
+        const y1 = (empRect.top + empRect.height / 2) - flowRect.top;
+        const y2 = (planRect.top + planRect.height / 2) - flowRect.top;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M0 ${y1} C${w * 0.4} ${y1}, ${w * 0.6} ${y2}, ${w} ${y2}`);
+        path.setAttribute('stroke', `rgba(0,183,253,${opacity})`);
+        path.setAttribute('stroke-width', '1');
+        path.setAttribute('stroke-dasharray', '3 3');
+        svg.appendChild(path);
+      });
+    }
+
+    function activateCov() {
+      if (activated) return;
+      activated = true;
+
+      // Show employer badges (left column, first 3)
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => badges[i]?.classList.add('is-visible'), 200 + i * 150);
+      }
+
+      // Draw and show flow lines (after badges are visible so positions are correct)
+      setTimeout(() => {
+        drawLines();
+        flow?.classList.add('is-visible');
+      }, 700);
+
+      // Show plan badges (right column)
+      for (let i = 3; i < badges.length; i++) {
+        setTimeout(() => badges[i]?.classList.add('is-visible'), 900 + (i - 3) * 150);
+      }
+
+      // Highlight linked
+      setTimeout(() => {
+        badges.forEach(b => b.classList.add('is-linked'));
+      }, 1600);
+
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) activateCov();
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(ecViz);
+  }
+</script>

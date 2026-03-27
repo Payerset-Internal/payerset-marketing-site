@@ -1,0 +1,608 @@
+---
+/**
+ * HeroRateExplorer.astro
+ *
+ * Interactive rate comparison visualization for the Rate Explorer hero.
+ * A central procedure card with satellite payer rate cards connected
+ * by animated lines, cycling through procedures.
+ *
+ * Design language matches HeroMap.astro: dark bg, cyan accents,
+ * dot-grid, glassmorphism panels, glow effects, auto-cycling.
+ *
+ * Dependencies: None (vanilla JS + CSS animations)
+ */
+---
+
+<div class="re-hero__visual" id="reHeroVisual">
+  <div class="re-hero__container">
+    <!-- Background SVG: dot grid + ambient glow -->
+    <svg class="re-hero__bg-svg" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <radialGradient id="reGlow" cx="50%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="var(--color-brand-secondary)" stop-opacity="0.09" />
+          <stop offset="100%" stop-color="var(--color-brand-secondary)" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="reGlowCenter" cx="50%" cy="45%" r="30%">
+          <stop offset="0%" stop-color="var(--color-brand-secondary)" stop-opacity="0.06" />
+          <stop offset="100%" stop-color="var(--color-brand-secondary)" stop-opacity="0" />
+        </radialGradient>
+        <pattern id="reGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="0.5" fill="var(--color-brand-secondary)" opacity="0.12" />
+        </pattern>
+        <filter id="reCardGlow">
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="reDotGlow">
+          <feGaussianBlur stdDeviation="3" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Ambient glow -->
+      <ellipse cx="300" cy="225" rx="280" ry="220" fill="url(#reGlow)" />
+      <ellipse cx="300" cy="225" rx="140" ry="120" fill="url(#reGlowCenter)" />
+
+      <!-- Dot grid -->
+      <rect width="600" height="500" fill="url(#reGrid)" class="re-hero__grid" />
+
+      <!-- Connector lines (drawn from center card to each satellite) -->
+      <line class="re-hero__connector" id="reConn0" x1="300" y1="200" x2="300" y2="200" />
+      <line class="re-hero__connector" id="reConn1" x1="300" y1="200" x2="300" y2="200" />
+      <line class="re-hero__connector" id="reConn2" x1="300" y1="200" x2="300" y2="200" />
+      <line class="re-hero__connector" id="reConn3" x1="300" y1="200" x2="300" y2="200" />
+      <line class="re-hero__connector" id="reConn4" x1="300" y1="200" x2="300" y2="200" />
+
+      <!-- Small scatter dots for data-density feel -->
+      <g class="re-hero__scatter" opacity="0.12">
+        <circle cx="85" cy="110" r="1.2" fill="var(--color-brand-secondary)" />
+        <circle cx="520" cy="85" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="145" cy="380" r="1.3" fill="var(--color-brand-secondary)" />
+        <circle cx="480" cy="400" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="65" cy="250" r="1.5" fill="var(--color-brand-secondary)" />
+        <circle cx="540" cy="280" r="1.2" fill="var(--color-brand-secondary)" />
+        <circle cx="200" cy="60" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="410" cy="55" r="1.3" fill="var(--color-brand-secondary)" />
+        <circle cx="120" cy="440" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="500" cy="440" r="1.5" fill="var(--color-brand-secondary)" />
+        <circle cx="50" cy="170" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="555" cy="155" r="1" fill="var(--color-brand-secondary)" />
+        <circle cx="250" cy="460" r="1.2" fill="var(--color-brand-secondary)" />
+        <circle cx="370" cy="470" r="1" fill="var(--color-brand-secondary)" />
+      </g>
+    </svg>
+
+    <!-- Center procedure card -->
+    <div class="re-hero__center-card" id="reCenterCard">
+      <div class="re-hero__center-card-label">Selected Procedure</div>
+      <div class="re-hero__center-card-code" id="reCenterCode"></div>
+      <div class="re-hero__center-card-name" id="reCenterName"></div>
+      <div class="re-hero__center-card-meta">
+        <span class="re-hero__center-card-meta-icon">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <circle cx="5" cy="5" r="4" stroke="var(--color-brand-secondary)" stroke-width="1" fill="none" opacity="0.6" />
+            <circle cx="5" cy="5" r="1.5" fill="var(--color-brand-secondary)" opacity="0.8" />
+          </svg>
+        </span>
+        <span id="reCenterPayers"></span>
+      </div>
+    </div>
+
+    <!-- Satellite rate cards (5 positions around center) -->
+    <div class="re-hero__sat" id="reSat0" data-sat="0">
+      <div class="re-hero__sat-payer" id="reSatPayer0"></div>
+      <div class="re-hero__sat-rate" id="reSatRate0"></div>
+      <div class="re-hero__sat-org" id="reSatOrg0"></div>
+      <div class="re-hero__sat-bar-track"><div class="re-hero__sat-bar-fill" id="reSatBar0"></div></div>
+    </div>
+
+    <div class="re-hero__sat" id="reSat1" data-sat="1">
+      <div class="re-hero__sat-payer" id="reSatPayer1"></div>
+      <div class="re-hero__sat-rate" id="reSatRate1"></div>
+      <div class="re-hero__sat-org" id="reSatOrg1"></div>
+      <div class="re-hero__sat-bar-track"><div class="re-hero__sat-bar-fill" id="reSatBar1"></div></div>
+    </div>
+
+    <div class="re-hero__sat" id="reSat2" data-sat="2">
+      <div class="re-hero__sat-payer" id="reSatPayer2"></div>
+      <div class="re-hero__sat-rate" id="reSatRate2"></div>
+      <div class="re-hero__sat-org" id="reSatOrg2"></div>
+      <div class="re-hero__sat-bar-track"><div class="re-hero__sat-bar-fill" id="reSatBar2"></div></div>
+    </div>
+
+    <div class="re-hero__sat" id="reSat3" data-sat="3">
+      <div class="re-hero__sat-payer" id="reSatPayer3"></div>
+      <div class="re-hero__sat-rate" id="reSatRate3"></div>
+      <div class="re-hero__sat-org" id="reSatOrg3"></div>
+      <div class="re-hero__sat-bar-track"><div class="re-hero__sat-bar-fill" id="reSatBar3"></div></div>
+    </div>
+
+    <div class="re-hero__sat" id="reSat4" data-sat="4">
+      <div class="re-hero__sat-payer" id="reSatPayer4"></div>
+      <div class="re-hero__sat-rate" id="reSatRate4"></div>
+      <div class="re-hero__sat-org" id="reSatOrg4"></div>
+      <div class="re-hero__sat-bar-track"><div class="re-hero__sat-bar-fill" id="reSatBar4"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* ── Visual Container ── */
+  .re-hero__visual {
+    position: relative;
+    opacity: 0;
+    animation: reFadeIn 1s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+  }
+
+  .re-hero__container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 6 / 5;
+    overflow: visible;
+  }
+
+  .re-hero__bg-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .re-hero__grid {
+    opacity: 0;
+    animation: reFadeIn 1.5s ease 0.6s forwards;
+  }
+
+  .re-hero__scatter {
+    opacity: 0;
+    animation: reFadeIn 1.5s ease 0.8s forwards;
+  }
+
+  /* ── Connector Lines ── */
+  .re-hero__connector {
+    stroke: var(--color-brand-secondary);
+    stroke-width: 0.8;
+    stroke-dasharray: 4 3;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .re-hero__connector.is-visible {
+    opacity: 0.2;
+    transition: opacity 0.5s ease 0.1s;
+  }
+
+  /* ── Center Procedure Card ── */
+  .re-hero__center-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    width: 190px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.35);
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.1), 0 24px 48px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    z-index: 10;
+    opacity: 0;
+    animation: reCenterIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards;
+  }
+
+  .re-hero__center-card-label {
+    font-size: 8.5px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .re-hero__center-card-code {
+    display: inline-block;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-brand-primary));
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-brand-dark-deep);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .re-hero__center-card-name {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.3;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .re-hero__center-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 9.5px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.2px;
+  }
+
+  .re-hero__center-card-meta-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── Satellite Rate Cards ── */
+  .re-hero__sat {
+    position: absolute;
+    width: 152px;
+    background: rgba(0, 31, 41, 0.9);
+    border: 1px solid rgba(0, 183, 253, 0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 0 30px rgba(0, 183, 253, 0.04), 0 12px 32px rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.15s ease, transform 0.15s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .re-hero__sat.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .re-hero__sat.is-highest {
+    border-color: rgba(0, 183, 253, 0.45);
+    box-shadow: 0 0 40px rgba(0, 183, 253, 0.1), 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .re-hero__sat[data-sat="0"].is-visible { transition-delay: 0.05s; }
+  .re-hero__sat[data-sat="1"].is-visible { transition-delay: 0.12s; }
+  .re-hero__sat[data-sat="2"].is-visible { transition-delay: 0.19s; }
+  .re-hero__sat[data-sat="3"].is-visible { transition-delay: 0.26s; }
+  .re-hero__sat[data-sat="4"].is-visible { transition-delay: 0.33s; }
+
+  .re-hero__sat-payer {
+    font-size: 9px;
+    color: var(--color-brand-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .re-hero__sat-rate {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    letter-spacing: -0.8px;
+    margin-bottom: 3px;
+    line-height: 1.1;
+  }
+
+  .re-hero__sat-org {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+
+  /* Mini bar chart */
+  .re-hero__sat-bar-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .re-hero__sat-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary));
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+  }
+
+  .re-hero__sat.is-visible .re-hero__sat-bar-fill {
+    /* width set via JS */
+  }
+
+  /* ── Satellite Positions (% based, arranged around center) ── */
+  /* Top-left */
+  .re-hero__sat[data-sat="0"] {
+    top: 3%;
+    left: 1%;
+  }
+  /* Top-right */
+  .re-hero__sat[data-sat="1"] {
+    top: 3%;
+    right: 1%;
+  }
+  /* Mid-left */
+  .re-hero__sat[data-sat="2"] {
+    top: 50%;
+    left: -3%;
+    transform: scale(0.92) translateY(-50%);
+  }
+  .re-hero__sat[data-sat="2"].is-visible {
+    transform: scale(1) translateY(-50%);
+  }
+  /* Bottom-left */
+  .re-hero__sat[data-sat="3"] {
+    bottom: 6%;
+    left: 6%;
+  }
+  /* Bottom-right */
+  .re-hero__sat[data-sat="4"] {
+    bottom: 6%;
+    right: 2%;
+  }
+
+  /* ── Ticker ── */
+  .re-hero__ticker {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: reFadeIn 0.8s ease 2s forwards;
+    white-space: nowrap;
+  }
+
+  .re-hero__ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00e87b;
+    box-shadow: 0 0 8px #00e87b;
+    animation: reTickerPulse 2s ease-in-out infinite;
+  }
+
+  .re-hero__ticker-text {
+    font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Animations ── */
+  @keyframes reFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes reCenterIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.92); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  @keyframes reTickerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .re-hero__visual {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .re-hero__center-card {
+      width: 165px;
+      padding: 14px 12px;
+    }
+
+    .re-hero__center-card-code {
+      font-size: 12px;
+    }
+
+    .re-hero__center-card-name {
+      font-size: 11px;
+    }
+
+    .re-hero__sat {
+      width: 130px;
+      padding: 10px 11px;
+    }
+
+    .re-hero__sat-rate {
+      font-size: 17px;
+    }
+
+    .re-hero__sat-payer {
+      font-size: 8px;
+    }
+
+    .re-hero__sat-org {
+      font-size: 9px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .re-hero__center-card {
+      width: 150px;
+      padding: 12px 10px;
+    }
+
+    .re-hero__center-card-code {
+      font-size: 11px;
+      padding: 2px 8px;
+    }
+
+    .re-hero__center-card-name {
+      font-size: 10px;
+    }
+
+    .re-hero__sat {
+      width: 115px;
+      padding: 8px 9px;
+      border-radius: 8px;
+    }
+
+    .re-hero__sat-rate {
+      font-size: 15px;
+    }
+
+    .re-hero__sat-payer {
+      font-size: 7.5px;
+    }
+
+    .re-hero__sat-org {
+      font-size: 8px;
+    }
+
+    .re-hero__connector {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const procedures = [
+      {
+        code: 'CPT 27447',
+        name: 'Total Knee Replacement',
+        payerCount: '5 payers compared',
+        rates: [
+          { payer: 'Aetna', rate: 32150, org: 'Cleveland Clinic' },
+          { payer: 'UnitedHealthcare', rate: 28400, org: 'HCA Healthcare' },
+          { payer: 'BCBS Florida', rate: 35210, org: 'Baptist Health' },
+          { payer: 'Cigna', rate: 26890, org: 'Tenet Healthcare' },
+          { payer: 'Humana', rate: 30475, org: 'AdventHealth' },
+        ],
+      },
+      {
+        code: 'CPT 43239',
+        name: 'Upper GI Endoscopy w/ Biopsy',
+        payerCount: '5 payers compared',
+        rates: [
+          { payer: 'UnitedHealthcare', rate: 4820, org: 'Northwestern Memorial' },
+          { payer: 'Aetna', rate: 5115, org: 'Mass General Brigham' },
+          { payer: 'BCBS Illinois', rate: 3960, org: 'Advocate Aurora' },
+          { payer: 'Cigna', rate: 4290, org: 'Rush University Med' },
+          { payer: 'Molina', rate: 3640, org: 'Loyola Medicine' },
+        ],
+      },
+      {
+        code: 'CPT 70553',
+        name: 'MRI Brain w/ & w/o Contrast',
+        payerCount: '5 payers compared',
+        rates: [
+          { payer: 'Harvard Pilgrim', rate: 3210, org: 'Mass General Brigham' },
+          { payer: 'BCBS MA', rate: 2980, org: 'Beth Israel Lahey' },
+          { payer: 'Aetna', rate: 3575, org: 'Tufts Medical Center' },
+          { payer: 'UnitedHealthcare', rate: 2740, org: 'Brigham & Women\'s' },
+          { payer: 'Cigna', rate: 3150, org: 'Boston Medical Ctr' },
+        ],
+      },
+      {
+        code: 'CPT 29827',
+        name: 'Arthroscopic Rotator Cuff Repair',
+        payerCount: '5 payers compared',
+        rates: [
+          { payer: 'Aetna', rate: 19324, org: 'Cleveland Clinic FL' },
+          { payer: 'BCBS Florida', rate: 17565, org: 'Baptist Health FL' },
+          { payer: 'UnitedHealthcare', rate: 21941, org: 'HCA Healthcare' },
+          { payer: 'Cigna', rate: 15196, org: 'Broward Health' },
+          { payer: 'Humana', rate: 18563, org: 'Jupiter Medical Ctr' },
+        ],
+      },
+    ];
+
+    // Satellite positions in SVG viewBox coordinates (600x500) for connector endpoints
+    const satPositions = [
+      { x: 105, y: 55 },    // top-left
+      { x: 495, y: 55 },    // top-right
+      { x: 75, y: 235 },    // mid-left
+      { x: 130, y: 420 },   // bottom-left
+      { x: 475, y: 420 },   // bottom-right
+    ];
+
+    const centerX = 300;
+    const centerY = 225;
+
+    let currentIdx = -1;
+    let cycleTimer = null;
+
+    function formatRate(n) {
+      return '$' + n.toLocaleString('en-US');
+    }
+
+    function activateProcedure(idx) {
+      if (idx === currentIdx) return;
+      currentIdx = idx;
+      const proc = procedures[idx];
+
+      // Update center card
+      document.getElementById('reCenterCode').textContent = proc.code;
+      document.getElementById('reCenterName').textContent = proc.name;
+      document.getElementById('reCenterPayers').textContent = proc.payerCount;
+
+      // Find max rate for bar scaling
+      const maxRate = Math.max(...proc.rates.map(r => r.rate));
+
+      // Hide all satellites and connectors first
+      for (let i = 0; i < 5; i++) {
+        const sat = document.getElementById('reSat' + i);
+        const conn = document.getElementById('reConn' + i);
+        sat.classList.remove('is-visible', 'is-highest');
+        conn.classList.remove('is-visible');
+      }
+
+      // Brief pause for fade-out, then populate and show
+      setTimeout(() => {
+        proc.rates.forEach((r, i) => {
+          document.getElementById('reSatPayer' + i).textContent = r.payer;
+          document.getElementById('reSatRate' + i).textContent = formatRate(r.rate);
+          document.getElementById('reSatOrg' + i).textContent = r.org;
+
+          const barPct = (r.rate / maxRate) * 100;
+          document.getElementById('reSatBar' + i).style.width = barPct + '%';
+
+          const sat = document.getElementById('reSat' + i);
+          sat.classList.add('is-visible');
+          if (r.rate === maxRate) sat.classList.add('is-highest');
+
+          // Draw connector line
+          const conn = document.getElementById('reConn' + i);
+          conn.setAttribute('x1', centerX);
+          conn.setAttribute('y1', centerY);
+          conn.setAttribute('x2', satPositions[i].x);
+          conn.setAttribute('y2', satPositions[i].y);
+          conn.classList.add('is-visible');
+        });
+      }, 180);
+    }
+
+    function startCycle() {
+      activateProcedure(0);
+      cycleTimer = setInterval(() => {
+        const next = (currentIdx + 1) % procedures.length;
+        activateProcedure(next);
+      }, 4000);
+    }
+
+    // Start after initial load animations settle
+    setTimeout(startCycle, 1400);
+  });
+</script>

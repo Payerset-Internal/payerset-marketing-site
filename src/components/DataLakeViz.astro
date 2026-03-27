@@ -1,0 +1,623 @@
+---
+/**
+ * DataLakeViz.astro
+ *
+ * Data pipeline flow visualization for the Data Lake product.
+ * Shows: MRF Sources → Enrichment Pipeline → Delivery Destinations
+ * with animated flow indicators and cycling stats.
+ *
+ * Activated via `viz:activate` custom event (from FeatureShowcase or
+ * standalone IntersectionObserver wrapper).
+ */
+---
+
+<div class="dl-viz" id="dlViz">
+  <div class="dl-viz__card">
+    <!-- Pipeline stages -->
+    <div class="dl-viz__pipeline">
+
+      <!-- Stage 1: Ingest -->
+      <div class="dl-viz__stage" id="dlStage0">
+        <div class="dl-viz__stage-header">
+          <div class="dl-viz__stage-badge">01</div>
+          <span class="dl-viz__stage-label">Ingest</span>
+        </div>
+        <div class="dl-viz__stage-body">
+          <div class="dl-viz__file-row" id="dlIngest0">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 1h5l3 3v7a1 1 0 01-1 1H3a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1v3h3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Every billing code</span>
+            <svg class="dl-viz__check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="dl-viz__file-row" id="dlIngest1">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 1h5l3 3v7a1 1 0 01-1 1H3a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1v3h3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Every payer & plan</span>
+            <svg class="dl-viz__check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="dl-viz__file-row" id="dlIngest2">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 1h5l3 3v7a1 1 0 01-1 1H3a1 1 0 01-1-1V2a1 1 0 011-1z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1v3h3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Every NPI</span>
+            <svg class="dl-viz__check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 1 -->
+      <div class="dl-viz__connector" id="dlConn0">
+        <div class="dl-viz__connector-line">
+          <div class="dl-viz__connector-flow"></div>
+        </div>
+        <svg class="dl-viz__connector-arrow" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="var(--color-brand-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- Stage 2: Enrich -->
+      <div class="dl-viz__stage" id="dlStage1">
+        <div class="dl-viz__stage-header">
+          <div class="dl-viz__stage-badge">02</div>
+          <span class="dl-viz__stage-label">Enrich & Normalize</span>
+        </div>
+        <div class="dl-viz__stage-body">
+          <div class="dl-viz__enrich-item" id="dlEnrich0">
+            <div class="dl-viz__enrich-dot"></div>
+            <span>Schema standardization</span>
+            <div class="dl-viz__enrich-indicator">
+              <div class="dl-viz__enrich-spinner"></div>
+              <svg class="dl-viz__enrich-check" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="dl-viz__enrich-item" id="dlEnrich1">
+            <div class="dl-viz__enrich-dot"></div>
+            <span>NPI → TIN mapping</span>
+            <div class="dl-viz__enrich-indicator">
+              <div class="dl-viz__enrich-spinner"></div>
+              <svg class="dl-viz__enrich-check" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="dl-viz__enrich-item" id="dlEnrich2">
+            <div class="dl-viz__enrich-dot"></div>
+            <span>HCO affiliations</span>
+            <div class="dl-viz__enrich-indicator">
+              <div class="dl-viz__enrich-spinner"></div>
+              <svg class="dl-viz__enrich-check" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="dl-viz__enrich-item" id="dlEnrich3">
+            <div class="dl-viz__enrich-dot"></div>
+            <span>QA & validation</span>
+            <div class="dl-viz__enrich-indicator">
+              <div class="dl-viz__enrich-spinner"></div>
+              <svg class="dl-viz__enrich-check" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 2 -->
+      <div class="dl-viz__connector" id="dlConn1">
+        <div class="dl-viz__connector-line">
+          <div class="dl-viz__connector-flow"></div>
+        </div>
+        <svg class="dl-viz__connector-arrow" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="var(--color-brand-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- Stage 3: Deliver -->
+      <div class="dl-viz__stage" id="dlStage2">
+        <div class="dl-viz__stage-header">
+          <div class="dl-viz__stage-badge">03</div>
+          <span class="dl-viz__stage-label">Deliver</span>
+        </div>
+        <div class="dl-viz__stage-body">
+          <div class="dl-viz__dest-row" id="dlDest0">
+            <div class="dl-viz__dest-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1"/><circle cx="4" cy="7" r="1" fill="currentColor"/><path d="M7 6h4M7 8h3" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
+            </div>
+            <span>Snowflake Marketplace</span>
+            <div class="dl-viz__dest-status">Live</div>
+          </div>
+          <div class="dl-viz__dest-row" id="dlDest1">
+            <div class="dl-viz__dest-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4l5-2 5 2v6l-5 2-5-2V4z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M7 6v6M2 4l5 2 5-2" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+            </div>
+            <span>Cloud Storage (S3)</span>
+            <div class="dl-viz__dest-status">Live</div>
+          </div>
+          <div class="dl-viz__dest-row" id="dlDest2">
+            <div class="dl-viz__dest-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 3h10v2H2zM2 7h10v2H2zM2 11h10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>REST API</span>
+            <div class="dl-viz__dest-status">Live</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dl-viz__footer">
+      <span class="dl-viz__ticker-dot"></span>
+      <span id="dlFooter">Pipeline active — next refresh in 14 days</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dl-viz {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .dl-viz.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .dl-viz__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Pipeline layout ── */
+  .dl-viz__pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Stage ── */
+  .dl-viz__stage {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .dl-viz__stage.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dl-viz__stage-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .dl-viz__stage-badge {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-brand-primary));
+    color: var(--color-brand-dark-deep);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .dl-viz__stage-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dl-viz__stage-body {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* ── File rows (Ingest) ── */
+  .dl-viz__file-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dl-viz__file-row svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .dl-viz__file-row span:first-of-type {
+    flex: 1;
+  }
+
+  .dl-viz__check {
+    color: #00e87b;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .dl-viz__file-row.is-checked .dl-viz__check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── Enrich items ── */
+  .dl-viz__enrich-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .dl-viz__enrich-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .dl-viz__enrich-item span {
+    flex: 1;
+  }
+
+  .dl-viz__enrich-item.is-active {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .dl-viz__enrich-item.is-done {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .dl-viz__enrich-indicator {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dl-viz__enrich-spinner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--color-brand-secondary);
+    opacity: 0;
+    animation: none;
+    position: absolute;
+  }
+
+  .dl-viz__enrich-item.is-active .dl-viz__enrich-spinner {
+    opacity: 1;
+    animation: dlSpin 0.8s linear infinite;
+  }
+
+  .dl-viz__enrich-item.is-done .dl-viz__enrich-spinner {
+    opacity: 0;
+    animation: none;
+  }
+
+  @keyframes dlSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .dl-viz__enrich-check {
+    color: var(--color-brand-secondary);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+  }
+
+  .dl-viz__enrich-item.is-done .dl-viz__enrich-check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── Connectors ── */
+  .dl-viz__connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .dl-viz__connector.is-visible {
+    opacity: 1;
+  }
+
+  .dl-viz__connector-line {
+    width: 2px;
+    height: 16px;
+    background: rgba(0, 183, 253, 0.15);
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .dl-viz__connector-flow {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--color-brand-secondary), transparent);
+    animation: dlFlow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes dlFlow {
+    0% { top: -100%; }
+    100% { top: 200%; }
+  }
+
+  .dl-viz__connector-arrow {
+    transform: rotate(90deg);
+    opacity: 0.5;
+  }
+
+  /* ── Destinations (Deliver) ── */
+  .dl-viz__dest-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dl-viz__dest-icon {
+    display: flex;
+    align-items: center;
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .dl-viz__dest-row span {
+    flex: 1;
+  }
+
+  .dl-viz__dest-status {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #00e87b;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .dl-viz__dest-row.is-live .dl-viz__dest-status {
+    opacity: 1;
+  }
+
+  /* ── Footer ── */
+  .dl-viz__footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .dl-viz__ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00e87b;
+    box-shadow: 0 0 8px #00e87b;
+    animation: dlTickerPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes dlTickerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .dl-viz__card {
+      padding: 14px;
+    }
+
+    .dl-viz__stage-label {
+      font-size: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dl-viz {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .dl-viz__stage {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .dl-viz__connector {
+      opacity: 1;
+      transition: none;
+    }
+
+    .dl-viz__connector-flow {
+      animation: none;
+    }
+
+    .dl-viz__enrich-spinner {
+      animation: none;
+    }
+
+    .dl-viz__ticker-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const viz = document.getElementById('dlViz');
+  if (viz) {
+
+    const stages = [
+      document.getElementById('dlStage0'),
+      document.getElementById('dlStage1'),
+      document.getElementById('dlStage2'),
+    ];
+    const connectors = [
+      document.getElementById('dlConn0'),
+      document.getElementById('dlConn1'),
+    ];
+    const ingestRows = Array.from({ length: 3 }, (_, i) =>
+      document.getElementById(`dlIngest${i}`)
+    );
+    const enrichItems = Array.from({ length: 4 }, (_, i) =>
+      document.getElementById(`dlEnrich${i}`)
+    );
+    const destRows = Array.from({ length: 3 }, (_, i) =>
+      document.getElementById(`dlDest${i}`)
+    );
+
+    let hasActivated = false;
+    let timeouts: ReturnType<typeof setTimeout>[] = [];
+
+    function clearTimeouts() {
+      timeouts.forEach(clearTimeout);
+      timeouts = [];
+    }
+
+    function delay(fn: () => void, ms: number) {
+      timeouts.push(setTimeout(fn, ms));
+    }
+
+    function reset() {
+      clearTimeouts();
+      stages.forEach(s => s?.classList.remove('is-visible'));
+      connectors.forEach(c => c?.classList.remove('is-visible'));
+      ingestRows.forEach(r => r?.classList.remove('is-checked'));
+      enrichItems.forEach(e => { e?.classList.remove('is-active'); e?.classList.remove('is-done'); });
+      destRows.forEach(d => d?.classList.remove('is-live'));
+
+    }
+
+    function animate() {
+      reset();
+      viz.classList.add('is-active');
+
+      // Stage 1: Ingest — appear
+      delay(() => {
+        stages[0]?.classList.add('is-visible');
+      }, 200);
+
+      // Ingest checkmarks appear one by one
+      ingestRows.forEach((row, i) => {
+        delay(() => { row?.classList.add('is-checked'); }, 500 + i * 200);
+      });
+
+      // Connector 1
+      delay(() => { connectors[0]?.classList.add('is-visible'); }, 1200);
+
+      // Stage 2: Enrich — appear
+      delay(() => { stages[1]?.classList.add('is-visible'); }, 1500);
+
+      // Enrichment items: spinner activates, then transitions to checkmark
+      enrichItems.forEach((item, i) => {
+        delay(() => { item?.classList.add('is-active'); }, 1800 + i * 500);
+        delay(() => { item?.classList.remove('is-active'); item?.classList.add('is-done'); }, 2100 + i * 500);
+      });
+
+      // Connector 2
+      delay(() => { connectors[1]?.classList.add('is-visible'); }, 4200);
+
+      // Stage 3: Deliver — appear
+      delay(() => { stages[2]?.classList.add('is-visible'); }, 4500);
+
+      // Destinations go live
+      destRows.forEach((row, i) => {
+        delay(() => { row?.classList.add('is-live'); }, 4800 + i * 250);
+      });
+
+      // Loop: restart after a pause
+      delay(() => {
+        hasActivated = false;
+        activate();
+      }, 12000);
+    }
+
+    function activate() {
+      if (hasActivated) return;
+      hasActivated = true;
+      animate();
+    }
+
+    function deactivate() {
+      clearTimeouts();
+      hasActivated = false;
+      viz.classList.remove('is-active');
+      reset();
+    }
+
+    // Listen for activation from FeatureShowcase or standalone wrapper
+    const panel = viz.closest('.feat-showcase__panel');
+
+    if (panel) {
+      panel.addEventListener('viz:activate', () => {
+        deactivate();
+        setTimeout(activate, 200);
+      });
+
+      // Self-activate for homepage-viz panels
+      if (panel.classList.contains('homepage-viz')) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (entries[0]?.isIntersecting && !hasActivated) {
+              activate();
+            }
+          },
+          { threshold: 0.2 }
+        );
+        io.observe(panel);
+      }
+    } else {
+      // Standalone usage (e.g., Data Lake hero) — self-activate on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting && !hasActivated) {
+            activate();
+          }
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(viz);
+    }
+  }
+</script>

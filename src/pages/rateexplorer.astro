@@ -1,0 +1,561 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import HeroRateExplorer from '../components/HeroRateExplorer.astro';
+import InsightsCarousel from '../components/InsightsCarousel.astro';
+import FeatureShowcase from '../components/FeatureShowcase.astro';
+---
+
+<PageLayout
+  title="Healthcare Price Transparency Tools: Rate Explorer - Payerset"
+  description="Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies & flip the negotiation dynamic."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-reveal="left">
+          <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
+            Rate Explorer&trade;
+          </p>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
+            Price Transparency Tools for the Next Era of Negotiations
+          </h1>
+          <h2 class="mt-4 text-lg text-slate-100 max-w-2xl font-light">
+            Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies &amp; flip the negotiation dynamic.
+          </h2>
+          <div class="mt-8">
+            <a
+              href="/get-started"
+              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              See it in action
+            </a>
+          </div>
+        </div>
+        <div>
+          <HeroRateExplorer />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10" data-reveal>
+        <p class="text-sm font-semibold text-brand-primary uppercase tracking-wider mb-3">Use Cases</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Power your strategy across the board
+        </h2>
+      </div>
+
+      <!-- Carousel -->
+      <div class="uc-viewport relative overflow-hidden" style="min-height:200px" data-reveal data-reveal-delay="200">
+        {[
+          {
+            title: 'Rate Benchmarking',
+            desc: 'Compare your reimbursement rates against peers and competitors across payers, services, and geographies to understand exactly where you stand.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>`,
+          },
+          {
+            title: 'Contract Negotiations',
+            desc: 'Walk into every payer conversation armed with market data. Know what competitors are paid so you can negotiate from a position of strength, not guesswork.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" /></svg>`,
+          },
+          {
+            title: 'Market Access',
+            desc: 'See which payers and plans are active in any market. Understand coverage landscapes and identify the partnerships that will drive volume.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" /></svg>`,
+          },
+          {
+            title: 'Pricing Strategy',
+            desc: 'Model rate scenarios and optimize your fee schedules with real market data. Set prices that maximize revenue without leaving money on the table.',
+            icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>`,
+          },
+        ].map((card, i) => (
+          <div class="uc-card absolute top-0 left-1/2" data-index={String(i)} style="opacity:0">
+            <div class="uc-card-inner h-full rounded-2xl border bg-white p-6 sm:p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-primary/8 text-brand-primary">
+                  <Fragment set:html={card.icon} />
+                </div>
+                <h3 class="text-lg font-semibold text-text-primary">{card.title}</h3>
+              </div>
+              <p class="text-[0.9375rem] text-text-secondary leading-relaxed">{card.desc}</p>
+            </div>
+          </div>
+        ))}
+
+        <!-- Nav buttons -->
+        <button
+          class="uc-prev absolute left-2 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-full shadow-sm flex items-center justify-center hover:shadow-md hover:border-brand-primary/30 transition-all duration-200"
+          aria-label="Previous use case"
+        >
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="uc-next absolute right-2 sm:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-full shadow-sm flex items-center justify-center hover:shadow-md hover:border-brand-primary/30 transition-all duration-200"
+          aria-label="Next use case"
+        >
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dot indicators -->
+      <div class="flex justify-center gap-2.5 mt-6">
+        {[0, 1, 2, 3].map((i) => (
+          <button
+            class="uc-dot w-2 h-2 rounded-full transition-all duration-300 bg-slate-300"
+            data-index={String(i)}
+            aria-label={`Go to use case ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .uc-card {
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  filter 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+    .uc-card-inner {
+      border-color: rgba(226, 232, 240, 0.7);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .uc-card[data-active="true"] .uc-card-inner {
+      border-color: rgba(0, 146, 202, 0.18);
+      box-shadow: 0 10px 40px -10px rgba(0, 146, 202, 0.13),
+                  0 4px 16px -4px rgba(0, 0, 0, 0.06);
+    }
+  </style>
+
+  <script>
+    const viewport = document.querySelector('.uc-viewport') as HTMLElement;
+    const prevBtn = document.querySelector('.uc-prev') as HTMLButtonElement;
+    const nextBtn = document.querySelector('.uc-next') as HTMLButtonElement;
+    const dots = document.querySelectorAll<HTMLButtonElement>('.uc-dot');
+
+    if (viewport) {
+      const cards = viewport.querySelectorAll<HTMLElement>('.uc-card');
+      const total = cards.length;
+      let activeIdx = 0;
+      let autoTimer: ReturnType<typeof setInterval> | null = null;
+
+      /* ---- Responsive card width ---- */
+      function getCardWidth(): number {
+        const vw = viewport.offsetWidth;
+        if (vw >= 1024) return Math.min(370, vw * 0.3);
+        if (vw >= 640)  return Math.min(340, vw * 0.44);
+        return Math.min(300, vw * 0.78);
+      }
+
+      function getGap(): number {
+        return window.innerWidth >= 640 ? 24 : 16;
+      }
+
+      /* ---- Layout: set widths & viewport height ---- */
+      function layout(): number {
+        const cardW = getCardWidth();
+        cards.forEach(c => { c.style.width = cardW + 'px'; });
+
+        // Measure tallest card for viewport height
+        let maxH = 0;
+        cards.forEach(c => { maxH = Math.max(maxH, c.offsetHeight); });
+        viewport.style.height = Math.ceil(maxH * 1.06 + 20) + 'px';
+
+        return cardW;
+      }
+
+      /* ---- Navigate to card ---- */
+      function goTo(idx: number) {
+        const next = ((idx % total) + total) % total;
+        activeIdx = next;
+
+        const cardW = layout();
+        const gap = getGap();
+        const step = cardW + gap;
+
+        cards.forEach((card, i) => {
+          // Signed offset with wrapping (shortest path around the ring)
+          let diff = i - next;
+          if (diff > total / 2)  diff -= total;
+          if (diff < -(total / 2)) diff += total;
+
+          const absDiff = Math.abs(diff);
+          const x = diff * step;
+
+          // If card was hidden and is now appearing, teleport first then fade in
+          const currentOpacity = parseFloat(card.style.opacity || '0');
+          const wasHidden = currentOpacity < 0.1;
+          const willBeVisible = absDiff <= 1;
+
+          if (wasHidden && willBeVisible) {
+            card.style.transition = 'none';
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(${absDiff === 0 ? 1 : 0.93})`;
+            card.style.opacity = '0';
+            card.offsetHeight; // force reflow
+            card.style.transition = ''; // restore CSS transition
+          }
+
+          const inner = card.querySelector('.uc-card-inner') as HTMLElement;
+
+          if (absDiff === 0) {
+            // Active card: centered, full size, elevated
+            card.style.transform = `translateX(-50%) scale(1)`;
+            card.style.opacity = '1';
+            card.style.filter = 'none';
+            card.style.zIndex = '3';
+            card.style.pointerEvents = 'auto';
+            card.dataset.active = 'true';
+            if (inner) inner.style.cursor = 'default';
+          } else if (absDiff === 1) {
+            // Adjacent cards: offset, smaller, dimmed
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(0.93)`;
+            card.style.opacity = '0.4';
+            card.style.filter = 'grayscale(0.2)';
+            card.style.zIndex = '2';
+            card.style.pointerEvents = 'auto';
+            card.dataset.active = 'false';
+            if (inner) inner.style.cursor = 'pointer';
+          } else {
+            // Far cards: hidden, positioned for future entry
+            card.style.transform = `translateX(calc(-50% + ${x}px)) scale(0.88)`;
+            card.style.opacity = '0';
+            card.style.filter = 'grayscale(0.3)';
+            card.style.zIndex = '1';
+            card.style.pointerEvents = 'none';
+            card.dataset.active = 'false';
+            if (inner) inner.style.cursor = 'default';
+          }
+        });
+
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === next) {
+            dot.classList.remove('bg-slate-300');
+            dot.classList.add('bg-brand-primary');
+            dot.style.transform = 'scale(1.3)';
+          } else {
+            dot.classList.remove('bg-brand-primary');
+            dot.classList.add('bg-slate-300');
+            dot.style.transform = 'scale(1)';
+          }
+        });
+      }
+
+      /* ---- Auto-play ---- */
+      function advance() { goTo(activeIdx + 1); }
+      function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(advance, 5000);
+      }
+      function stopAuto() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+      }
+
+      /* ---- Nav buttons ---- */
+      prevBtn?.addEventListener('click', () => { goTo(activeIdx - 1); startAuto(); });
+      nextBtn?.addEventListener('click', () => { goTo(activeIdx + 1); startAuto(); });
+
+      /* ---- Click inactive card to navigate ---- */
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.dataset.index || '0', 10);
+          if (idx !== activeIdx) { goTo(idx); startAuto(); }
+        });
+      });
+
+      /* ---- Dot clicks ---- */
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.index || '0', 10);
+          goTo(idx); startAuto();
+        });
+      });
+
+      /* ---- Pause on hover ---- */
+      let hovered = false;
+      viewport.addEventListener('mouseenter', () => { hovered = true; stopAuto(); });
+      viewport.addEventListener('mouseleave', () => { hovered = false; if (visible) startAuto(); });
+
+      /* ---- Keyboard ---- */
+      viewport.setAttribute('tabindex', '0');
+      viewport.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'ArrowLeft')  { goTo(activeIdx - 1); startAuto(); }
+        if (e.key === 'ArrowRight') { goTo(activeIdx + 1); startAuto(); }
+      });
+
+      /* ---- Touch swipe ---- */
+      let touchX = 0;
+      viewport.addEventListener('touchstart', (e: TouchEvent) => {
+        touchX = e.touches[0].clientX;
+      }, { passive: true });
+      viewport.addEventListener('touchend', (e: TouchEvent) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 50) { goTo(activeIdx + (dx < 0 ? 1 : -1)); startAuto(); }
+      }, { passive: true });
+
+      /* ---- Resize ---- */
+      let raf = 0;
+      window.addEventListener('resize', () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => { raf = 0; goTo(activeIdx); });
+      });
+
+      /* ---- Only auto-play when visible ---- */
+      let visible = false;
+      const obs = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !hovered) startAuto();
+        else stopAuto();
+      }, { threshold: 0.3 });
+      obs.observe(viewport);
+
+      /* ---- Init ---- */
+      goTo(0);
+    }
+  </script>
+
+  <!-- Feature Showcase (sticky-scroll interactive section) -->
+  <FeatureShowcase />
+
+  <InsightsCarousel />
+
+  <!-- CTA Section -->
+  <section class="relative overflow-hidden bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-tl from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div data-reveal="left">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+            Start Leveraging Price Transparency Data Today
+          </h2>
+          <p class="text-lg text-white mb-8 font-light">
+            Request your demo &amp; learn how <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> can transform your pricing strategy &amp; contract negotiations.
+          </p>
+          <ul class="space-y-3">
+            {[
+              'All payer-provider negotiated rates with claims',
+              'Access every health plan with historical rates',
+              'Self-service platform — no IT lift required',
+            ].map((item) => (
+              <li class="flex items-start gap-3 text-white font-light">
+                <svg class="w-5 h-5 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-8" data-reveal="right" data-reveal-delay="200">
+          <h3 class="text-xl font-semibold text-text-primary mb-6">
+            Contact our team
+          </h3>
+          <form id="rateexplorer-form" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
+                <input type="text" name="firstname" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
+                <input type="text" name="lastname" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
+              <input type="email" name="email" required placeholder="Work email" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
+              <input type="tel" name="phone" placeholder="Phone number" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
+              <select name="role" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]">
+                <option value="">What is your role?</option>
+                <option value="Healthcare provider">Healthcare provider</option>
+                <option value="Healthcare solution">Healthcare solution</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Health plan">Health plan</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
+              <textarea name="usecase" rows="3" placeholder="Describe your use case..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"></textarea>
+            </div>
+            <button
+              type="button"
+              class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Request a demo
+            </button>
+            <p id="rateexplorer-form-error" class="text-sm text-red-600 hidden"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 lg:py-28 bg-slate-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12" data-reveal>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Frequently Asked Questions
+        </h2>
+      </div>
+      <div class="space-y-4">
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="0">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span>How often is <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> data refreshed?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            The data is refreshed quarterly and is automatically made available directly to customers in the self-service <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> portal.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="80">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span>Can I analyze rates directly by billing code?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            Yes! You can choose any combination of payers, providers, and billing codes for any plan and instantly compare rates. You do not have to pre-select a plan or other subsets of the data.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="160">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span>Do you normalize disparate payer rate formats?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            Yes. payerset's ingestion pipeline parses and standardizes every payer MRF, handling different schemas and formats, standardizing fields, and enriching with additional data like Healthcare Organization (HCO) affiliations to increase usability before the data appears in <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span>.
+          </div>
+        </details>
+
+        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="240">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
+          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
+            <span>What are some of the ongoing challenges with machine readable files (MRFs)?</span>
+            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
+            <p class="mb-3">Here are a few of the common challenges within price transparency data. payerset takes care of each of these (and more!) as part of our standard parsing and enrichment processes:</p>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2">
+                <span class="text-brand-primary font-bold mt-0.5 shrink-0">&bull;</span>
+                <span><strong>Sheer volume</strong> &mdash; up to 300 TB of new data each month</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brand-primary font-bold mt-0.5 shrink-0">&bull;</span>
+                <span><strong>Inconsistent schemas</strong> &mdash; payers change field names without notice</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brand-primary font-bold mt-0.5 shrink-0">&bull;</span>
+                <span><strong>Ghost or 'zombie' rates</strong> &mdash; rates for services a provider doesn't actually perform</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brand-primary font-bold mt-0.5 shrink-0">&bull;</span>
+                <span><strong>Naming and coding variation</strong> &mdash; inconsistent parent groupings, plan aliases, missing billing codes</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-brand-primary font-bold mt-0.5 shrink-0">&bull;</span>
+                <span><strong>Update cadence and hosting quirks</strong> &mdash; links move or lag, some payers omit metadata</span>
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('rateexplorer-form');
+    if (!form) return;
+
+    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+
+    var btn = form.querySelector('button[type="button"]');
+    btn.addEventListener('click', function() {
+      var errorEl = document.getElementById('rateexplorer-form-error');
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var email = form.querySelector('[name="email"]').value.toLowerCase();
+      var domain = email.split('@')[1] || '';
+      if (blockedDomains.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      var payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
+          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
+          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
+          { objectTypeId: '0-1', name: 'phone', value: form.querySelector('[name="phone"]').value || '' },
+          { objectTypeId: '0-1', name: 'jobtitle', value: form.querySelector('[name="role"]').value || '' },
+          { objectTypeId: '0-1', name: 'message', value: form.querySelector('[name="usecase"]').value || '' },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Submission failed');
+        window.location.href = '/thank-you';
+      })
+      .catch(function() {
+        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Request a demo';
+      });
+    });
+  })();
+</script>

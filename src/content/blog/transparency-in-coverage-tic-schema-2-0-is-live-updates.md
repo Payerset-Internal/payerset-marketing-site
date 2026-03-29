@@ -22,8 +22,12 @@ There are a lot of updates, but here are a few of the highlights:
 **Network Name**
 The common carrier network name most familiar to members and the public. No more filtering through dozens of internal plan names. BlueCard networks are now called out explicitly, which helps separate local contracted rates from BlueCard passthrough rates for benchmarking and negotiation.
 
+![Network name in payer MRF](/images/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates/network-name.png)
+
 **Business Name**
 The common business name associated with the EIN (Tax ID). Previously, business names were only tied to NPIs via NPPES. Now we can group rates by business name and Tax ID, making it easier to determine if a rate applies to, as an example, Hospital A, Hospital B, or a physician's private practice.
+
+![Business organization name in payer MRF](/images/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates/business-name.png)
 
 **Plan Sponsor Name**
 For employer plans, shows the plan sponsor's business name. Helpful for distinguishing employer-sponsored vs. commercial plans.
@@ -45,6 +49,10 @@ It's rare for the Transparency in Coverage schema to get a dramatic update like 
 **Payers not posting the new schema**
 
 As of February 2nd (the official enforcement day for TiC 2.0), many State Blues and Cigna have not updated to the new schema. This creates a fragmented landscape where some payers are posting 2.0-compliant files while others remain on the original schema, requiring anyone working with this data to reconcile both formats.
+
+For context, here's a screenshot showing the only Blues that are posting under the new 2.0 federal TiC rule:
+
+![Overview of which payers are complying with Transparency in Coverage Schema 2.0](/images/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates/compliance-overview.png)
 
 **Erroneous machine-readable files (MRFs)**
 

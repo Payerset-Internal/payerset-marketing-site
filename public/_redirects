@@ -1,6 +1,9 @@
 # Wix blog URL patterns — Wix sometimes uses /blog/ prefix
 /blog/*  /insights  301
 
+# Wix URL redirects
+/getstarted  /get-started  301
+
 # Common Wix URL variations
 /insights/categories/industry-insights  /insights/categories/industry-insights  200
 /insights/categories/parsing-payer-mrfs  /insights/categories/parsing-payer-mrfs  200

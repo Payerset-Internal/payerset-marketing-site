@@ -79,9 +79,9 @@ import logo466 from '../assets/images/logo-466.png';
         <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-brand-dark-deep to-transparent z-10 pointer-events-none"></div>
 
         <!-- Scrolling track -->
-        <div class="flex gap-16 animate-scroll">
+        <div class="flex gap-8 md:gap-16 animate-scroll">
           <!-- First set of logos -->
-          <div class="flex items-center gap-16 shrink-0">
+          <div class="flex items-center gap-8 md:gap-16 shrink-0">
             <Image src={logo453} alt="Northwell Health" class="h-10 w-auto object-contain" />
             <Image src={logo454} alt="Partner logo" class="h-10 w-auto object-contain" />
             <Image src={logo456} alt="Partner logo" class="h-10 w-auto object-contain" />
@@ -96,7 +96,7 @@ import logo466 from '../assets/images/logo-466.png';
             <Image src={logo466} alt="Partner logo" class="h-10 w-auto object-contain" />
           </div>
           <!-- Duplicate set for seamless loop -->
-          <div class="flex items-center gap-16 shrink-0">
+          <div class="flex items-center gap-8 md:gap-16 shrink-0">
             <Image src={logo453} alt="Northwell Health" class="h-10 w-auto object-contain" />
             <Image src={logo454} alt="Partner logo" class="h-10 w-auto object-contain" />
             <Image src={logo456} alt="Partner logo" class="h-10 w-auto object-contain" />
@@ -126,8 +126,14 @@ import logo466 from '../assets/images/logo-466.png';
     }
 
     .animate-scroll {
-      animation: scroll 30s linear infinite;
+      animation: scroll 8s linear infinite;
       will-change: transform;
+    }
+
+    @media (min-width: 768px) {
+      .animate-scroll {
+        animation-duration: 30s;
+      }
     }
 
     .animate-scroll:hover {

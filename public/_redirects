@@ -13,5 +13,3 @@
 # Wix asset redirects (Wix serves static from _files)
 /_files/*  /  404
 
-# Ensure non-www redirects to www
-https://payerset.com/*  https://www.payerset.com/:splat  301

@@ -6,6 +6,7 @@ author: "Andrew Gordon"
 category: "News"
 tags: ["price transparency", "hospital MRFs", "CMS", "compliance"]
 readTime: "11 min read"
+image: "/images/blog/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline/hero.jpg"
 ---
 
 The Price Transparency Requirements for Hospitals to Make Standard Charges Public is the CMS rule implementing Section 2718(e) of the Public Health Service Act, enacted as part of the Affordable Care Act and codified at [45 CFR Part 180](https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-E/part-180). It has been updated with a meaningful set of changes.

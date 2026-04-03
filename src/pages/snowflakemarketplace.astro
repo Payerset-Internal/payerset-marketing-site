@@ -62,29 +62,34 @@ import PageLayout from '../layouts/PageLayout.astro';
             payer: 'Kaiser Permanente',
             type: 'Machine Readable File Data',
             badge: 'Free Sample Dataset',
+            url: 'https://app.snowflake.com/marketplace/listing/GZTSZUEI44U/payerset-inc-kaiser-permanente-payer-price-transparency?originTab=provider&providerName=Payerset+Inc.&profileGlobalName=GZTSZUEI446',
           },
           {
             payer: 'Elevance',
             type: 'Machine Readable File Data',
             badge: 'Free Sample Dataset',
+            url: 'https://app.snowflake.com/marketplace/listing/GZTSZUEI44Y/payerset-inc-anthem-elevance-payer-price-transparency?originTab=provider&providerName=Payerset+Inc.&profileGlobalName=GZTSZUEI446',
           },
           {
             payer: 'United Healthcare',
             type: 'Machine Readable File Data',
             badge: 'Free Sample Dataset',
+            url: 'https://app.snowflake.com/marketplace/listing/GZTSZUEI44Q/payerset-inc-united-healthcare-payer-pricing-transparency?originTab=provider&providerName=Payerset+Inc.&profileGlobalName=GZTSZUEI446',
           },
           {
             payer: 'Cigna',
             type: 'Machine Readable File Data',
             badge: 'Free Sample Dataset',
+            url: 'https://app.snowflake.com/marketplace/listing/GZTSZUEI453/payerset-inc-cigna-payer-price-transparency?originTab=provider&providerName=Payerset+Inc.&profileGlobalName=GZTSZUEI446',
           },
           {
             payer: 'Sentara',
             type: 'Machine Readable File Data',
             badge: 'Free Sample Dataset',
+            url: 'https://app.snowflake.com/marketplace/listing/GZTSZUEI457/payerset-inc-sentara-payer-price-transparency?originTab=provider&providerName=Payerset+Inc.&profileGlobalName=GZTSZUEI446',
           },
         ].map((dataset) => (
-          <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-200">
+          <a href={dataset.url} target="_blank" rel="noopener noreferrer" class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-200 block">
             <div class="mb-4">
               <span class="inline-block px-3 py-1 text-xs font-semibold text-brand-primary bg-brand-primary/10 rounded-full">
                 {dataset.badge}
@@ -94,7 +99,7 @@ import PageLayout from '../layouts/PageLayout.astro';
               {dataset.payer} - Price Transparency
             </h3>
             <p class="text-sm text-slate-600">{dataset.type}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>

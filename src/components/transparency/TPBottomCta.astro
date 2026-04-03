@@ -1,0 +1,21 @@
+---
+import TPEmailCapture from './TPEmailCapture.astro';
+---
+
+<section class="relative bg-brand-dark-deep overflow-hidden py-20">
+  <!-- Decorative -->
+  <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(0,146,202,0.3)_0%,transparent_60%)]"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white leading-tight tracking-tight mb-3">
+      The market only works when prices are visible
+    </h2>
+    <p class="text-base text-white/65 mb-8">
+      Join the practitioners, policymakers, and advocates building a transparent healthcare system.
+    </p>
+    <div class="flex justify-center">
+      <TPEmailCapture variant="dark" note="Bi-weekly newsletter, unsubscribe anytime." />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import { topics } from '../../config/transparency-topics';
+
+const iconBgColors: Record<string, string> = {
+  analysis: 'bg-brand-primary-light text-brand-primary',
+  policy: 'bg-surface-blue-tint text-brand-dark',
+  playbook: 'bg-brand-accent/10 text-brand-accent',
+  equity: 'bg-brand-secondary/10 text-brand-secondary',
+  employer: 'bg-brand-accent/10 text-brand-accent',
+};
+---
+
+<section class="bg-surface-light border-t border-b border-slate-200 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-xs font-semibold tracking-widest uppercase text-text-muted mb-6">What we cover</div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {topics.map(topic => (
+        <a
+          href={topic.href}
+          class="block bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-lg hover:border-brand-primary/30 hover:-translate-y-0.5 transition-all duration-300 no-underline text-inherit"
+        >
+          <div class:list={['w-9 h-9 rounded-lg flex items-center justify-center mb-3', iconBgColors[topic.slug] || iconBgColors.analysis]}>
+            <Fragment set:html={topic.icon} />
+          </div>
+          <h3 class="font-heading text-sm font-medium tracking-tight text-text-primary mb-1.5">
+            {topic.label}
+          </h3>
+          <p class="text-xs text-text-muted leading-relaxed">
+            {topic.description}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

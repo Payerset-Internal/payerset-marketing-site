@@ -1,0 +1,63 @@
+---
+import { topics as topicConfig } from '../../config/transparency-topics';
+
+interface Props {
+  tag: string;
+  tagType: 'podcast' | 'newsletter' | 'brief' | 'research';
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  topics?: string[];
+}
+
+const { tag, tagType, title, description, meta, href, topics = [] } = Astro.props;
+
+const topicDetails = topics
+  .map(slug => topicConfig.find(t => t.slug === slug))
+  .filter(Boolean);
+
+const tagColors: Record<string, string> = {
+  podcast: 'text-brand-primary bg-brand-primary-light border-brand-primary/15',
+  newsletter: 'text-brand-dark bg-surface-blue-tint border-brand-dark/12',
+  brief: 'text-brand-accent bg-brand-accent/10 border-brand-accent/15',
+  research: 'text-brand-secondary bg-brand-secondary/10 border-brand-secondary/15',
+};
+
+const topicPillColors: Record<string, string> = {
+  analysis: 'text-brand-primary bg-brand-primary-light border-brand-primary/10',
+  policy: 'text-brand-dark bg-surface-blue-tint border-brand-dark/10',
+  playbook: 'text-brand-accent bg-brand-accent/10 border-brand-accent/10',
+  equity: 'text-brand-secondary bg-brand-secondary/10 border-brand-secondary/10',
+  employer: 'text-brand-accent bg-brand-accent/10 border-brand-accent/10',
+};
+---
+
+<a
+  class="block bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:border-brand-primary/30 hover:-translate-y-0.5 transition-all duration-300 no-underline text-inherit"
+  href={href}
+>
+  <div class="flex items-center gap-2 flex-wrap mb-3">
+    <span class:list={['text-[0.625rem] font-semibold tracking-wider uppercase px-2.5 py-1 rounded border inline-block', tagColors[tagType] || tagColors.brief]}>
+      {tag}
+    </span>
+    {topicDetails.length > 0 && (
+      <div class="flex gap-1">
+        {topicDetails.map(t => (
+          <span class:list={['text-[0.55rem] font-medium tracking-wide uppercase px-2 py-0.5 rounded border', topicPillColors[t!.slug] || topicPillColors.analysis]}>
+            {t!.shortLabel}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+  <h3 class="font-heading text-base font-medium leading-snug tracking-tight text-text-primary mb-2">
+    {title}
+  </h3>
+  <p class="text-sm text-text-muted leading-relaxed flex-1">
+    {description}
+  </p>
+  <div class="text-xs text-text-muted mt-4 pt-3 border-t border-slate-100 opacity-85">
+    {meta}
+  </div>
+</a>

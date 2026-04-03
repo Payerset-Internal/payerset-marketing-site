@@ -1,0 +1,122 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import TPFeedCard from '../../components/transparency/TPFeedCard.astro';
+import TPBottomCta from '../../components/transparency/TPBottomCta.astro';
+import { topics } from '../../config/transparency-topics';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return topics.map(t => ({ params: { topic: t.slug }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+
+const blog = await getCollection('tp-blog');
+const podcast = await getCollection('tp-podcast');
+const newsletter = await getCollection('tp-newsletter');
+const research = await getCollection('tp-research');
+
+type FeedItem = {
+  tag: string;
+  tagType: 'podcast' | 'newsletter' | 'brief' | 'research';
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  date: Date;
+  topics: string[];
+};
+
+const allItems: FeedItem[] = [
+  ...podcast.filter(p => p.data.topics.includes(topic.slug)).map(p => ({
+    tag: `Podcast — Ep. ${p.data.episode}`,
+    tagType: 'podcast' as const,
+    title: p.data.title,
+    description: p.data.description,
+    meta: `${p.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${p.data.duration}`,
+    href: `/transparencyproject/podcast/${p.id}`,
+    date: p.data.date,
+    topics: [...p.data.topics],
+  })),
+  ...newsletter.filter(n => n.data.topics.includes(topic.slug)).map(n => ({
+    tag: 'Newsletter',
+    tagType: 'newsletter' as const,
+    title: n.data.title,
+    description: n.data.description,
+    meta: `${n.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${n.data.readTime}`,
+    href: `/transparencyproject/newsletter/${n.id}`,
+    date: n.data.date,
+    topics: [...n.data.topics],
+  })),
+  ...blog.filter(b => b.data.topics.includes(topic.slug)).map(b => ({
+    tag: 'Blog',
+    tagType: 'brief' as const,
+    title: b.data.title,
+    description: b.data.description,
+    meta: `${b.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${b.data.readTime}`,
+    href: `/transparencyproject/blog/${b.id}`,
+    date: b.data.date,
+    topics: [...b.data.topics],
+  })),
+  ...research.filter(r => r.data.topics.includes(topic.slug)).map(r => ({
+    tag: 'Research',
+    tagType: 'research' as const,
+    title: r.data.title,
+    description: r.data.description,
+    meta: `${r.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${r.data.readTime}`,
+    href: `/transparencyproject/research/${r.id}`,
+    date: r.data.date,
+    topics: [...r.data.topics],
+  })),
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const iconBgColors: Record<string, string> = {
+  analysis: 'bg-brand-primary-light text-brand-primary',
+  policy: 'bg-surface-blue-tint text-brand-dark',
+  playbook: 'bg-brand-accent/10 text-brand-accent',
+  equity: 'bg-brand-secondary/10 text-brand-secondary',
+  employer: 'bg-brand-accent/10 text-brand-accent',
+};
+---
+
+<PageLayout title={`${topic.label} — Price Transparency Project`} description={topic.description}>
+  <!-- Topic Header -->
+  <section class="bg-surface-light border-b border-slate-200 py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-reveal>
+      <div class:list={['w-11 h-11 rounded-xl flex items-center justify-center mb-5', iconBgColors[topic.slug] || iconBgColors.analysis]}>
+        <Fragment set:html={topic.icon} />
+      </div>
+      <h1 class="font-heading text-3xl sm:text-4xl font-bold text-text-primary leading-tight tracking-tight mb-3">
+        {topic.label}
+      </h1>
+      <p class="text-base text-text-muted leading-relaxed max-w-xl">
+        {topic.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Feed -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {allItems.length > 0 ? (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-reveal>
+        {allItems.map(item => (
+          <TPFeedCard
+            tag={item.tag}
+            tagType={item.tagType}
+            title={item.title}
+            description={item.description}
+            meta={item.meta}
+            href={item.href}
+            topics={item.topics}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 text-text-muted text-sm">
+        No content in this topic yet. Check back soon.
+      </div>
+    )}
+  </section>
+
+  <TPBottomCta />
+</PageLayout>

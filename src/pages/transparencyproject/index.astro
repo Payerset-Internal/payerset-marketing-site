@@ -1,0 +1,96 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import TPHero from '../../components/transparency/TPHero.astro';
+import TPContentSection from '../../components/transparency/TPContentSection.astro';
+import TPPillars from '../../components/transparency/TPPillars.astro';
+import TPBottomCta from '../../components/transparency/TPBottomCta.astro';
+import { getCollection } from 'astro:content';
+
+const research = await getCollection('tp-research');
+const podcast = await getCollection('tp-podcast');
+const newsletter = await getCollection('tp-newsletter');
+const blog = await getCollection('tp-blog');
+
+const latestEpisode = podcast
+  .sort((a, b) => b.data.episode - a.data.episode)[0];
+
+const latestEpisodeProps = latestEpisode ? {
+  episode: latestEpisode.data.episode,
+  title: latestEpisode.data.title,
+  description: latestEpisode.data.description,
+  duration: latestEpisode.data.duration,
+  date: latestEpisode.data.date,
+  href: `/transparencyproject/podcast/${latestEpisode.id}`,
+} : undefined;
+
+const scorecard = {
+  tag: 'Analysis',
+  title: 'Payer Compliance Scorecard: how well are payers following price transparency rules?',
+  description: "We grade 100+ payers on how completely, accurately, and timely they publish machine-readable files. See who's leading, who's lagging, and where enforcement gaps remain.",
+  href: '/transparencyproject/scorecard',
+};
+
+type FeedItem = {
+  tag: string;
+  tagType: 'podcast' | 'newsletter' | 'brief' | 'research';
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  date: Date;
+  topics: string[];
+};
+
+const feedItems: FeedItem[] = [
+  ...podcast.map(p => ({
+    tag: `Podcast — Ep. ${p.data.episode}`,
+    tagType: 'podcast' as const,
+    title: p.data.title,
+    description: p.data.description,
+    meta: `${p.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${p.data.duration}`,
+    href: `/transparencyproject/podcast/${p.id}`,
+    date: p.data.date,
+    topics: [...p.data.topics],
+  })),
+  ...newsletter.map(n => ({
+    tag: 'Newsletter',
+    tagType: 'newsletter' as const,
+    title: n.data.title,
+    description: n.data.description,
+    meta: `${n.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${n.data.readTime}`,
+    href: `/transparencyproject/newsletter/${n.id}`,
+    date: n.data.date,
+    topics: [...n.data.topics],
+  })),
+  ...blog.map(b => ({
+    tag: 'Research brief',
+    tagType: 'brief' as const,
+    title: b.data.title,
+    description: b.data.description,
+    meta: `${b.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${b.data.readTime}`,
+    href: `/transparencyproject/blog/${b.id}`,
+    date: b.data.date,
+    topics: [...b.data.topics],
+  })),
+  ...research.map(r => ({
+    tag: 'Research',
+    tagType: 'research' as const,
+    title: r.data.title,
+    description: r.data.description,
+    meta: `${r.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${r.data.readTime}`,
+    href: `/transparencyproject/research/${r.id}`,
+    date: r.data.date,
+    topics: [...r.data.topics],
+  })),
+];
+---
+
+<PageLayout
+  title="The Price Transparency Project — A Payerset Initiative"
+  description="Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market actually function like one."
+>
+  <TPHero />
+  <TPContentSection feedItems={feedItems} scorecard={scorecard} latestEpisode={latestEpisodeProps} />
+  <TPPillars />
+  <TPBottomCta />
+</PageLayout>

@@ -1,0 +1,23 @@
+---
+import TPEmailCapture from './TPEmailCapture.astro';
+---
+
+<section class="relative bg-brand-dark-deep overflow-hidden">
+  <!-- Decorative gradients -->
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16" data-reveal>
+    <div class="text-xs font-semibold tracking-widest uppercase text-brand-accent mb-4">
+      A Payerset Initiative
+    </div>
+    <h1 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight max-w-3xl mb-4">
+      Making healthcare prices <span class="text-brand-accent italic font-light">visible, comparable, and&nbsp;fair</span>
+    </h1>
+    <p class="text-base text-slate-300 max-w-lg leading-relaxed mb-7">
+      Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market actually function like one.
+    </p>
+    <TPEmailCapture note="Bi-weekly newsletter, unsubscribe anytime." />
+  </div>
+</section>

@@ -1,0 +1,47 @@
+---
+interface Props {
+  variant?: 'default' | 'dark';
+  note?: string;
+}
+
+const { variant = 'default', note } = Astro.props;
+const isDark = variant === 'dark';
+---
+
+<div>
+  <div class:list={[
+    'flex max-w-md overflow-hidden rounded-lg transition-all duration-200',
+    isDark
+      ? 'bg-white/10 border border-white/20 backdrop-blur-sm focus-within:border-white/50 focus-within:ring-2 focus-within:ring-white/10'
+      : 'bg-white border border-slate-200 shadow-sm focus-within:border-brand-accent focus-within:ring-2 focus-within:ring-brand-accent/10',
+  ]}>
+    <input
+      type="email"
+      placeholder="Your email address"
+      aria-label="Email address"
+      class:list={[
+        'flex-1 px-4 py-3 text-sm bg-transparent border-none outline-none min-w-0',
+        isDark ? 'text-white placeholder:text-white/50' : 'text-text-primary placeholder:text-text-muted',
+      ]}
+    />
+    <button
+      type="submit"
+      class:list={[
+        'px-5 py-3 text-sm font-semibold whitespace-nowrap transition-colors flex-shrink-0 border-0',
+        isDark
+          ? 'bg-brand-accent text-brand-dark-deep hover:bg-brand-accent/90'
+          : 'bg-brand-accent text-brand-dark-deep hover:bg-brand-accent/90',
+      ]}
+    >
+      Subscribe
+    </button>
+  </div>
+  {note && (
+    <p class:list={[
+      'text-xs mt-2 opacity-80',
+      isDark ? 'text-white/50' : 'text-text-muted',
+    ]}>
+      {note}
+    </p>
+  )}
+</div>

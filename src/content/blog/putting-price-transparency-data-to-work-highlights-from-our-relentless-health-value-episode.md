@@ -64,3 +64,4 @@ The bigger lever may be fiduciary accountability. Plan sponsors can no longer cl
 Jerry also noted that his work with the current administration and CMS reflects a continued and renewed push for more transparency, and that data quality and compliance have both been improving. The organizations getting real value from this right now are the ones who have invested in the methodology to use it well, not just access it.
 
 Let's keep building and moving price transparency forward together.
+

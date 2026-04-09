@@ -6,7 +6,6 @@ author: "Matt Phillips"
 category: "News"
 tags: ["price transparency", "plan sponsors", "providers", "negotiation", "podcast"]
 readTime: "5 min read"
-draft: false
 image: "/images/blog/putting-price-transparency-data-to-work-highlights-from-our-relentless-health-value-episode/hero.jpg"
 ---
 

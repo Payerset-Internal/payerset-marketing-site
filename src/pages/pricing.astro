@@ -87,10 +87,10 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
 
       {[
-        { tier: 'Tier 1', beds: '300 – 999 Beds', desc: 'Multi-facility organizations', price: '95', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
-        { tier: 'Tier 2', beds: '1,000 – 2,999 Beds', desc: 'Regional health systems', price: '195', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
-        { tier: 'Tier 3', beds: '3,000+ Beds', desc: 'Large national health systems', price: '350', label: 'K+/yr', pricePrefix: 'Starting At', cta: 'Talk to Sales', ctaStyle: 'bg-brand-dark hover:bg-brand-dark-deeper text-white shadow-[0_2px_8px_rgba(0,31,41,0.2)]' },
-      ].map(({ tier, beds, desc, price, label, pricePrefix, cta, ctaStyle }, i) => (
+        { tier: 'Tier 1', beds: '300 – 999 Beds', price: '95', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
+        { tier: 'Tier 2', beds: '1,000 – 2,999 Beds', price: '195', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
+        { tier: 'Tier 3', beds: '3,000+ Beds', price: '350', label: 'K+/yr', pricePrefix: 'Starting At', cta: 'Talk to Sales', ctaStyle: 'bg-brand-dark hover:bg-brand-dark-deeper text-white shadow-[0_2px_8px_rgba(0,31,41,0.2)]' },
+      ].map(({ tier, beds, price, label, pricePrefix, cta, ctaStyle }, i) => (
         <div class:list={[
           "sm:grid grid-cols-[1fr_auto_auto] items-center gap-4 px-8 py-5 transition-colors hover:bg-slate-50/80",
           i < 2 ? "border-b border-slate-100" : "",
@@ -98,7 +98,6 @@ import PageLayout from '../layouts/PageLayout.astro';
           <div class="mb-3 sm:mb-0">
             <p class="text-[10px] font-bold uppercase tracking-[2px] text-slate-400 mb-0.5">{tier}</p>
             <p class="text-lg font-bold text-slate-900 leading-tight">{beds}</p>
-            <p class="text-xs text-slate-500">{desc}</p>
           </div>
           <div class="flex flex-col items-end font-heading w-32 mb-3 sm:mb-0">
             {pricePrefix && (

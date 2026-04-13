@@ -79,7 +79,7 @@ import logo466 from '../assets/images/logo-466.png';
         <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-brand-dark-deep to-transparent z-10 pointer-events-none"></div>
 
         <!-- Scrolling track -->
-        <div class="flex gap-8 md:gap-16 animate-scroll">
+        <div class="flex gap-8 md:gap-16 animate-scroll w-max">
           <!-- First set of logos -->
           <div class="flex items-center gap-8 md:gap-16 shrink-0">
             <Image src={logo453} alt="Northwell Health" class="h-10 w-auto object-contain" loading="eager" />
@@ -115,25 +115,37 @@ import logo466 from '../assets/images/logo-466.png';
     </div>
   </section>
 
+  <script>
+    // Set carousel speed as consistent px/second regardless of viewport
+    // ~75px/s feels smooth and readable at any screen size
+    const SPEED = 75;
+    function setCarouselSpeed() {
+      const track = document.querySelector('.animate-scroll');
+      if (!track) return;
+      const firstSet = track.children[0] as HTMLElement;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const distance = firstSet.offsetWidth + gap;
+      const duration = distance / SPEED;
+      track.style.setProperty('--scroll-duration', `${duration}s`);
+      track.style.setProperty('--scroll-gap-half', `${gap / 2}px`);
+    }
+    setCarouselSpeed();
+    window.addEventListener('resize', setCarouselSpeed);
+  </script>
+
   <style>
     @keyframes scroll {
       0% {
         transform: translateX(0);
       }
       100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% - var(--scroll-gap-half, 16px)));
       }
     }
 
     .animate-scroll {
-      animation: scroll 8s linear infinite;
+      animation: scroll var(--scroll-duration, 30s) linear infinite;
       will-change: transform;
-    }
-
-    @media (min-width: 768px) {
-      .animate-scroll {
-        animation-duration: 30s;
-      }
     }
 
     .animate-scroll:hover {

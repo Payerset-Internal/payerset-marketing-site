@@ -1,5 +1,18 @@
 ---
 import TPEmailCapture from './TPEmailCapture.astro';
+
+interface Announcement {
+  eyebrow?: string;
+  text: string;
+  shortText?: string;
+  href: string;
+}
+
+interface Props {
+  announcement?: Announcement;
+}
+
+const { announcement } = Astro.props;
 ---
 
 <section class="relative bg-brand-dark-deep overflow-hidden">
@@ -9,6 +22,33 @@ import TPEmailCapture from './TPEmailCapture.astro';
   <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16" data-reveal>
+    {announcement && (
+      <div class="flex justify-center mb-12 sm:mb-14">
+        <a
+          href={announcement.href}
+          class="group inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full bg-white/[0.06] border border-white/10 hover:bg-white/[0.10] hover:border-brand-accent/40 transition-all duration-200 no-underline text-inherit max-w-full"
+        >
+          <span class="flex-shrink-0 font-heading text-[0.625rem] sm:text-[0.7rem] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full bg-brand-accent/15 text-brand-accent whitespace-nowrap">
+            {announcement.eyebrow ?? 'Just Published'}
+          </span>
+          <span class="text-xs sm:text-sm text-white truncate">
+            <span class="hidden sm:inline">{announcement.text}</span>
+            <span class="sm:hidden">{announcement.shortText ?? announcement.text}</span>
+          </span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            class="flex-shrink-0 text-brand-accent transition-transform duration-200 group-hover:translate-x-0.5"
+            aria-hidden="true"
+          >
+            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    )}
+
     <div class="text-xs font-semibold tracking-widest uppercase text-brand-accent mb-4">
       A Payerset Initiative
     </div>

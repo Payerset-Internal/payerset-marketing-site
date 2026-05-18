@@ -12,13 +12,12 @@ export function getStaticPaths() {
 const { topic } = Astro.props;
 
 const blog = await getCollection('tp-blog');
-const podcast = await getCollection('tp-podcast');
 const newsletter = await getCollection('tp-newsletter');
 const research = await getCollection('tp-research');
 
 type FeedItem = {
   tag: string;
-  tagType: 'podcast' | 'newsletter' | 'brief' | 'research';
+  tagType: 'newsletter' | 'brief' | 'research';
   title: string;
   description: string;
   meta: string;
@@ -28,16 +27,6 @@ type FeedItem = {
 };
 
 const allItems: FeedItem[] = [
-  ...podcast.filter(p => p.data.topics.includes(topic.slug)).map(p => ({
-    tag: `Podcast — Ep. ${p.data.episode}`,
-    tagType: 'podcast' as const,
-    title: p.data.title,
-    description: p.data.description,
-    meta: `${p.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${p.data.duration}`,
-    href: `/transparencyproject/podcast/${p.id}`,
-    date: p.data.date,
-    topics: [...p.data.topics],
-  })),
   ...newsletter.filter(n => n.data.topics.includes(topic.slug)).map(n => ({
     tag: 'Newsletter',
     tagType: 'newsletter' as const,

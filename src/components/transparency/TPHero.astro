@@ -26,11 +26,12 @@ const { announcement } = Astro.props;
       <div class="flex justify-center mb-12 sm:mb-14">
         <a
           href={announcement.href}
-          class="group inline-flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full bg-white/[0.06] border border-white/10 hover:bg-white/[0.10] hover:border-brand-accent/40 transition-all duration-200 no-underline text-inherit max-w-full"
+          class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-white/10 hover:bg-white/[0.10] hover:border-brand-accent/40 transition-all duration-200 no-underline text-inherit max-w-full"
         >
-          <span class="flex-shrink-0 font-heading text-[0.625rem] sm:text-[0.7rem] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full bg-brand-accent/15 text-brand-accent whitespace-nowrap">
-            {announcement.eyebrow ?? 'Just Published'}
+          <span class="flex-shrink-0 text-xs sm:text-sm font-medium text-brand-accent whitespace-nowrap">
+            {announcement.eyebrow ?? 'Just published'}
           </span>
+          <span class="flex-shrink-0 text-white/30 text-xs" aria-hidden="true">·</span>
           <span class="text-xs sm:text-sm text-white truncate">
             <span class="hidden sm:inline">{announcement.text}</span>
             <span class="sm:hidden">{announcement.shortText ?? announcement.text}</span>
@@ -49,8 +50,8 @@ const { announcement } = Astro.props;
       </div>
     )}
 
-    <div class="text-xs font-semibold tracking-widest uppercase text-brand-accent mb-4">
-      A Payerset Initiative
+    <div class="text-[0.8rem] font-medium text-brand-accent mb-4">
+      A Payerset initiative
     </div>
     <h1 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight max-w-3xl mb-4">
       Making healthcare prices <span class="text-brand-accent italic font-light">visible, comparable, and&nbsp;fair</span>

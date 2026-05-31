@@ -66,13 +66,18 @@ const feedItems: FeedItem[] = [
   title="The Price Transparency Project — A Payerset Initiative"
   description="Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market actually function like one."
 >
+  {/* TODO: Description copy is placeholder.
+      Two issues to address before launch:
+        1. Rewrite the copy itself (this is a stub).
+        2. Reformat — the current single-paragraph block reads as a wall
+           of text under the title. Consider breaking it into a shorter
+           lead sentence + a bulleted "Inside the report:" list, or
+           multiple short paragraphs. The component may need a structural
+           update to support that (currently takes a single `description`
+           string). */}
   <TPHero
-    announcement={{
-      eyebrow: 'Just published',
-      text: 'Rate Review: The 2026 Price Transparency Report',
-      shortText: 'Rate Review 2026',
-      href: '/transparencyproject/2026-transparency-report',
-    }}
+    title="Rate Review: The 2026 Price Transparency Report"
+    description="A synthesis of what hundreds of customer conversations, industry conferences, and the broader price transparency community have taught us. Inside: an updated contracting playbook for managed care teams, what the data shows in 2026, and an honest read on the gaps still slowing organizations down."
   />
   <TPContentSection feedItems={feedItems} scorecard={scorecard} />
   <TPPillars />

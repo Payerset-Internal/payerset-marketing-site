@@ -6,9 +6,24 @@ interface Props {
 
 const { variant = 'default', note } = Astro.props;
 const isDark = variant === 'dark';
+
+/**
+ * MailChimp embed form config — Price Transparency Project subscribe list.
+ *
+ * The form posts directly to MailChimp; MailChimp then redirects the
+ * subscriber to whatever URL is configured in the dashboard's form
+ * settings (Audience → Signup forms → "Signup 'thank you' page" →
+ * "Send subscribers to another URL"). Production redirect target:
+ *   https://<production-domain>/transparencyproject/2026-transparency-report/thank-you-download
+ *
+ * The honeypot input must keep this exact name; MailChimp drops
+ * submissions where it's filled in (a hidden field bots can't resist).
+ */
+const MAILCHIMP_ACTION = 'https://payerset.us10.list-manage.com/subscribe/post?u=2993a043f5d216244c53d5c24&id=28c509fa94&f_id=001cfde5f0';
+const MAILCHIMP_HONEYPOT_NAME = 'b_2993a043f5d216244c53d5c24_28c509fa94';
 ---
 
-<div>
+<form action={MAILCHIMP_ACTION} method="post" target="_self" class="tp-email-form">
   <div class:list={[
     'flex max-w-md overflow-hidden rounded-lg transition-all duration-200',
     isDark
@@ -17,25 +32,59 @@ const isDark = variant === 'dark';
   ]}>
     <input
       type="email"
-      placeholder="Your email address"
+      name="EMAIL"
+      placeholder="Your work email address"
       aria-label="Email address"
+      required
       class:list={[
         'flex-1 px-4 py-3 text-sm bg-transparent border-none outline-none min-w-0',
         isDark ? 'text-white placeholder:text-white/50' : 'text-text-primary placeholder:text-text-muted',
       ]}
     />
+    <!--
+      Deliberately type="button" rather than type="submit". A real submit
+      button (or a native form submit event) would be picked up by the
+      site-wide HubSpot "non-HubSpot forms" tracker and double-captured
+      into HubSpot. By validating in a click handler and submitting via
+      form.submit() programmatically, no submit event ever fires.
+    -->
     <button
-      type="submit"
+      type="button"
+      data-tp-email-submit
       class:list={[
-        'px-5 py-3 text-sm font-semibold whitespace-nowrap transition-colors flex-shrink-0 border-0',
-        isDark
-          ? 'bg-brand-accent text-brand-dark-deep hover:bg-brand-accent/90'
-          : 'bg-brand-accent text-brand-dark-deep hover:bg-brand-accent/90',
+        'px-5 py-3 text-sm font-semibold whitespace-nowrap transition-colors flex-shrink-0 border-0 cursor-pointer',
+        'bg-brand-accent text-brand-dark-deep hover:bg-brand-accent/90',
       ]}
     >
       Subscribe
     </button>
   </div>
+
+  <!--
+    MailChimp bot-trap honeypot. Hidden off-screen so real users never see
+    or fill it; bots that fill every field get caught. Required by MailChimp.
+  -->
+  <div aria-hidden="true" style="position: absolute; left: -5000px;">
+    <input
+      type="text"
+      name={MAILCHIMP_HONEYPOT_NAME}
+      tabindex="-1"
+      value=""
+    />
+  </div>
+
+  <!-- Validation error (hidden by default; revealed by the script below
+       when a free / personal email domain is detected). -->
+  <p
+    data-tp-email-error
+    class:list={[
+      'text-xs mt-2 hidden',
+      isDark ? 'text-rose-300' : 'text-red-600',
+    ]}
+  >
+    Please use your work email address.
+  </p>
+
   {note && (
     <p class:list={[
       'text-xs mt-2 opacity-80',
@@ -44,4 +93,68 @@ const isDark = variant === 'dark';
       {note}
     </p>
   )}
-</div>
+</form>
+
+<script>
+  /**
+   * Block free / personal email domains from subscribing, and submit to
+   * MailChimp without firing a native form submit event (which would be
+   * intercepted by the site-wide HubSpot non-HubSpot-forms tracker and
+   * double-captured into HubSpot).
+   *
+   * Domain list mirrors /get-started — keep these two lists in sync. If
+   * we add more lead magnets it's worth extracting this to a shared
+   * module.
+   */
+  const BLOCKED_DOMAINS = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+    'icloud.com', 'me.com', 'mac.com', 'protonmail.com', 'proton.me',
+    'zoho.com', 'yandex.com', 'mail.com', 'gmx.com', 'fastmail.com',
+    'hushmail.com', 'tutanota.com', 'inbox.com', 'live.com', 'msn.com',
+    'att.net', 'sbcglobal.net', 'bellsouth.net', 'comcast.net',
+    'verizon.net', 'cox.net', 'charter.net', 'earthlink.net', 'juno.com',
+    'rocketmail.com',
+  ];
+
+  document.querySelectorAll<HTMLFormElement>('.tp-email-form').forEach((form) => {
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-tp-email-submit]');
+    const emailInput = form.querySelector<HTMLInputElement>('[name="EMAIL"]');
+    const errorEl = form.querySelector<HTMLElement>('[data-tp-email-error]');
+    if (!submitBtn || !emailInput || !errorEl) return;
+
+    function trySubmit() {
+      // Native HTML5 constraints first (required, email format).
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const email = emailInput!.value.trim().toLowerCase();
+      const domain = email.split('@')[1] ?? '';
+      if (BLOCKED_DOMAINS.includes(domain)) {
+        errorEl!.classList.remove('hidden');
+        emailInput!.focus();
+        return;
+      }
+
+      errorEl!.classList.add('hidden');
+
+      // form.submit() submits to the action URL via standard form POST
+      // but does NOT raise the submit event — so HubSpot's site-wide
+      // form tracker can't intercept this and create a duplicate contact.
+      form.submit();
+    }
+
+    submitBtn.addEventListener('click', trySubmit);
+
+    // Handle Enter-to-submit explicitly. With type="button" most browsers
+    // suppress implicit form submission anyway, but this guarantees it
+    // across all browsers and keeps a native UX expectation working.
+    emailInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        trySubmit();
+      }
+    });
+  });
+</script>

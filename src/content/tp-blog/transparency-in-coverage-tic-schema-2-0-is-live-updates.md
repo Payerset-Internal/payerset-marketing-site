@@ -3,9 +3,10 @@ title: "Transparency in Coverage (TiC) Schema 2.0 Is Live - Updates"
 description: "February 2nd, 2026 marked the first enforcement deadline for TiC Schema 2.0. Here's what we're seeing on the ground with payer compliance and the new data fields."
 date: 2026-02-05
 author: "Matt Phillips"
-category: "Industry Insights"
 tags: ["price transparency", "transparency in coverage", "Schema 2.0"]
 readTime: "3 min read"
+topics: ["policy", "analysis"]
+featured: false
 image: "/images/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates/hero.png"
 ---
 
@@ -13,7 +14,7 @@ February 2nd, 2026 marked the first enforcement deadline for Transparency in Cov
 
 We plan to update this post each quarter as payers continue adapting to the new requirements.
 
-Schema 2.0 is the first step. [We recently did a deep dive in to proposed rules for 2027 and beyond.](/post/cms-proposes-major-updates-to-transparency-in-coverage-rules)
+Schema 2.0 is the first step. [We recently did a deep dive in to proposed rules for 2027 and beyond.](/transparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules)
 
 ## Refresher: What's New in Schema 2.0
 

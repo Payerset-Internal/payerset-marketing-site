@@ -31,10 +31,12 @@ const tpBlog = defineCollection({
     description: z.string(),
     author: z.string(),
     date: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
     readTime: z.string(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
     topics: z.array(tpTopicEnum).default([]),
+    image: z.string().optional(),
   }),
 });
 

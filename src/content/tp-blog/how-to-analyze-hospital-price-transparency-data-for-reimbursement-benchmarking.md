@@ -1,5 +1,5 @@
 ---
-title: "How to Analyze Price Transparency Data for Reimbursement Benchmarking"
+title: "Part 1: How to Analyze Price Transparency Data for Reimbursement Benchmarking"
 description: "A framework for using price transparency data to benchmark reimbursement between hospitals, built from hundreds of customer interactions with managed care professionals."
 date: 2026-03-10
 author: "Matt Phillips"

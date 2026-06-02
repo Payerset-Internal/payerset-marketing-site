@@ -14,7 +14,7 @@ const scorecard = {
   tag: 'Analysis',
   title: 'Payer Compliance Scorecard: how well are payers following price transparency rules?',
   description: "We grade 100+ payers on three dimensions of their machine-readable files: table of contents, file accessibility, and data quality. See who's leading, who's lagging, and where enforcement gaps remain.",
-  href: '/transparencyproject/scorecard',
+  href: '/pricetransparencyproject/scorecard',
 };
 
 type FeedItem = {
@@ -35,7 +35,7 @@ const feedItems: FeedItem[] = [
     title: n.data.title,
     description: n.data.description,
     meta: `${n.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${n.data.readTime}`,
-    href: `/transparencyproject/newsletter/${n.id}`,
+    href: `/pricetransparencyproject/newsletter/${n.id}`,
     date: n.data.date,
     topics: [...n.data.topics],
   })),
@@ -45,7 +45,7 @@ const feedItems: FeedItem[] = [
     title: b.data.title,
     description: b.data.description,
     meta: `${b.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${b.data.readTime}`,
-    href: `/transparencyproject/blog/${b.id}`,
+    href: `/pricetransparencyproject/blog/${b.id}`,
     date: b.data.date,
     topics: [...b.data.topics],
   })),
@@ -55,7 +55,7 @@ const feedItems: FeedItem[] = [
     title: r.data.title,
     description: r.data.description,
     meta: `${r.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${r.data.readTime}`,
-    href: `/transparencyproject/research/${r.id}`,
+    href: `/pricetransparencyproject/research/${r.id}`,
     date: r.data.date,
     topics: [...r.data.topics],
   })),
@@ -69,8 +69,8 @@ const feedItems: FeedItem[] = [
   <TPHero
     logo="/images/transparencyproject/ptp-logo-white.png"
     description="Practical tips and lessons for healthcare finance leaders and analysts leveraging price transparency data."
-    releaseNote="Get the 2026 Price Transparency Report — out June 10th"
-    emailNote="Plus our bi-weekly newsletter on price transparency."
+    releaseNote="Get the 2026 Price Transparency Field Guide - out June 10th"
+    emailNote="Plus our monthly newsletter."
   />
   <TPContentSection feedItems={feedItems} scorecard={scorecard} />
   <TPPillars />

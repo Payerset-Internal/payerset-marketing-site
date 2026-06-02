@@ -14,7 +14,7 @@ February 2nd, 2026 marked the first enforcement deadline for Transparency in Cov
 
 We plan to update this post each quarter as payers continue adapting to the new requirements.
 
-Schema 2.0 is the first step. [We recently did a deep dive in to proposed rules for 2027 and beyond.](/transparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules)
+Schema 2.0 is the first step. [We recently did a deep dive in to proposed rules for 2027 and beyond.](/pricetransparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules)
 
 ## Refresher: What's New in Schema 2.0
 

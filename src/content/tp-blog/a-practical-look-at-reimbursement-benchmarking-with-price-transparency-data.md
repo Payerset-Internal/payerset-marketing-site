@@ -1,5 +1,5 @@
 ---
-title: "A Practical Look at Reimbursement Benchmarking with Price Transparency Data"
+title: "Part 2: A Practical Look at Reimbursement Benchmarking with Price Transparency Data"
 description: "Part two of our series on benchmarking with price transparency data. A real-world example of how single-code comparisons can mislead, and what a comprehensive approach actually looks like."
 date: 2026-03-16
 author: "Jacob Little"
@@ -10,7 +10,7 @@ featured: false
 image: "/images/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data/hospital-comparison.png"
 ---
 
-This is Part Two of a series on using price transparency data for benchmarking. You can take a look at [Part 1 here](/transparencyproject/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking).
+This is Part Two of a series on using price transparency data for benchmarking. You can take a look at [Part 1 here](/pricetransparencyproject/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking).
 
 We recently helped a customer work through one of the most common questions we hear in managed care: am I getting paid more or less for emergency visits than the other hospital in my market?
 
@@ -96,7 +96,7 @@ Understanding which structure applies to which codes is a prerequisite for meani
 
 Claims data is becoming increasingly valuable for hospital benchmarking. Remittance data unlocks added visibility by going under the hood to help showcase billing patterns, validate reported rates, distill code cohorts, and help close the loop on percent-of-charge contracts.
 
-Federal enforcement energy should remain consistent, focused, and constructive. With the introduction of [Schema 2.0](/transparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates), this is a fantastic step forward and even more improvements are [coming in 2027 and beyond](/transparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules).
+Federal enforcement energy should remain consistent, focused, and constructive. With the introduction of [Schema 2.0](/pricetransparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates), this is a fantastic step forward and even more improvements are [coming in 2027 and beyond](/pricetransparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules).
 
 Even a thorough analysis has limits. The methodology we walked through is more accurate than pulling estimated amounts from a hospital MRF for one billing code, but it still involves estimates. Every emergency visit is different. Every contract is different. We are modeling a typical clinical presentation, not a specific patient encounter. The goal is to get directionally right with reasonable confidence, not to manufacture false precision.
 

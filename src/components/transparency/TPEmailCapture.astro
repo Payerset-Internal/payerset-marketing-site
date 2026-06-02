@@ -14,7 +14,7 @@ const isDark = variant === 'dark';
  * subscriber to whatever URL is configured in the dashboard's form
  * settings (Audience → Signup forms → "Signup 'thank you' page" →
  * "Send subscribers to another URL"). Production redirect target:
- *   https://<production-domain>/transparencyproject/2026-transparency-report/thank-you-download
+ *   https://<production-domain>/pricetransparencyproject/2026-field-guide/thank-you-download
  *
  * The honeypot input must keep this exact name; MailChimp drops
  * submissions where it's filled in (a hidden field bots can't resist).
@@ -87,8 +87,7 @@ const MAILCHIMP_HONEYPOT_NAME = 'b_2993a043f5d216244c53d5c24_28c509fa94';
 
   {note && (
     <p class:list={[
-      'text-xs mt-2 opacity-80',
-      isDark ? 'text-white/50' : 'text-text-muted',
+      'text-xs mt-2 text-white/60',
     ]}>
       {note}
     </p>

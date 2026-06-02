@@ -56,7 +56,7 @@ const related = allPosts
           <span class="absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75 animate-ping"></span>
           <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-accent"></span>
         </span>
-        <a href="/transparencyproject" class="hover:text-brand-dark transition-colors">The Price Transparency Project</a>
+        <a href="/pricetransparencyproject" class="hover:text-brand-dark transition-colors">The Price Transparency Project</a>
       </div>
 
       {topicMeta.length > 0 && (
@@ -139,7 +139,7 @@ const related = allPosts
               <h3 class="text-sm font-semibold text-text-primary uppercase tracking-wider mb-3">Share</h3>
               <div class="flex gap-3">
                 <a
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://www.payerset.com/transparencyproject/blog/${post.id}`)}`}
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://www.payerset.com/pricetransparencyproject/blog/${post.id}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
@@ -150,7 +150,7 @@ const related = allPosts
                   </svg>
                 </a>
                 <a
-                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://www.payerset.com/transparencyproject/blog/${post.id}`)}&text=${encodeURIComponent(post.data.title)}`}
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://www.payerset.com/pricetransparencyproject/blog/${post.id}`)}&text=${encodeURIComponent(post.data.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
@@ -178,7 +178,7 @@ const related = allPosts
                 <h3 class="text-sm font-semibold text-text-primary uppercase tracking-wider mb-3">More from the Project</h3>
                 <div class="space-y-4">
                   {related.map((r) => (
-                    <a href={`/transparencyproject/blog/${r.id}`} class="block group">
+                    <a href={`/pricetransparencyproject/blog/${r.id}`} class="block group">
                       <p class="text-sm font-medium text-text-secondary group-hover:text-brand-primary transition-colors leading-snug">
                         {r.data.title}
                       </p>

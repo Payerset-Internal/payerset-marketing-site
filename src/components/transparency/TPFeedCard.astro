@@ -2,8 +2,6 @@
 import { topics as topicConfig } from '../../config/transparency-topics';
 
 interface Props {
-  tag: string;
-  tagType: 'newsletter' | 'brief' | 'research';
   title: string;
   description: string;
   meta: string;
@@ -11,38 +9,29 @@ interface Props {
   topics?: string[];
 }
 
-const { tag, tagType, title, description, meta, href, topics = [] } = Astro.props;
+const { title, description, meta, href, topics = [] } = Astro.props;
 
+// The card's tag(s) are the content's topics (Analysis, Policy, Guides, …),
+// each in its own accent color — not the content type ("Research brief").
 const topicDetails = topics
   .map(slug => topicConfig.find(t => t.slug === slug))
   .filter(Boolean);
-
-const tagColors: Record<string, string> = {
-  newsletter: 'text-brand-dark',
-  brief: 'text-brand-accent',
-  research: 'text-brand-secondary',
-};
 ---
 
 <a
   class="block bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-brand-primary/30 transition-all duration-300 no-underline text-inherit"
   href={href}
 >
-  <div class="flex items-baseline gap-2.5 flex-wrap mb-3">
-    <span class:list={['text-[0.75rem] font-medium', tagColors[tagType] || tagColors.brief]}>
-      {tag}
-    </span>
-    {topicDetails.length > 0 && (
-      <span class="text-[0.7rem] text-text-muted">
-        {topicDetails.map((t, i) => (
-          <>
-            {i > 0 && <span class="text-text-muted/40"> · </span>}
-            <span>{t!.shortLabel}</span>
-          </>
-        ))}
-      </span>
-    )}
-  </div>
+  {topicDetails.length > 0 && (
+    <div class="flex items-baseline gap-2 flex-wrap mb-3 text-[0.75rem] font-medium">
+      {topicDetails.map((t, i) => (
+        <>
+          {i > 0 && <span class="text-text-muted/40">·</span>}
+          <span class={t!.tagText}>{t!.shortLabel}</span>
+        </>
+      ))}
+    </div>
+  )}
   <h3 class="font-heading text-base font-medium leading-snug tracking-tight text-text-primary mb-2">
     {title}
   </h3>

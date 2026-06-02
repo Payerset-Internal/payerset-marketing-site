@@ -29,7 +29,6 @@ const allItems = [...feedItems].sort((a, b) => b.date.getTime() - a.date.getTime
 
 const tabs = [
   { id: 'all',      label: 'All' },
-  { id: 'research', label: 'Research' },
   { id: 'analysis', label: 'Analysis' },
   { id: 'policy',   label: 'Policy' },
   { id: 'playbook', label: 'Field Guides' },
@@ -39,7 +38,6 @@ const tabs = [
 
 function getMatchingTabs(item: FeedItem): string[] {
   const matched = ['all'];
-  if (item.tagType === 'brief' || item.tagType === 'research') matched.push('research');
   item.topics.forEach(t => matched.push(t));
   return matched;
 }
@@ -83,8 +81,6 @@ function getMatchingTabs(item: FeedItem): string[] {
         data-tabs={getMatchingTabs(item).join(',')}
       >
         <TPFeedCard
-          tag={item.tag}
-          tagType={item.tagType}
           title={item.title}
           description={item.description}
           meta={item.meta}

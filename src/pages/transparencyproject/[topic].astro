@@ -59,20 +59,13 @@ const allItems: FeedItem[] = [
   })),
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-const iconBgColors: Record<string, string> = {
-  analysis: 'bg-brand-primary-light text-brand-primary',
-  policy: 'bg-surface-blue-tint text-brand-dark',
-  playbook: 'bg-brand-accent/10 text-brand-accent',
-  equity: 'bg-brand-secondary/10 text-brand-secondary',
-  employer: 'bg-brand-accent/10 text-brand-accent',
-};
 ---
 
 <PageLayout title={`${topic.label} — Price Transparency Project`} description={topic.description}>
   <!-- Topic Header -->
   <section class="bg-surface-light border-b border-slate-200 py-16 sm:py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-reveal>
-      <div class:list={['w-11 h-11 rounded-xl flex items-center justify-center mb-5', iconBgColors[topic.slug] || iconBgColors.analysis]}>
+      <div class:list={['w-11 h-11 rounded-xl flex items-center justify-center mb-5', topic.iconBg]}>
         <Fragment set:html={topic.icon} />
       </div>
       <h1 class="font-heading text-3xl sm:text-4xl font-bold text-text-primary leading-tight tracking-tight mb-3">
@@ -90,8 +83,6 @@ const iconBgColors: Record<string, string> = {
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-reveal>
         {allItems.map(item => (
           <TPFeedCard
-            tag={item.tag}
-            tagType={item.tagType}
             title={item.title}
             description={item.description}
             meta={item.meta}

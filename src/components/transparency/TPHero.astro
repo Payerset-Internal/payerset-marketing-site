@@ -1,22 +1,30 @@
 ---
 import TPEmailCapture from './TPEmailCapture.astro';
+import TPReportPanel from './TPReportPanel.astro';
 
 interface Props {
-  /** Optional small kicker above the title (e.g. "2026 Edition"). */
-  eyebrow?: string;
-  /** Hero headline — currently the flagship report's name. */
-  title: string;
-  /** Pitch paragraph below the title. */
-  description: string;
-  /** Helper text under the email capture. */
+  /** Optional logo image shown above the title. Falls back to a placeholder. */
+  logo?: string;
+  /** Optional big hero headline. Omit to let the logo + card carry the
+   *  report identity; the `description` then stands in as the page's h1. */
+  title?: string;
+  /** Framing line. Acts as the h1 when no `title` is given, else a subhead. */
+  description?: string;
+  /** Live "notification" pill above the CTA — the release date hook (e.g. "Releasing June 10th"). */
+  releaseNote?: string;
+  /** Explicit CTA promise tying the email signup to the report (e.g. "Sign up to get the full report…"). */
+  ctaHeading?: string;
+  /** Secondary helper under the email capture (e.g. the newsletter bonus). */
   emailNote?: string;
 }
 
 const {
-  eyebrow,
+  logo,
   title,
   description,
-  emailNote = "Enter your email to receive the report. You'll also be signed up for our bi-weekly newsletter.",
+  releaseNote,
+  ctaHeading,
+  emailNote = 'Plus our bi-weekly newsletter.',
 } = Astro.props;
 ---
 
@@ -26,55 +34,76 @@ const {
   <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
   <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14" data-reveal>
+  <!-- max-w-7xl so the hero's left/right edges align with the content
+       section below (scorecard tile + feed). The middle gap is eased by
+       widening the report card (see TPReportPanel) rather than narrowing
+       the whole hero, which would break that alignment. -->
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16" data-reveal>
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      <!-- Left (mobile: below cover): text + email capture -->
-      <div class="lg:col-span-7 order-2 lg:order-1">
-        {eyebrow && (
-          <div class="text-[0.8rem] font-medium text-brand-accent mb-4">
-            {eyebrow}
+      <!-- Left (also first on mobile): logo, copy, value props + email capture -->
+      <div class="lg:col-span-6">
+        <!-- Logo carries the brand identity; the card carries the report
+             title, so the left side leads with the logo (slightly larger)
+             instead of repeating the report name in a big headline. -->
+        {logo ? (
+          <img src={logo} alt="The Price Transparency Project — from the team at Payerset" class="w-full max-w-[260px] sm:max-w-[300px] h-auto mb-6" />
+        ) : (
+          <div class="inline-flex items-center justify-center h-11 px-5 mb-6 rounded-md border border-dashed border-white/25 text-white/40 text-[0.7rem] font-medium tracking-wide uppercase">
+            Logo placeholder
           </div>
         )}
-        <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-[1.15] tracking-tight mb-4">
-          {title}
-        </h1>
-        <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6 max-w-xl">
-          {description}
-        </p>
-        <TPEmailCapture note={emailNote} />
+
+        {/* Thin accent rule bridges the logo into the supporting line and
+            rhymes with the card's accent bar on the right. */}
+        <div class="w-12 h-[3px] rounded-full bg-brand-accent mb-7"></div>
+
+        {/* If a title is supplied, render it as the big headline (legacy).
+            Otherwise the framing line below stands in as the page's h1. */}
+        {title && (
+          <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight max-w-2xl">
+            {title}
+          </h1>
+        )}
+
+        {description && (
+          title ? (
+            <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-md">
+              {description}
+            </p>
+          ) : (
+            <h1 class="text-lg sm:text-xl font-normal text-slate-300 leading-relaxed max-w-md">
+              {description}
+            </h1>
+          )
+        )}
+
+        <!-- Action cluster: the report is the hook, so the release date and
+             the "get the report" promise live right on the email CTA — not
+             floated off on their own. The card is the visual of what you get. -->
+        <div class="mt-10">
+          {releaseNote && (
+            <div class="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-3.5 py-1 mb-5 max-w-lg">
+              <span class="relative flex h-1.5 w-1.5 shrink-0">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-brand-accent/70 tp-hero-ping"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-accent"></span>
+              </span>
+              <span class="text-xs font-semibold text-white tracking-wide leading-snug">{releaseNote}</span>
+            </div>
+          )}
+
+          {ctaHeading && (
+            <p class="text-base sm:text-lg font-semibold text-white leading-snug mb-3 max-w-md">
+              {ctaHeading}
+            </p>
+          )}
+
+          <TPEmailCapture note={emailNote} />
+        </div>
       </div>
 
-      <!-- Right (mobile: above text): placeholder report cover -->
-      <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-        <!--
-          TODO: Replace this typographic placeholder with the final report
-          cover image when artwork is available. Aspect ratio is 3:4 — swap
-          for an <img /> at the same proportions to preserve layout.
-        -->
-        <div class="relative w-full max-w-[220px] sm:max-w-[240px] lg:max-w-[260px] aspect-[3/4] bg-brand-dark-deep border border-white/10 rounded-md shadow-2xl shadow-black/50 flex flex-col justify-between p-5 sm:p-6">
-          <!-- Subtle inner gradient for depth -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent rounded-md pointer-events-none"></div>
-
-          <div class="relative">
-            <div class="text-[0.6rem] sm:text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-brand-accent/85 mb-2">
-              Vol. 01 · 2026 Edition
-            </div>
-            <div class="h-px bg-brand-accent/40 w-12"></div>
-          </div>
-
-          <div class="relative">
-            <div class="font-heading text-3xl sm:text-4xl font-bold text-white leading-none tracking-tight">Rate</div>
-            <div class="font-heading text-3xl sm:text-4xl font-light text-brand-accent italic leading-none tracking-tight mt-1">Review</div>
-            <div class="h-px bg-white/15 w-full my-4"></div>
-            <div class="text-[0.75rem] sm:text-sm font-medium text-slate-300 leading-snug">
-              The 2026 Price Transparency Report
-            </div>
-          </div>
-
-          <div class="relative text-[0.55rem] font-semibold tracking-[0.25em] uppercase text-white/40">
-            Payerset
-          </div>
-        </div>
+      <!-- Right (also second/below on mobile): designed-in-browser report panel -->
+      <div class="lg:col-span-6">
+        <TPReportPanel />
       </div>
     </div>
 
@@ -89,8 +118,22 @@ const {
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="text-brand-accent transition-transform group-hover:translate-y-0.5">
           <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Explore analysis, research, and field guides
+        Explore analysis, policy, and field guides
       </span>
     </a>
   </div>
 </section>
+
+<style>
+  /* Soft pulse on the release-pill dot. Disabled under reduced-motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .tp-hero-ping {
+      animation: tpHeroPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+
+  @keyframes tpHeroPing {
+    0%        { transform: scale(1);   opacity: 0.7; }
+    70%, 100% { transform: scale(2.6); opacity: 0; }
+  }
+</style>

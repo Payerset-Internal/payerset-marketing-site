@@ -1,0 +1,153 @@
+---
+import TPFeaturedCard from './TPFeaturedCard.astro';
+import TPFeedCard from './TPFeedCard.astro';
+
+interface FeedItem {
+  tag: string;
+  tagType: 'newsletter' | 'brief' | 'research';
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  date: Date;
+  topics: string[];
+}
+
+interface Props {
+  feedItems: FeedItem[];
+  scorecard: {
+    tag: string;
+    title: string;
+    description: string;
+    href: string;
+  };
+}
+
+const { feedItems, scorecard } = Astro.props;
+
+const allItems = [...feedItems].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const tabs = [
+  { id: 'all',      label: 'All' },
+  { id: 'analysis', label: 'Analysis' },
+  { id: 'policy',   label: 'Policy' },
+  { id: 'playbook', label: 'Field Guides' },
+  { id: 'equity',   label: 'Patient Equity' },
+  { id: 'employer', label: 'Employers' },
+];
+
+function getMatchingTabs(item: FeedItem): string[] {
+  const matched = ['all'];
+  item.topics.forEach(t => matched.push(t));
+  return matched;
+}
+---
+
+<!-- Sticky tab bar, sits below the main header (72px tall) -->
+<div id="tp-tab-bar" class="sticky top-[72px] z-40 bg-white border-b border-slate-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-1 overflow-x-auto scrollbar-none py-1" role="tablist">
+      {tabs.map((tab, i) => (
+        <button
+          role="tab"
+          data-tab={tab.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          class="tp-tab flex-shrink-0 px-4 py-2.5 text-sm font-medium rounded-md transition-all duration-150 whitespace-nowrap"
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<!-- Featured card — only shown in "All" tab -->
+<div id="tp-featured" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+  <div class="text-[0.8rem] font-medium text-text-muted mb-5">Featured</div>
+  <TPFeaturedCard
+    tag={scorecard.tag}
+    title={scorecard.title}
+    description={scorecard.description}
+    href={scorecard.href}
+  />
+</div>
+
+<!-- Content grid -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-16">
+  <div id="tp-feed-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+    {allItems.map(item => (
+      <div
+        class="tp-card-wrapper"
+        data-tabs={getMatchingTabs(item).join(',')}
+      >
+        <TPFeedCard
+          title={item.title}
+          description={item.description}
+          meta={item.meta}
+          href={item.href}
+          topics={item.topics}
+        />
+      </div>
+    ))}
+  </div>
+  <div id="tp-empty" class="hidden text-center py-12 text-text-muted text-sm">
+    No content in this topic yet. Check back soon.
+  </div>
+</section>
+
+<script>
+  const featured = document.getElementById('tp-featured');
+  const feedGrid = document.getElementById('tp-feed-grid');
+  const empty = document.getElementById('tp-empty');
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  const cards = feedGrid?.querySelectorAll<HTMLElement>('.tp-card-wrapper');
+
+  function setTab(tabId: string) {
+    tabBtns?.forEach(btn => {
+      btn.setAttribute('aria-selected', btn.dataset.tab === tabId ? 'true' : 'false');
+    });
+
+    if (featured) {
+      featured.style.display = tabId === 'all' ? '' : 'none';
+    }
+
+    let visibleCount = 0;
+    cards?.forEach(card => {
+      const tabs = card.dataset.tabs?.split(',') ?? [];
+      const show = tabs.includes(tabId);
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+
+    if (empty) {
+      empty.classList.toggle('hidden', visibleCount > 0);
+    }
+  }
+
+  tabBtns?.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTab(btn.dataset.tab ?? 'all');
+    });
+  });
+</script>
+
+<style>
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tp-tab {
+    color: var(--color-text-muted);
+  }
+  .tp-tab:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-slate-50);
+  }
+  .tp-tab[aria-selected="true"] {
+    color: var(--color-brand-primary);
+    background-color: var(--color-brand-primary-light);
+  }
+</style>

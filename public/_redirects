@@ -1,6 +1,20 @@
 # Wix blog URL patterns — Wix sometimes uses /blog/ prefix
 /blog/*  /insights  301
 
+# Posts migrated from /insights to the Price Transparency Project
+/post/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline  /pricetransparencyproject/blog/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline  301
+/post/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data  /pricetransparencyproject/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data  301
+/post/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking  /pricetransparencyproject/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking  301
+/post/transparency-in-coverage-tic-schema-2-0-is-live-updates  /pricetransparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates  301
+/post/cms-proposes-major-updates-to-transparency-in-coverage-rules  /pricetransparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules  301
+
+# Price Transparency Project moved from /transparencyproject to /pricetransparencyproject
+/transparencyproject       /pricetransparencyproject        301
+/transparencyproject/*     /pricetransparencyproject/:splat  301
+
+# 2026 report renamed to the 2026 Field Guide
+/pricetransparencyproject/2026-transparency-report/*  /pricetransparencyproject/2026-field-guide/:splat  301
+
 # Wix URL redirects
 /getstarted  /get-started  301
 

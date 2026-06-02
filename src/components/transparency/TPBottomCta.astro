@@ -1,0 +1,25 @@
+---
+import TPEmailCapture from './TPEmailCapture.astro';
+---
+
+<section class="relative bg-brand-dark-deep overflow-hidden py-20">
+  <!-- Decorative — matches the hero background for consistency -->
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white leading-tight tracking-tight mb-3">
+      The market only works when prices are visible
+    </h2>
+    <p class="text-base text-white/65 mb-8">
+      Join the practitioners, policymakers, and advocates building a transparent healthcare system.
+    </p>
+    <!-- Same MailChimp form as the hero (default/white variant). max-w-md
+         mx-auto (not flex justify-center) so it expands to the full form
+         width like the hero instead of shrinking to its content. -->
+    <div class="max-w-md mx-auto">
+      <TPEmailCapture note="Subscribe to get our monthly newsletter and additional resources." />
+    </div>
+  </div>
+</section>

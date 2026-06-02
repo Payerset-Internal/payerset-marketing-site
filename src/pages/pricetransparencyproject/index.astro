@@ -1,0 +1,78 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import TPHero from '../../components/transparency/TPHero.astro';
+import TPContentSection from '../../components/transparency/TPContentSection.astro';
+import TPPillars from '../../components/transparency/TPPillars.astro';
+import TPBottomCta from '../../components/transparency/TPBottomCta.astro';
+import { getCollection } from 'astro:content';
+
+const research = await getCollection('tp-research');
+const newsletter = await getCollection('tp-newsletter');
+const blog = await getCollection('tp-blog');
+
+const scorecard = {
+  tag: 'Analysis',
+  title: 'Payer Compliance Scorecard: how well are payers following price transparency rules?',
+  description: "We grade 100+ payers on three dimensions of their machine-readable files: table of contents, file accessibility, and data quality. See who's leading, who's lagging, and where enforcement gaps remain.",
+  href: '/pricetransparencyproject/scorecard',
+};
+
+type FeedItem = {
+  tag: string;
+  tagType: 'newsletter' | 'brief' | 'research';
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  date: Date;
+  topics: string[];
+};
+
+const feedItems: FeedItem[] = [
+  ...newsletter.map(n => ({
+    tag: 'Newsletter',
+    tagType: 'newsletter' as const,
+    title: n.data.title,
+    description: n.data.description,
+    meta: `${n.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${n.data.readTime}`,
+    href: `/pricetransparencyproject/newsletter/${n.id}`,
+    date: n.data.date,
+    topics: [...n.data.topics],
+  })),
+  ...blog.map(b => ({
+    tag: 'Research brief',
+    tagType: 'brief' as const,
+    title: b.data.title,
+    description: b.data.description,
+    meta: `${b.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${b.data.readTime}`,
+    href: `/pricetransparencyproject/blog/${b.id}`,
+    date: b.data.date,
+    topics: [...b.data.topics],
+  })),
+  ...research.map(r => ({
+    tag: 'Research',
+    tagType: 'research' as const,
+    title: r.data.title,
+    description: r.data.description,
+    meta: `${r.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} · ${r.data.readTime}`,
+    href: `/pricetransparencyproject/research/${r.id}`,
+    date: r.data.date,
+    topics: [...r.data.topics],
+  })),
+];
+---
+
+<PageLayout
+  title="The Price Transparency Project — A Payerset Initiative"
+  description="Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market actually function like one."
+>
+  <TPHero
+    logo="/images/transparencyproject/ptp-logo-white.png"
+    description="Practical tips and lessons for healthcare finance leaders and analysts leveraging price transparency data."
+    releaseNote="Get the 2026 Price Transparency Field Guide - out June 10th"
+    emailNote="Plus our monthly newsletter."
+  />
+  <TPContentSection feedItems={feedItems} scorecard={scorecard} />
+  <TPPillars />
+  <TPBottomCta />
+</PageLayout>

@@ -1,0 +1,139 @@
+---
+import TPEmailCapture from './TPEmailCapture.astro';
+import TPReportPanel from './TPReportPanel.astro';
+
+interface Props {
+  /** Optional logo image shown above the title. Falls back to a placeholder. */
+  logo?: string;
+  /** Optional big hero headline. Omit to let the logo + card carry the
+   *  report identity; the `description` then stands in as the page's h1. */
+  title?: string;
+  /** Framing line. Acts as the h1 when no `title` is given, else a subhead. */
+  description?: string;
+  /** Live "notification" pill above the CTA — the release date hook (e.g. "Releasing June 10th"). */
+  releaseNote?: string;
+  /** Explicit CTA promise tying the email signup to the report (e.g. "Sign up to get the full report…"). */
+  ctaHeading?: string;
+  /** Secondary helper under the email capture (e.g. the newsletter bonus). */
+  emailNote?: string;
+}
+
+const {
+  logo,
+  title,
+  description,
+  releaseNote,
+  ctaHeading,
+  emailNote = 'Plus our bi-weekly newsletter.',
+} = Astro.props;
+---
+
+<section class="relative bg-brand-dark-deep overflow-hidden">
+  <!-- Decorative gradients -->
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- max-w-7xl so the hero's left/right edges align with the content
+       section below (scorecard tile + feed). The middle gap is eased by
+       widening the report card (see TPReportPanel) rather than narrowing
+       the whole hero, which would break that alignment. -->
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16" data-reveal>
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <!-- Left (also first on mobile): logo, copy, value props + email capture -->
+      <div class="lg:col-span-6">
+        <!-- Logo carries the brand identity; the card carries the report
+             title, so the left side leads with the logo (slightly larger)
+             instead of repeating the report name in a big headline. -->
+        {logo ? (
+          <img src={logo} alt="The Price Transparency Project — from the team at Payerset" class="w-full max-w-[260px] sm:max-w-[300px] h-auto mb-6" />
+        ) : (
+          <div class="inline-flex items-center justify-center h-11 px-5 mb-6 rounded-md border border-dashed border-white/25 text-white/40 text-[0.7rem] font-medium tracking-wide uppercase">
+            Logo placeholder
+          </div>
+        )}
+
+        {/* Thin accent rule bridges the logo into the supporting line and
+            rhymes with the card's accent bar on the right. */}
+        <div class="w-12 h-[3px] rounded-full bg-brand-accent mb-7"></div>
+
+        {/* If a title is supplied, render it as the big headline (legacy).
+            Otherwise the framing line below stands in as the page's h1. */}
+        {title && (
+          <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight max-w-2xl">
+            {title}
+          </h1>
+        )}
+
+        {description && (
+          title ? (
+            <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-md">
+              {description}
+            </p>
+          ) : (
+            <h1 class="text-lg sm:text-xl font-normal text-slate-300 leading-relaxed max-w-md">
+              {description}
+            </h1>
+          )
+        )}
+
+        <!-- Action cluster: the report is the hook, so the release date and
+             the "get the report" promise live right on the email CTA — not
+             floated off on their own. The card is the visual of what you get. -->
+        <div class="mt-10">
+          {releaseNote && (
+            <div class="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-3.5 py-1 mb-5 max-w-lg">
+              <span class="relative flex h-1.5 w-1.5 shrink-0">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-brand-accent/70 tp-hero-ping"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-accent"></span>
+              </span>
+              <span class="text-xs font-semibold text-white tracking-wide leading-snug">{releaseNote}</span>
+            </div>
+          )}
+
+          {ctaHeading && (
+            <p class="text-base sm:text-lg font-semibold text-white leading-snug mb-3 max-w-md">
+              {ctaHeading}
+            </p>
+          )}
+
+          <TPEmailCapture note={emailNote} />
+        </div>
+      </div>
+
+      <!-- Right (also second/below on mobile): designed-in-browser report panel -->
+      <div class="lg:col-span-6">
+        <TPReportPanel />
+      </div>
+    </div>
+
+    <!-- Scroll cue: signals there's more content below the hero.
+         Mobile/tablet only — on lg+ the sticky tab bar peeks above the fold
+         and does the job, so this would be redundant. -->
+    <a
+      href="#tp-tab-bar"
+      class="group relative flex lg:hidden justify-center mt-10 no-underline"
+    >
+      <span class="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-400 group-hover:text-white transition-colors">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="text-brand-accent transition-transform group-hover:translate-y-0.5">
+          <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Explore analysis, policy, and field guides
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Soft pulse on the release-pill dot. Disabled under reduced-motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .tp-hero-ping {
+      animation: tpHeroPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+
+  @keyframes tpHeroPing {
+    0%        { transform: scale(1);   opacity: 0.7; }
+    70%, 100% { transform: scale(2.6); opacity: 0; }
+  }
+</style>

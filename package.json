@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync:scorecard": "node --env-file=.env scripts/sync-scorecard.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

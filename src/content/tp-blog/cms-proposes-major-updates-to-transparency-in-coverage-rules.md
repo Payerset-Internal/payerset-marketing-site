@@ -4,9 +4,10 @@ description: "CMS is proposing significant updates to TiC requirements including
 date: 2026-02-03
 updatedDate: 2026-02-05
 author: "Matt Phillips"
-category: "Industry Insights"
 tags: ["price transparency", "CMS", "transparency in coverage"]
 readTime: "10 min read"
+topics: ["policy"]
+featured: false
 image: "/images/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules/hero.jpg"
 ---
 

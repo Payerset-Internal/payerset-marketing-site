@@ -1,0 +1,138 @@
+---
+/**
+ * TPReportPanel.astro
+ *
+ * The hero-right visual for the Price Transparency Project landing page.
+ * A designed-in-browser "report" artifact — NOT a raster book mockup.
+ * It renders the report as a dark glassmorphism panel that previews its
+ * table of contents, matching the site's data-forward design language
+ * (cf. HeroRateExplorer.astro): dark-deep gradient, faint dot-grid,
+ * ambient accent glow, monospace numerals, staggered fade-in.
+ *
+ * Accent is the TP section green (--color-brand-accent), not the main
+ * site's cyan (--color-brand-secondary).
+ *
+ * The title/subtitle/sections/releaseLabel below are EDITABLE copy.
+ * Swap the section titles for the report's real outline when it's final.
+ */
+interface Section {
+  /** Zero-padded index shown in monospace, e.g. "01". */
+  num: string;
+  /** Section title. */
+  title: string;
+}
+
+interface Props {
+  kicker?: string;
+  /** Small masthead tag, top-right (monospace). */
+  edition?: string;
+  title?: string;
+  subtitle?: string;
+  sections?: Section[];
+}
+
+const {
+  kicker = 'Annual report',
+  edition = '2026 · Vol. 1',
+  title = 'The 2026 Price Transparency Field Guide',
+  subtitle = 'Lessons from the leaders shaping price transparency.',
+  sections = [
+    { num: '01', title: 'The real state of data quality' },
+    { num: '02', title: 'Three themes from leading health systems' },
+    { num: '03', title: 'The new benchmarking playbook' },
+    { num: '04', title: "What's coming in 2026 and beyond" },
+  ],
+} = Astro.props;
+---
+
+<div class="tp-report-panel relative w-full max-w-[500px] mx-auto lg:ml-auto lg:mr-0">
+  <!-- Stacked "pages" behind the cover — two faint, offset layers peeking out
+       at the bottom to suggest a bound, multi-page report. -->
+  <div class="absolute inset-0 rounded-2xl border border-white/[0.05] bg-white/[0.025] translate-y-[12px] -translate-x-[8px] pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 rounded-2xl border border-white/[0.07] bg-white/[0.03] translate-y-[6px] -translate-x-[4px] pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] shadow-2xl shadow-black/40">
+    <!-- Top edge highlight: a faint, colorless hairline that fades at the ends
+         — reads as the lit top edge of a cover, without a loud masthead stripe. -->
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-20"></div>
+    <!-- Fore-edge: faint vertical hairlines along the right edge, like the cut
+         edges of stacked pages on a closed book. -->
+    <div class="absolute right-1.5 top-10 bottom-8 w-2 z-[1] pointer-events-none" aria-hidden="true" style="background-image: repeating-linear-gradient(to right, rgba(255,255,255,0.06) 0 1px, transparent 1px 3px);"></div>
+    <!-- Dot grid + ambient accent glow (same family as HeroRateExplorer) -->
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="tpReportGrid" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="11" cy="11" r="0.5" fill="var(--color-brand-accent)" opacity="0.18" />
+        </pattern>
+        <radialGradient id="tpReportGlow" cx="80%" cy="6%" r="62%">
+          <stop offset="0%" stop-color="var(--color-brand-accent)" stop-opacity="0.24" />
+          <stop offset="100%" stop-color="var(--color-brand-accent)" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#tpReportGrid)" />
+      <rect width="100%" height="100%" fill="url(#tpReportGlow)" />
+    </svg>
+
+    <div class="relative z-10 p-7 sm:p-8">
+      <!-- Header: report identity -->
+      <div class="tp-rp-row flex items-center justify-between gap-3 mb-2.5">
+        <span class="text-[0.8rem] font-semibold text-brand-accent">{kicker}</span>
+        {edition && (
+          <span class="font-mono text-[0.7rem] text-white/40 tracking-wide shrink-0">{edition}</span>
+        )}
+      </div>
+      <h2 class="tp-rp-row font-heading text-xl sm:text-2xl font-bold text-white leading-tight tracking-tight mb-2.5">
+        {title}
+      </h2>
+      <div class="tp-rp-row w-9 h-[3px] rounded-full bg-brand-accent mb-3"></div>
+      <p class="tp-rp-row text-sm text-white/55">
+        {subtitle}
+      </p>
+
+      <div class="tp-rp-row border-t border-white/10 my-6"></div>
+
+      <!-- Contents -->
+      <div class="tp-rp-row text-[0.8rem] font-medium text-white/45 mb-1">
+        Inside the report
+      </div>
+      <ul>
+        {sections.map((s) => (
+          <li class="tp-rp-row flex items-baseline gap-4 py-3 border-b border-white/[0.08] last:border-b-0">
+            <span class="font-mono text-sm text-brand-accent shrink-0 tabular-nums">{s.num}</span>
+            <span class="text-sm text-white/85 leading-snug">{s.title}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Subtle staggered entrance — gives the panel the site's "pulse".
+     The hero container's [data-reveal] handles opacity; these add motion
+     to the inner rows once visible. Disabled under reduced-motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .tp-rp-row {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: tpRpRowIn 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    .tp-rp-row:nth-child(1)  { animation-delay: 0.10s; }
+    .tp-rp-row:nth-child(2)  { animation-delay: 0.16s; }
+    .tp-rp-row:nth-child(3)  { animation-delay: 0.22s; }
+    .tp-rp-row:nth-child(4)  { animation-delay: 0.28s; }
+    .tp-rp-row:nth-child(5)  { animation-delay: 0.34s; }
+    .tp-rp-row:nth-child(6)  { animation-delay: 0.40s; }
+    .tp-rp-row:nth-child(7)  { animation-delay: 0.46s; }
+    .tp-rp-row:nth-child(8)  { animation-delay: 0.52s; }
+    /* List items share a parent <ul>, so they restart their own count. */
+    ul .tp-rp-row:nth-child(1) { animation-delay: 0.40s; }
+    ul .tp-rp-row:nth-child(2) { animation-delay: 0.46s; }
+    ul .tp-rp-row:nth-child(3) { animation-delay: 0.52s; }
+    ul .tp-rp-row:nth-child(4) { animation-delay: 0.58s; }
+  }
+
+  @keyframes tpRpRowIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

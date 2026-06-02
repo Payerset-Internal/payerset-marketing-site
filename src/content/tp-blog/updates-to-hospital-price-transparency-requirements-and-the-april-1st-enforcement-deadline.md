@@ -3,9 +3,10 @@ title: "Updates to Hospital Price Transparency Requirements and the April 1st En
 description: "CMS replaced estimated allowed amounts with percentile-based remittance data in the hospital price transparency rule. Here's what changed before the April 1, 2026 enforcement deadline."
 date: 2026-04-03
 author: "Andrew Gordon"
-category: "News"
 tags: ["price transparency", "hospital MRFs", "CMS", "compliance"]
 readTime: "11 min read"
+topics: ["policy"]
+featured: false
 image: "/images/blog/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline/hero.jpg"
 ---
 
@@ -53,7 +54,7 @@ The attestation requirement adds another layer. By signing off with a named seni
 
 ## Using the new data in practice
 
-The estimated allowed amount was a real limitation in the prior framework. Its value depended entirely on the methodology the hospital used to produce it, which was applied inconsistently and was difficult to audit. The shift to percentile-based actual remittance data closes that gap considerably for percentage-based contracts, and it makes [benchmarking work more reliable](/post/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data) when you are comparing reimbursement across hospitals.
+The estimated allowed amount was a real limitation in the prior framework. Its value depended entirely on the methodology the hospital used to produce it, which was applied inconsistently and was difficult to audit. The shift to percentile-based actual remittance data closes that gap considerably for percentage-based contracts, and it makes [benchmarking work more reliable](/pricetransparencyproject/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data) when you are comparing reimbursement across hospitals.
 
 That said, there are some real limits to what the new data can tell you. The percentile values are backward-looking. They reflect what was actually paid over the prior 12 to 15 months, not what a future claim will pay. For contracts that have been renegotiated or for hospitals that have updated their chargemasters recently, the historical distribution may not reflect current economics.
 
@@ -69,6 +70,6 @@ The original hospital price transparency rule took effect in January 2021, requi
 
 CMS delayed enforcement of the January 1 effective date to give hospitals additional time to update their files. That window closes April 1, 2026. Hospitals that have not yet moved to the version 3.0.0 template and encoded the required percentile data, attestation language, and organizational NPIs will be out of compliance. Non-compliance carries real financial consequences. CMS can issue civil monetary penalties of up to $300 per day for smaller hospitals and up to $5,500 per day for larger ones, and the agency has been actively issuing penalties since late 2023. Enforcement activity has continued to increase since then.
 
-For anyone consuming hospital MRF data for benchmarking or analysis, April 1 is also a useful moment to audit your sources. Files published before that date may still reflect the old format. After enforcement begins, you should start seeing the new structure more consistently, though file quality and completeness will continue to vary across hospitals as it always has. We have written about [what payer compliance looks like when a major schema update takes effect](/post/transparency-in-coverage-tic-schema-2-0-is-live-updates), and the same dynamic applies here on the hospital side.
+For anyone consuming hospital MRF data for benchmarking or analysis, April 1 is also a useful moment to audit your sources. Files published before that date may still reflect the old format. After enforcement begins, you should start seeing the new structure more consistently, though file quality and completeness will continue to vary across hospitals as it always has. We have written about [what payer compliance looks like when a major schema update takes effect](/pricetransparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates), and the same dynamic applies here on the hospital side.
 
 We are watching how the new fields roll out across the files we work with and will share what we find.

@@ -1,0 +1,121 @@
+---
+interface Props {
+  tag: string;
+  title: string;
+  description: string;
+  href: string;
+  ctaLabel?: string;
+}
+
+const { tag, title, description, href, ctaLabel = 'Explore the scorecard' } = Astro.props;
+
+/**
+ * Scorecard preview matrix.
+ *
+ * Status colors follow the real product's traffic-light system:
+ *   green = best, red = worst.
+ *
+ * TODO: Sample payers and status values are representative placeholders.
+ * Wire these to the real Q2 2026 scorecard data when it's published.
+ */
+const statusColors: Record<string, string> = {
+  green:  'bg-emerald-500',
+  yellow: 'bg-amber-300',
+  orange: 'bg-orange-400',
+  red:    'bg-rose-500',
+};
+
+type Status = keyof typeof statusColors;
+
+interface PayerRow {
+  name: string;
+  toc: Status;
+  access: Status;
+  quality: Status;
+}
+
+// Slight green skew — representative of an industry that's improving but uneven.
+const samplePayers: PayerRow[] = [
+  { name: 'Aetna',                  toc: 'green',  access: 'green',  quality: 'green'  },
+  { name: 'Blue Cross Blue Shield', toc: 'green',  access: 'yellow', quality: 'orange' },
+  { name: 'Cigna',                  toc: 'green',  access: 'green',  quality: 'yellow' },
+  { name: 'UnitedHealthcare',       toc: 'yellow', access: 'orange', quality: 'red'    },
+  { name: 'Humana',                 toc: 'orange', access: 'red',    quality: 'red'    },
+];
+---
+
+<a
+  class="group grid md:grid-cols-12 bg-white rounded-xl border border-slate-200 overflow-hidden transition-shadow duration-300 hover:shadow-md no-underline text-inherit"
+  href={href}
+>
+  <!-- Left: scorecard preview matrix (editorial, not dashboard) -->
+  <div class="md:col-span-5 relative bg-brand-dark-deep overflow-hidden p-8 md:p-10 flex flex-col justify-center min-h-[320px]">
+    <!-- Subtle gradient + accent glow, consistent with hero/announcement styling -->
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep pointer-events-none"></div>
+    <div class="absolute -top-16 -right-16 w-56 h-56 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Issue header -->
+    <div class="relative text-[0.75rem] font-medium text-brand-accent mb-7">
+      Q2 2026 · Scorecard
+    </div>
+
+    <!-- Matrix -->
+    <div class="relative">
+      <!-- Column headers -->
+      <div class="grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] gap-3 items-end pb-3 border-b border-white/15">
+        <div></div>
+        <div class="text-[0.65rem] font-medium text-white/55 text-center leading-[1.2]">Table of<br/>contents</div>
+        <div class="text-[0.65rem] font-medium text-white/55 text-center leading-[1.2]">File<br/>accessibility</div>
+        <div class="text-[0.65rem] font-medium text-white/55 text-center leading-[1.2]">Data<br/>quality</div>
+      </div>
+
+      <!-- Rows -->
+      {samplePayers.map(payer => (
+        <div class="grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] gap-3 items-center py-2.5 border-b border-white/8 last:border-b-0">
+          <span class="text-[0.72rem] text-white/85 truncate pr-2">{payer.name}</span>
+          <div class="flex justify-center">
+            <span class:list={['w-2.5 h-2.5 rounded-full', statusColors[payer.toc]]} aria-label={`Table of contents: ${payer.toc}`}></span>
+          </div>
+          <div class="flex justify-center">
+            <span class:list={['w-2.5 h-2.5 rounded-full', statusColors[payer.access]]} aria-label={`File accessibility: ${payer.access}`}></span>
+          </div>
+          <div class="flex justify-center">
+            <span class:list={['w-2.5 h-2.5 rounded-full', statusColors[payer.quality]]} aria-label={`Data quality: ${payer.quality}`}></span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Footnote -->
+    <div class="relative text-[0.62rem] text-white/45 mt-5 tracking-wide">+ 100 more payers</div>
+  </div>
+
+  <!-- Right: body -->
+  <div class="md:col-span-7 p-8 md:p-10 flex flex-col justify-center">
+    <!-- Editorial kicker (replaces colored pill tag) -->
+    <div class="text-[0.8rem] font-medium text-brand-primary mb-4">
+      {tag}
+    </div>
+
+    <h2 class="font-heading text-xl md:text-2xl font-semibold leading-snug tracking-tight text-text-primary mb-3">
+      {title}
+    </h2>
+
+    <p class="text-sm text-text-muted leading-relaxed mb-5">
+      {description}
+    </p>
+
+    <!-- Editorial meta line (replaces 3-stat row) -->
+    <p class="text-xs text-text-muted tracking-wide pt-4 mb-5 border-t border-slate-100">
+      Graded quarterly · 100+ payers · Updated Q2 2026
+    </p>
+
+    <span class="inline-flex items-center gap-2 text-sm font-medium text-brand-primary group-hover:gap-3 transition-all duration-200">
+      {ctaLabel}
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+</a>

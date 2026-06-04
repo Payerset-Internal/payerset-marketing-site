@@ -74,15 +74,17 @@ For percent-of-charge contracts: the payer MRF gives you the rate as a percentag
 
 Here is how this plays out with real data. We worked through a comparison of two competing hospitals in the same market: Hospital A and Hospital B, both serving a similar commercial payer mix. We focused on commercial PPO reimbursement using the bundle above.
 
-The original analysis had claimed Hospital A receives 1.5x more than Hospital B. Here is what we found when we applied the full methodology.
+The original analysis had claimed Hospital A receives more than Hospital B. Here is what we found when we applied the full methodology.
 
 **Head-to-Head Bundle Comparison -- Commercial PPO**
 
 ![Sample breakdown of a real emergency visit comparing two hospitals](/images/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data/hospital-comparison.png)
 
-The conclusion flips entirely. Hospital A does receive more on the headline facility fee for the 99284 code, which is exactly what the original analysis highlighted. But once you account for the full visit, Hospital B comes out ahead by roughly $100 per encounter, about 10% higher overall.
+![Totals for the emergency visit bundle comparison between two hospitals](/images/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data/hospital-comparison-totals.png)
 
-Here is the part that really matters. The 99284 facility fee, the single number the original analysis was built on, shows Hospital A higher by a good margin. But then look at what happens in the labs and the rest of the bundle. Hospital B collects significantly more across labs, troponin, and the EKG professional fee. That is where the negotiating leverage actually lives, and it is easy to miss entirely if you are only looking at one code from one source.
+The conclusion flips entirely. Hospital A does receive more on the headline facility fee for the 99284 code, which is exactly what the original analysis highlighted. But once you account for the full visit, Hospital B comes out ahead by roughly $250 per encounter, about 12% higher overall.
+
+Here is the part that really matters. The 99284 facility fee, the single number the original analysis was built on, shows Hospital A higher by a good margin. But then look at what happens in the labs and the rest of the bundle. Hospital B collects significantly more across the labs and the troponin, and edges ahead on the professional fees as well. That is where the negotiating leverage actually lives, and it is easy to miss entirely if you are only looking at one code from one source.
 
 ## A Note About Percent-of-Charge Rates
 

@@ -8,18 +8,13 @@ import PageLayout from '../../../layouts/PageLayout.astro';
  * subscribers here after a successful submission. The page is publicly
  * accessible at its URL — it's "soft-gated" by being unlinked from site
  * navigation, which is standard practice for marketing lead magnets.
- *
- * TODO: The PDF at /public/reports/rate-review-2026.pdf is currently a
- *       placeholder ("PLACEHOLDER FILE — Do Not Distribute"). Replace
- *       it with the real published report before launch. URL stays the
- *       same; no code change needed.
  */
-const downloadUrl = '/reports/rate-review-2026.pdf';
+const downloadUrl = '/reports/2026-price-transparency-field-guide.pdf';
 ---
 
 <PageLayout
   title="You're subscribed — 2026 Price Transparency Field Guide | Price Transparency Project"
-  description="Thanks for subscribing. Your copy of The 2026 Price Transparency Field Guide will be on its way to your inbox on June 10th."
+  description="Thanks for subscribing. Download your copy of The 2026 Price Transparency Field Guide and get the latest analysis from the Project."
 >
   <!-- Confirmation hero -->
   <section class="relative bg-brand-dark-deep overflow-hidden">
@@ -40,15 +35,11 @@ const downloadUrl = '/reports/rate-review-2026.pdf';
       </h1>
 
       <p class="text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
-        Your copy of <em class="text-white not-italic font-medium">The 2026 Price Transparency Field Guide</em> will be on its way to your inbox on June 10th. You'll also receive our newsletter with the latest analysis, research, and field guides from the Project.
+        Your copy of <em class="text-white not-italic font-medium">The 2026 Price Transparency Field Guide</em> is on its way to your inbox, or grab it right now below. You'll also receive our newsletter with the latest analysis, research, and field guides from the Project.
       </p>
 
-      {/* Download CTA temporarily removed until the report publishes on
-          June 10th. Restore this block (and use `downloadUrl` above) once the
-          real PDF is in place. */}
-      {/*
       <div class="flex flex-col items-center mt-12 sm:mt-14">
-        <span class="text-xs sm:text-sm text-white/55 mb-3">Or grab it right now:</span>
+        <span class="text-xs sm:text-sm text-white/55 mb-3">Download your copy:</span>
         <a
           href={downloadUrl}
           download
@@ -60,7 +51,6 @@ const downloadUrl = '/reports/rate-review-2026.pdf';
           Download the report
         </a>
       </div>
-      */}
     </div>
   </section>
 

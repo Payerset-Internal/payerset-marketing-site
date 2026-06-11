@@ -37,6 +37,16 @@ const related = allPosts
   .filter((p) => p.id !== post.id && p.data.topics.some((t) => post.data.topics.includes(t)))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.payerset.com/' },
+    { '@type': 'ListItem', position: 2, name: 'The Price Transparency Project', item: 'https://www.payerset.com/pricetransparencyproject' },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: `https://www.payerset.com/pricetransparencyproject/blog/${post.id}` },
+  ],
+};
 ---
 
 <PageLayout
@@ -47,6 +57,7 @@ const related = allPosts
   modifiedDate={post.data.updatedDate?.toISOString()}
   author={post.data.author}
   image={post.data.image}
+  extraSchema={[breadcrumbSchema]}
 >
   <!-- Header -->
   <section class="bg-surface-light border-b border-slate-200">

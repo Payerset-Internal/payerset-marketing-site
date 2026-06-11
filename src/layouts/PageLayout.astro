@@ -13,6 +13,7 @@ interface Props {
   publishedDate?: string;
   modifiedDate?: string;
   author?: string;
+  extraSchema?: Record<string, unknown>[];
 }
 
 const props = Astro.props;

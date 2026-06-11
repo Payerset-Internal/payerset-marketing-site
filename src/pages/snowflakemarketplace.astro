@@ -1,10 +1,28 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+
+const datasetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Payerset Price Transparency Sample Data on Snowflake Marketplace',
+  description:
+    'Free sample price transparency datasets for UnitedHealthcare, Kaiser Permanente, Cigna, and more, available on the Snowflake Marketplace.',
+  url: 'https://www.payerset.com/snowflakemarketplace',
+  isAccessibleForFree: true,
+  keywords: [
+    'price transparency',
+    'Transparency in Coverage',
+    'payer negotiated rates',
+    'Snowflake Marketplace',
+  ],
+  creator: { '@id': 'https://www.payerset.com/#organization' },
+};
 ---
 
 <PageLayout
   title="Snowflake Marketplace"
   description="Access free samples of price transparency data for United Healthcare, Kaiser Permanente, Cigna, and more."
+  extraSchema={[datasetSchema]}
 >
   <!-- Hero Section -->
   <section class="relative bg-brand-dark-deep overflow-hidden">

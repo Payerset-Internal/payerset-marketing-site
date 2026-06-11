@@ -10,6 +10,8 @@ interface Props {
   publishedDate?: string;
   modifiedDate?: string;
   author?: string;
+  /** Extra JSON-LD objects to inject (e.g. SoftwareApplication, FAQPage, BreadcrumbList). */
+  extraSchema?: Record<string, unknown>[];
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   publishedDate,
   modifiedDate,
   author,
+  extraSchema = [],
 } = Astro.props;
 
 const fullTitle = title === 'Payerset' ? title : `${title} | Payerset`;
@@ -32,10 +35,26 @@ const isArticle = type === 'article';
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': 'https://www.payerset.com/#organization',
   name: 'Payerset',
   url: 'https://www.payerset.com',
   logo: 'https://www.payerset.com/images/og-default.png',
-  description: 'Healthcare price transparency solutions. Understand every contracted rate and claim in your market.',
+  description:
+    'Healthcare price transparency data company. Payerset turns payer Transparency in Coverage files and hospital machine-readable files into clean, analyzable contracted-rate and claims data for reimbursement benchmarking and managed care contract negotiations.',
+  knowsAbout: [
+    'Healthcare price transparency',
+    'Transparency in Coverage (TiC)',
+    'Hospital Price Transparency',
+    'Machine-readable files (MRF)',
+    'Reimbursement benchmarking',
+    'Managed care contract negotiation',
+    'Commercial payer contracted rates',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    url: 'https://www.payerset.com/get-started',
+  },
   sameAs: [
     'https://www.linkedin.com/company/payerset',
   ],
@@ -58,6 +77,8 @@ const blogPostingSchema = isArticle ? {
   description,
   image: ogImage,
   url: canonicalURL,
+  mainEntityOfPage: canonicalURL,
+  inLanguage: 'en-US',
   datePublished: publishedDate,
   ...(modifiedDate && { dateModified: modifiedDate }),
   author: {
@@ -66,6 +87,7 @@ const blogPostingSchema = isArticle ? {
   },
   publisher: {
     '@type': 'Organization',
+    '@id': 'https://www.payerset.com/#organization',
     name: 'Payerset',
     logo: {
       '@type': 'ImageObject',
@@ -110,6 +132,7 @@ const blogPostingSchema = isArticle ? {
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {websiteSchema && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
     {blogPostingSchema && <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />}
+    {extraSchema.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

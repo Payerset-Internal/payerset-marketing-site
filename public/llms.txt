@@ -1,0 +1,37 @@
+# Payerset
+
+> Payerset is a healthcare price transparency data company. We turn payer
+> Transparency in Coverage (TiC) files and Hospital Price Transparency
+> machine-readable files (MRFs) into clean, analyzable contracted-rate and claims
+> data so health systems, providers, health-tech teams, employers, and researchers
+> can benchmark reimbursement, prepare for managed care contract negotiations, and
+> understand competitive rates in their market.
+
+Payerset normalizes and enriches MRF data and delivers it through self-service
+tools, full data feeds, and the Snowflake Marketplace. Our editorial hub, the
+Price Transparency Project, publishes analysis, policy explainers, and practical
+playbooks on putting this data to work.
+
+## Products
+- [Rate Explorer](https://www.payerset.com/rateexplorer): Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies and flip the negotiation dynamic.
+- [Data Lake](https://www.payerset.com/datalake): Enriched payer and provider MRF data delivered in analytics-ready formats so teams can build, innovate, and scale faster.
+- [Snowflake Marketplace](https://www.payerset.com/snowflakemarketplace): Access price transparency data for UnitedHealthcare, Kaiser Permanente, Cigna, and more, directly in Snowflake.
+- [Research](https://www.payerset.com/research): Free access to payer-sourced price transparency data through the Rate Explorer portal for academic research.
+- [Pricing](https://www.payerset.com/pricing): Price transparency and claims data built for hospital finance teams — one platform, every contracted rate in your market.
+
+## The Price Transparency Project (editorial hub)
+- [Project home](https://www.payerset.com/pricetransparencyproject): Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market function like one.
+- [Part 1: How to Analyze Price Transparency Data for Reimbursement Benchmarking](https://www.payerset.com/pricetransparencyproject/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking): A framework for benchmarking reimbursement between hospitals using MRF data.
+- [Part 2: A Practical Look at Reimbursement Benchmarking](https://www.payerset.com/pricetransparencyproject/blog/a-practical-look-at-reimbursement-benchmarking-with-price-transparency-data): Why single-code comparisons mislead and what a sound methodology looks like.
+- [CMS Proposes Major Updates to Transparency in Coverage (TiC) Rules](https://www.payerset.com/pricetransparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules): Network-based files, annual utilization files, quarterly reporting, and enhanced out-of-network data.
+- [TiC Schema 2.0 Is Live](https://www.payerset.com/pricetransparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates): What changed in the Transparency in Coverage schema.
+- [Hospital Price Transparency Requirements & the April 1 Enforcement Deadline](https://www.payerset.com/pricetransparencyproject/blog/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline): Updated requirements and the enforcement timeline.
+
+## Company
+- [About Payerset](https://www.payerset.com/about-us): Our mission to create fair and equitable healthcare for everyone.
+- [Insights (full blog)](https://www.payerset.com/insights): Healthcare price transparency insights, analysis, Payercast episodes, and MRF parsing deep-dives from the Payerset team.
+- [Request a demo](https://www.payerset.com/get-started): Talk to the team about price transparency for contract negotiations and pricing strategy.
+
+## Optional
+- [Privacy Policy](https://www.payerset.com/privacy)
+- [Terms of Use](https://www.payerset.com/terms-of-use)

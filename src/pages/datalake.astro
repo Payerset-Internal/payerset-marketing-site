@@ -6,11 +6,29 @@ import RatesGridViz from '../components/RatesGridViz.astro';
 import NpiTinViz from '../components/NpiTinViz.astro';
 import EmployerCoverageViz from '../components/EmployerCoverageViz.astro';
 import NetworkViz from '../components/NetworkViz.astro';
+
+const datasetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Payerset Data Lake',
+  description:
+    'Enriched payer and provider price transparency (MRF) data — contracted rates and claims — delivered in analytics-ready formats for custom tools and analysis.',
+  url: 'https://www.payerset.com/datalake',
+  keywords: [
+    'price transparency',
+    'machine-readable files',
+    'MRF',
+    'contracted rates',
+    'Transparency in Coverage',
+  ],
+  creator: { '@id': 'https://www.payerset.com/#organization' },
+};
 ---
 
 <PageLayout
   title="Healthcare Price Transparency Data Solutions for Custom Tools: Data Lake"
   description="Build, innovate & scale faster with enriched payer & provider MRF data delivered in analytics-ready formats."
+  extraSchema={[datasetSchema]}
 >
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-brand-dark-deep">

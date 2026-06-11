@@ -3,11 +3,25 @@ import PageLayout from '../layouts/PageLayout.astro';
 import HeroRateExplorer from '../components/HeroRateExplorer.astro';
 import InsightsCarousel from '../components/InsightsCarousel.astro';
 import FeatureShowcase from '../components/FeatureShowcase.astro';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Payerset Rate Explorer',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description:
+    'Self-service tool to analyze every negotiated commercial rate by payer, provider, and procedure, fueling smarter pricing strategies and contract negotiations.',
+  url: 'https://www.payerset.com/rateexplorer',
+  offers: { '@type': 'Offer', url: 'https://www.payerset.com/get-started' },
+  provider: { '@id': 'https://www.payerset.com/#organization' },
+};
 ---
 
 <PageLayout
   title="Healthcare Price Transparency Tools: Rate Explorer - Payerset"
   description="Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies & flip the negotiation dynamic."
+  extraSchema={[softwareSchema]}
 >
   <!-- Hero Section -->
   <section class="relative bg-brand-dark-deep overflow-hidden">

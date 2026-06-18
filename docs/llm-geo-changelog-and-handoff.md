@@ -2,7 +2,7 @@
 
 > **Purpose:** self-contained handoff so this initiative can continue in a fresh chat with no prior context.
 > **Project:** Payerset marketing site (`payerset-site`) — Astro 5 + Tailwind v4 + MDX, deployed on Netlify. Dev server: `npm run dev` (port 4321). Build: `npm run build`. Production: https://www.payerset.com
-> **Branch:** `main` · **Status:** Tier 1 + core Tier 2 schema committed & pushed in `9f52803`. **FAQ + Glossary + `llms-full.txt` work (2026-06-18) committed & pushed to `origin/main`** — see §2b. Remaining: TL;DR standardization, plain-text product intros, and 2 user inputs (founding year, author LinkedIn URLs).
+> **Branch:** `main` · **Status:** Tier 1 + core Tier 2 schema committed & pushed in `9f52803`. **FAQ + Glossary + `llms-full.txt` work (2026-06-18) committed & pushed in `b8dea7c` on `origin/main`** — see §2b. Remaining: TL;DR standardization, plain-text product intros, and 2 user inputs (founding year, author LinkedIn URLs).
 
 ---
 
@@ -56,7 +56,7 @@ All changes below are **committed and pushed** in `9f52803` on `origin/main`. `d
 
 ## 2b. Changelog — FAQ schema + Glossary (2026-06-18)
 
-**Committed & pushed to `origin/main` (2026-06-18).** Build passes; all emitted JSON-LD validated (**19 blocks, 0 invalid**); verified rendering in the dev preview (homepage / rateexplorer / datalake / pricing / research / PTP hub FAQs + `/glossary`) with no console errors.
+**Committed & pushed in `b8dea7c` (2026-06-18).** Build passes; all emitted JSON-LD validated (**19 blocks, 0 invalid**); verified rendering in the dev preview (homepage / rateexplorer / datalake / pricing / research / PTP hub FAQs + `/glossary`) with no console errors.
 
 This closed open items **§4b #3 (FAQPage)** and **§4b #4 (Glossary)**.
 

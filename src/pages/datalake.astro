@@ -6,6 +6,8 @@ import RatesGridViz from '../components/RatesGridViz.astro';
 import NpiTinViz from '../components/NpiTinViz.astro';
 import EmployerCoverageViz from '../components/EmployerCoverageViz.astro';
 import NetworkViz from '../components/NetworkViz.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../utils/faq';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
@@ -23,12 +25,31 @@ const datasetSchema = {
   ],
   creator: { '@id': 'https://www.payerset.com/#organization' },
 };
+
+const faqs: FaqItem[] = [
+  {
+    q: 'How do you deliver the data to my environment?',
+    a: 'We will work with you and your technology organization. Every organization is different depending on your environment, platforms, and processes. We support all major clouds and can provide the data in various formats. Additionally, Snowflake customers can easily access and purchase our data via the Snowflake Marketplace.',
+  },
+  {
+    q: 'Does Payerset handle schema drift as upstream data structures change?',
+    a: 'Yes. There can be regular schema changes based on payer updates in price transparency compliance. There can also be changes based on updated CMS rules. We normalize the data before you receive it, so we handle these changes for you. We will never remove fields, as that would affect your downstream processes, but we may add fields based on new requirements.',
+  },
+  {
+    q: 'What challenges come with using price transparency data?',
+    a: 'Price transparency data is publicly accessible, but transforming it into usable formats demands significant technological investment and time. Payerset simplifies this process, enabling product teams to leverage the data for innovation and scaling on their core platforms.',
+  },
+  {
+    q: 'How frequently is Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> updated?',
+    a: 'Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> is updated quarterly, ensuring the latest payer data structures, negotiated rates, and regulatory requirements are incorporated. These updates provide users with the most accurate and current information, while historical payer data remains fully accessible.',
+  },
+];
 ---
 
 <PageLayout
   title="Healthcare Price Transparency Data Solutions for Custom Tools: Data Lake"
   description="Build, innovate & scale faster with enriched payer & provider MRF data delivered in analytics-ready formats."
-  extraSchema={[datasetSchema]}
+  extraSchema={[datasetSchema, buildFaqSchema(faqs)]}
 >
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-brand-dark-deep">
@@ -566,59 +587,7 @@ const datasetSchema = {
         </h2>
       </div>
 
-      <div class="space-y-4">
-        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="0">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-            <span class="text-base font-semibold text-brand-dark pr-4">How do you deliver the data to my environment?</span>
-            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-            We will work with you and your technology organization. Every organization is different depending on your environment, platforms, and processes. We support all major clouds and can provide the data in various formats. Additionally, Snowflake customers can easily access and purchase our data via the Snowflake Marketplace.
-          </div>
-        </details>
-
-        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="80">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-            <span class="text-base font-semibold text-brand-dark pr-4">Does Payerset handle schema drift as upstream data structures change?</span>
-            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-            Yes. There can be regular schema changes based on payer updates in price transparency compliance. There can also be changes based on updated CMS rules. We normalize the data before you receive it, so we handle these changes for you. We will never remove fields, as that would affect your downstream processes, but we may add fields based on new requirements.
-          </div>
-        </details>
-
-        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="160">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-            <span class="text-base font-semibold text-brand-dark pr-4">What challenges come with using price transparency data?</span>
-            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-            Price transparency data is publicly accessible, but transforming it into usable formats demands significant technological investment and time. Payerset simplifies this process, enabling product teams to leverage the data for innovation and scaling on their core platforms.
-          </div>
-        </details>
-
-        <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200" data-reveal data-reveal-delay="240">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-          <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-            <span class="text-base font-semibold text-brand-dark pr-4">How frequently is Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> updated?</span>
-            <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-            Payerset <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> is updated quarterly, ensuring the latest payer data structures, negotiated rates, and regulatory requirements are incorporated. These updates provide users with the most accurate and current information, while historical payer data remains fully accessible.
-          </div>
-        </details>
-      </div>
+      <FaqAccordion faqs={faqs} reveal />
     </div>
   </section>
 </PageLayout>

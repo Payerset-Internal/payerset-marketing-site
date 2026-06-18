@@ -14,11 +14,13 @@
 - ✅ `BreadcrumbList` on Insights (`/post/`) and Price Transparency Project blog posts
 - ✅ Verified: site builds; all 14 emitted JSON-LD blocks are valid JSON; sitemap no longer ships stale `/transparencyproject/` paths
 
+### Shipped (2026-06-18, on `origin/main`)
+- ✅ **FAQPage** with visible Q&A on homepage, pricing, rateexplorer, datalake, research, and the PTP hub — shared `FaqAccordion` component + `buildFaqSchema` util (visible text + schema share one array). See changelog doc §2b.
+- ✅ **Glossary** at `/glossary` with `DefinedTermSet`/`DefinedTerm` schema (14 terms); linked from footer + `llms.txt`.
+
 ### Still open (needs your input or a content pass)
 - ⏳ **Author E-E-A-T:** add `sameAs` (LinkedIn) to blog authors + optional `/authors/<name>` pages — *needs LinkedIn URLs*
 - ⏳ **Organization enrichment:** `foundingDate` + `founders` — *needs the year/names*
-- ⏳ **FAQPage** with visible Q&A on homepage/pricing/product pages — *content pass (schema mechanism is ready via `extraSchema`)*
-- ⏳ **Glossary** page with `DefinedTerm` — *content pass*
 - ⏳ **TL;DR standardization** across all posts + plain-text product-page intro paragraphs — *content pass*
 
 ---

@@ -2,7 +2,7 @@
 
 > **Purpose:** self-contained handoff so this initiative can continue in a fresh chat with no prior context.
 > **Project:** Payerset marketing site (`payerset-site`) — Astro 5 + Tailwind v4 + MDX, deployed on Netlify. Dev server: `npm run dev` (port 4321). Build: `npm run build`. Production: https://www.payerset.com
-> **Branch:** `main` · **Status:** Tier 1 + core Tier 2 schema **committed & pushed** in commit `9f52803` ("Add LLM GEO/SEO structured data, AI crawler rules, and llms.txt") on `origin/main`. Content passes + 2 inputs still open. (This handoff doc was added afterward and may itself be uncommitted.)
+> **Branch:** `main` · **Status:** Tier 1 + core Tier 2 schema committed & pushed in `9f52803`. **FAQ + Glossary + `llms-full.txt` work (2026-06-18) committed & pushed to `origin/main`** — see §2b. Remaining: TL;DR standardization, plain-text product intros, and 2 user inputs (founding year, author LinkedIn URLs).
 
 ---
 
@@ -54,6 +54,44 @@ All changes below are **committed and pushed** in `9f52803` on `origin/main`. `d
 
 ---
 
+## 2b. Changelog — FAQ schema + Glossary (2026-06-18)
+
+**Committed & pushed to `origin/main` (2026-06-18).** Build passes; all emitted JSON-LD validated (**19 blocks, 0 invalid**); verified rendering in the dev preview (homepage / rateexplorer / datalake / pricing / research / PTP hub FAQs + `/glossary`) with no console errors.
+
+This closed open items **§4b #3 (FAQPage)** and **§4b #4 (Glossary)**.
+
+### New files
+| File | What it does |
+|---|---|
+| `src/utils/faq.ts` | `FaqItem` type + `buildFaqSchema(faqs)`. One array drives both the visible accordion and the `FAQPage` JSON-LD, so on-page Q&A and schema **cannot drift** (Google's match requirement). Strips inline HTML to clean schema text; `text?` field overrides when markup (e.g. a bulleted list) won't strip cleanly. |
+| `src/components/FaqAccordion.astro` | Shared `<details>` accordion (renders only the Q&A list, so each page keeps its own section heading/eyebrow/background). Props: `faqs`, `reveal?` (staggered scroll-reveal). Questions/answers rendered via `set:html` to preserve ™ superscripts, `<strong>`, bullet lists. |
+| `src/pages/glossary.astro` | New `/glossary` page. 14 terms (MRF, TiC, Hospital Price Transparency, negotiated/allowed rate, in-/out-of-network, payer, reimbursement benchmarking, NPI, TIN, CPT/HCPCS, DRG, billing code) each as an `<h2>` + definition, anchor-linked, with a quick-nav. Emits `DefinedTermSet` JSON-LD (each term a `DefinedTerm` with `@id`/`url` anchors, `inDefinedTermSet`, publisher → Org `@id`). Single `terms` array drives visible text **and** schema. |
+
+### Modified files
+| File | Change |
+|---|---|
+| `src/pages/index.astro` | FAQ refactored to `FaqAccordion` + `buildFaqSchema` (5 Q&A) → `FAQPage`. |
+| `src/pages/rateexplorer.astro` | Same; `extraSchema=[softwareSchema, buildFaqSchema(faqs)]`. The bullet-list answer uses a `text` override for clean schema. |
+| `src/pages/datalake.astro` | Same; `extraSchema=[datasetSchema, buildFaqSchema(faqs)]`. |
+| `src/pages/pricing.astro` | Same (6 Q&A). |
+| `src/pages/research.astro` | Same (3 Q&A) — previously had visible FAQ but no schema. |
+| `src/pages/pricetransparencyproject/index.astro` | **Net-new** FAQ section (6 educational/definitional Q&A: "what is TiC/MRF/hospital price transparency", etc.) inserted before `TPBottomCta`, + `FAQPage`. |
+| `src/components/Footer.astro` | Added **Glossary** link under Resources. |
+| `public/llms.txt` | Added a **Reference** section linking `/glossary`. |
+
+**Note on visible/schema match:** the 4 pages that already had hardcoded FAQs (index, rateexplorer, datalake) and the array-based ones (pricing, research) were all migrated to the shared component, so the visible text is now generated from the same array as the schema — no duplication/drift. Minor formatting (e.g. "Rate Explorer™" → "Rate Explorer ™" in stripped schema text) is cosmetic and within Google's tolerance.
+
+### Also added: `llms-full.txt` (full-text AI export)
+| File | What it does |
+|---|---|
+| `src/data/glossary.ts` | Glossary terms extracted to a shared module (single source of truth). Imported by both `glossary.astro` and the export below — no duplication. |
+| `src/pages/llms-full.txt.ts` | **Build-time endpoint** (`export const prerender = true`) that emits a static `/llms-full.txt` — the full-text companion to the curated `/llms.txt`. Concatenates the company description, the 14 glossary definitions, all Price Transparency Project posts, and all Insights posts (full markdown bodies, newest-first), pulled live from the content collections so it regenerates on every deploy (self-healing like the sitemap). Last build: **~227 KB, 40 articles**, served `text/plain; charset=utf-8`. |
+| `public/llms.txt` | Added a pointer to `llms-full.txt` near the top. |
+
+This was a **zero-visible-change** addition (chosen deliberately over TL;DR/product-intro passes, which would alter existing page appearance). Verified: served 200, correct content-type, links resolve, glossary page still emits its 14-term `DefinedTermSet` after the refactor.
+
+---
+
 ## 3. Reference: trust-logo → org mapping (homepage carousel)
 
 Identified by viewing each PNG in `src/assets/images/`. Use these names if the carousel changes.
@@ -84,10 +122,12 @@ Identified by viewing each PNG in `src/assets/images/`. Use these names if the c
 2. **Founding year** (+ founder name[s], optional) → add `foundingDate` and `founders` to `organizationSchema` in `BaseLayout.astro`. **Do not guess these** — they were deliberately omitted.
 
 ### 4b. Content passes (mechanism ready, needs copy)
-3. **FAQ + `FAQPage` schema** on homepage, `pricing`, `rateexplorer`, `datalake`, PTP hub. The `extraSchema` mechanism is ready (see §5). **Rule:** the visible on-page Q&A text MUST match the schema `acceptedAnswer.text` (Google requirement). Needs the actual Q&A copy — can be drafted from existing blog content for user review.
-4. **Glossary page** (e.g. `/glossary`) with `DefinedTerm` schema: MRF, Transparency in Coverage (TiC), Hospital Price Transparency, Negotiated/Allowed Rate, Reimbursement Benchmarking, In-/Out-of-Network. Clean 2–4 sentence definitions = the format LLMs cite most.
-5. **TL;DR standardization** — add a 3–5 bullet answer-first summary to the top of each post (the CMS/TiC post already has one as the pattern: `src/content/tp-blog/cms-proposes-major-updates-to-transparency-in-coverage-rules.md`).
-6. **Plain-text product intros** — homepage + product pages lead with visual components (`HeroMap`, etc.) that LLMs can't read. Add a short plain-text "what Payerset does" paragraph.
+3. ✅ **DONE (2026-06-18, on `origin/main`).** **FAQ + `FAQPage` schema** on homepage, `pricing`, `rateexplorer`, `datalake`, `research`, and the PTP hub — via the shared `FaqAccordion` + `buildFaqSchema` (visible text and schema share one array, so they can't drift). See §2b.
+4. ✅ **DONE (2026-06-18, on `origin/main`).** **Glossary** at `/glossary` with `DefinedTermSet`/`DefinedTerm` schema, 14 terms. See §2b. **`llms-full.txt`** full-text export also shipped (see §2b).
+5. **TL;DR standardization** — add a 3–5 bullet answer-first summary to the top of each post (the CMS/TiC post already has one as the pattern: `src/content/tp-blog/cms-proposes-major-updates-to-transparency-in-coverage-rules.md`). **Still open** — highest-impact remaining content pass.
+6. **Plain-text product intros** — homepage + product pages lead with visual components (`HeroMap`, etc.) that LLMs can't read. Add a short plain-text "what Payerset does" paragraph. **Still open.**
+
+> **Next-highest-impact ideas (newer, beyond original plan):** ~~`llms-full.txt`~~ ✅ **done 2026-06-18** (see §2b); a citable "by the numbers" stats page (LLMs quote named statistics — leverage the scorecard/field-guide data); query-targeted answer pages. Off-site corroboration (§4c) remains the single biggest real-world citation driver.
 
 ### 4c. Off-site (separate owner — marketing)
 See [`llm-geo-offsite-checklist.md`](./llm-geo-offsite-checklist.md): Wikidata entry, profile consistency (LinkedIn/Crunchbase/G2/Capterra), third-party citations/PR, and a monthly monitoring prompt set. This is the biggest real-world driver of citations and is NOT code work.
@@ -139,7 +179,7 @@ for(const f of files){
 console.log("blocks:",total,"invalid:",bad);'
 ```
 
-Last verified run (2026-06-10): **14 blocks, 0 invalid.** Homepage = Organization + WebSite; product pages = Organization + SoftwareApplication/Dataset; blog posts = Organization + BlogPosting + BreadcrumbList.
+Last verified run (2026-06-18): **19 blocks, 0 invalid.** Homepage = Organization + WebSite + FAQPage; rateexplorer = Organization + SoftwareApplication + FAQPage; datalake = Organization + Dataset + FAQPage; pricing/research/PTP hub = Organization + FAQPage; glossary = Organization + DefinedTermSet; blog posts = Organization + BlogPosting + BreadcrumbList. (Add the FAQ pages + `glossary/index.html` to the `files` array in the script above.)
 
 External validators (post-deploy): [Google Rich Results Test](https://search.google.com/test/rich-results), [Schema.org validator](https://validator.schema.org). Confirm `https://www.payerset.com/llms.txt` and `/robots.txt` render as plain text.
 

@@ -1,10 +1,40 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../utils/faq';
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What data is included in every plan?',
+    a: 'Every plan includes payer price transparency data (all published MRFs), all-payer claims and remits, full historical rate data, and quarterly refreshes. The difference between tiers is based on your organization\'s bed count.',
+  },
+  {
+    q: 'How do you determine which tier I fall into?',
+    a: 'Tiers are based on the number of licensed beds at your facility or across your system. Tier 1 covers 300–999 beds, Tier 2 covers 1,000–2,999 beds, and Tier 3 is for systems with 3,000+ beds. Not sure where you fall? Our team can help you determine the best fit.',
+  },
+  {
+    q: 'Can I add more user seats to my plan?',
+    a: 'Yes. All plans support add-on user seats beyond the base allocation. Reach out and we\'ll build the right package for your team.',
+  },
+  {
+    q: 'What is the Payerset Data Lake™?',
+    a: 'The Data Lake is our enterprise-grade API and data integration product. It allows you to pipe price transparency and claims data directly into your own analytics, BI tools, or applications. It\'s available as an add-on to any tier.',
+  },
+  {
+    q: "I'm not a hospital. Can I still use Payerset?",
+    a: 'Absolutely. We work with healthcare consulting firms, medical device companies, health tech platforms, health plans, and more. Our bed-based pricing tiers are specifically designed for hospitals and health systems, but we build custom packages for other organizations. Reach out and we\'ll scope something for your needs.',
+  },
+  {
+    q: 'How often is the data refreshed?',
+    a: 'Data is refreshed quarterly. Every three months we ingest, audit, and enrich the latest payer MRFs, hospital transparency files, and claims data. Full historical data is always retained and accessible for trending.',
+  },
+];
 ---
 
 <PageLayout
   title="Pricing — Payerset | Healthcare Price Transparency for Hospitals & Health Systems"
   description="Price transparency and claims data built for hospital finance teams. One platform, every contracted rate in your market."
+  extraSchema={[buildFaqSchema(faqs)]}
 >
 
   <!-- ── HERO ── -->
@@ -384,47 +414,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Common Questions</p>
         <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">Frequently Asked Questions</h2>
       </div>
-      <div class="space-y-4">
-        {[
-          {
-            q: 'What data is included in every plan?',
-            a: 'Every plan includes payer price transparency data (all published MRFs), all-payer claims and remits, full historical rate data, and quarterly refreshes. The difference between tiers is based on your organization\'s bed count.',
-          },
-          {
-            q: 'How do you determine which tier I fall into?',
-            a: 'Tiers are based on the number of licensed beds at your facility or across your system. Tier 1 covers 300–999 beds, Tier 2 covers 1,000–2,999 beds, and Tier 3 is for systems with 3,000+ beds. Not sure where you fall? Our team can help you determine the best fit.',
-          },
-          {
-            q: 'Can I add more user seats to my plan?',
-            a: 'Yes. All plans support add-on user seats beyond the base allocation. Reach out and we\'ll build the right package for your team.',
-          },
-          {
-            q: 'What is the Payerset Data Lake™?',
-            a: 'The Data Lake is our enterprise-grade API and data integration product. It allows you to pipe price transparency and claims data directly into your own analytics, BI tools, or applications. It\'s available as an add-on to any tier.',
-          },
-          {
-            q: "I'm not a hospital. Can I still use Payerset?",
-            a: 'Absolutely. We work with healthcare consulting firms, medical device companies, health tech platforms, health plans, and more. Our bed-based pricing tiers are specifically designed for hospitals and health systems, but we build custom packages for other organizations. Reach out and we\'ll scope something for your needs.',
-          },
-          {
-            q: 'How often is the data refreshed?',
-            a: 'Data is refreshed quarterly. Every three months we ingest, audit, and enrich the latest payer MRFs, hospital transparency files, and claims data. Full historical data is always retained and accessible for trending.',
-          },
-        ].map((faq) => (
-          <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-            <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-              <span>{faq.q}</span>
-              <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </summary>
-            <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-              {faq.a}
-            </div>
-          </details>
-        ))}
-      </div>
+      <FaqAccordion faqs={faqs} />
     </div>
   </section>
 

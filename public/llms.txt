@@ -12,6 +12,9 @@ tools, full data feeds, and the Snowflake Marketplace. Our editorial hub, the
 Price Transparency Project, publishes analysis, policy explainers, and practical
 playbooks on putting this data to work.
 
+Full text of our glossary and all articles, in one file:
+https://www.payerset.com/llms-full.txt
+
 ## Products
 - [Rate Explorer](https://www.payerset.com/rateexplorer): Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies and flip the negotiation dynamic.
 - [Data Lake](https://www.payerset.com/datalake): Enriched payer and provider MRF data delivered in analytics-ready formats so teams can build, innovate, and scale faster.
@@ -26,6 +29,9 @@ playbooks on putting this data to work.
 - [CMS Proposes Major Updates to Transparency in Coverage (TiC) Rules](https://www.payerset.com/pricetransparencyproject/blog/cms-proposes-major-updates-to-transparency-in-coverage-rules): Network-based files, annual utilization files, quarterly reporting, and enhanced out-of-network data.
 - [TiC Schema 2.0 Is Live](https://www.payerset.com/pricetransparencyproject/blog/transparency-in-coverage-tic-schema-2-0-is-live-updates): What changed in the Transparency in Coverage schema.
 - [Hospital Price Transparency Requirements & the April 1 Enforcement Deadline](https://www.payerset.com/pricetransparencyproject/blog/updates-to-hospital-price-transparency-requirements-and-the-april-1st-enforcement-deadline): Updated requirements and the enforcement timeline.
+
+## Reference
+- [Price Transparency Glossary](https://www.payerset.com/glossary): Plain-language definitions of key terms — machine-readable files (MRFs), Transparency in Coverage (TiC), negotiated and allowed rates, reimbursement benchmarking, NPI/TIN, and more.
 
 ## Company
 - [About Payerset](https://www.payerset.com/about-us): Our mission to create fair and equitable healthcare for everyone.

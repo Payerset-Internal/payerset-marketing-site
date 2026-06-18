@@ -4,6 +4,8 @@ import TPHero from '../../components/transparency/TPHero.astro';
 import TPContentSection from '../../components/transparency/TPContentSection.astro';
 import TPPillars from '../../components/transparency/TPPillars.astro';
 import TPBottomCta from '../../components/transparency/TPBottomCta.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../../utils/faq';
 import { getCollection } from 'astro:content';
 
 const research = await getCollection('tp-research');
@@ -60,11 +62,39 @@ const feedItems: FeedItem[] = [
     topics: [...r.data.topics],
   })),
 ];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What is the Price Transparency Project?',
+    a: 'The Price Transparency Project is a Payerset initiative that publishes data-driven analysis, policy explainers, and practical playbooks on U.S. healthcare price transparency. It helps hospital finance leaders, analysts, employers, and researchers turn payer and hospital machine-readable files into actionable insight for reimbursement benchmarking and contract negotiations.',
+  },
+  {
+    q: 'What is healthcare price transparency?',
+    a: 'Healthcare price transparency refers to federal rules that require health plans and hospitals to publicly post the rates they have negotiated for medical services. The Hospital Price Transparency rule (effective 2021) and the Transparency in Coverage rule (effective 2022) together make previously confidential negotiated rates available online as machine-readable files.',
+  },
+  {
+    q: 'What is the Transparency in Coverage (TiC) rule?',
+    a: 'Transparency in Coverage (TiC) is a federal rule that requires health insurers and group health plans to publish their in-network negotiated rates and out-of-network allowed amounts in machine-readable files (MRFs). The files are updated monthly and cover essentially every commercial plan, making them the most comprehensive public source of payer-negotiated rate data.',
+  },
+  {
+    q: 'What is hospital price transparency?',
+    a: 'Hospital price transparency is a federal rule, effective January 1, 2021, that requires every U.S. hospital to publish a machine-readable file of standard charges — including gross charges, discounted cash prices, and payer-specific negotiated rates — alongside a consumer-friendly display of shoppable services. CMS has progressively tightened the file format and enforcement requirements since.',
+  },
+  {
+    q: 'What is a machine-readable file (MRF)?',
+    a: 'A machine-readable file (MRF) is a structured data file — typically JSON or CSV — that payers and hospitals publish to satisfy price transparency rules. MRFs list negotiated rates by payer, provider, and billing code, but their large size, inconsistent schemas, and data-quality issues make them difficult to use without significant normalization and enrichment.',
+  },
+  {
+    q: 'How is price transparency data used?',
+    a: 'Organizations use price transparency data to benchmark reimbursement against competitors, prepare for managed care contract negotiations, model pricing strategy, evaluate market access, and build healthcare analytics products. Because the data reveals the rates payers and providers have actually agreed to, hospitals, employers, and health-tech teams can negotiate and plan from evidence rather than guesswork.',
+  },
+];
 ---
 
 <PageLayout
   title="The Price Transparency Project — A Payerset Initiative"
   description="Data-driven analysis, policy insight, and practical tools for everyone working to make the healthcare market actually function like one."
+  extraSchema={[buildFaqSchema(faqs)]}
 >
   <TPHero
     logo="/images/transparencyproject/ptp-logo-white.png"
@@ -74,5 +104,20 @@ const feedItems: FeedItem[] = [
   />
   <TPContentSection feedItems={feedItems} scorecard={scorecard} />
   <TPPillars />
+
+  <!-- FAQ Section -->
+  <section class="relative py-20 lg:py-28 bg-white">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Common Questions</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Frequently Asked Questions
+        </h2>
+      </div>
+      <FaqAccordion faqs={faqs} reveal />
+    </div>
+  </section>
+
   <TPBottomCta />
 </PageLayout>

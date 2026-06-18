@@ -1,10 +1,28 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../utils/faq';
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What is price transparency in healthcare?',
+    a: 'Price transparency in healthcare involves publicly posting the negotiated reimbursement rates between healthcare providers and insurance carriers. This is done by hospitals and payers, respectively. Historically, these rates were confidential. However, the Federal Hospital Price Transparency (2021) and Transparency in Coverage (2022) laws now require that these negotiated rates be made openly available online.',
+  },
+  {
+    q: 'What is payer price transparency data?',
+    a: 'Payer price transparency data refers to the information that health insurance companies (payers) are required to disclose about the prices they have negotiated with healthcare providers for various medical services. This data includes detailed records of rates for medical procedures, services, and items, as negotiated between payers and providers.',
+  },
+  {
+    q: 'How often is the data refreshed?',
+    a: 'Payerset refreshes its data quarterly. Every three months, Payerset updates and audits its entire data set to incorporate the latest changes in payer data structures, negotiated rates, and any new regulatory requirements.',
+  },
+];
 ---
 
 <PageLayout
   title="Payerset Academic Research"
   description="Free access to all payer-sourced price transparency data through our Rate Explorer portal for academic research."
+  extraSchema={[buildFaqSchema(faqs)]}
 >
   <!-- Hero Section -->
   <section class="relative bg-brand-dark-deep overflow-hidden">
@@ -194,35 +212,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         </h2>
       </div>
 
-      <div class="space-y-4">
-        {[
-          {
-            q: 'What is price transparency in healthcare?',
-            a: 'Price transparency in healthcare involves publicly posting the negotiated reimbursement rates between healthcare providers and insurance carriers. This is done by hospitals and payers, respectively. Historically, these rates were confidential. However, the Federal Hospital Price Transparency (2021) and Transparency in Coverage (2022) laws now require that these negotiated rates be made openly available online.',
-          },
-          {
-            q: 'What is payer price transparency data?',
-            a: 'Payer price transparency data refers to the information that health insurance companies (payers) are required to disclose about the prices they have negotiated with healthcare providers for various medical services. This data includes detailed records of rates for medical procedures, services, and items, as negotiated between payers and providers.',
-          },
-          {
-            q: 'How often is the data refreshed?',
-            a: 'Payerset refreshes its data quarterly. Every three months, Payerset updates and audits its entire data set to incorporate the latest changes in payer data structures, negotiated rates, and any new regulatory requirements.',
-          },
-        ].map((faq) => (
-          <details class="group relative bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 overflow-hidden hover:border-brand-primary/15 transition-all duration-200">
-            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-secondary to-brand-primary opacity-0 group-open:opacity-100 transition-opacity duration-300"></div>
-            <summary class="flex items-center justify-between cursor-pointer p-6 text-left font-semibold text-brand-dark hover:bg-brand-primary/[0.03] transition-colors">
-              <span>{faq.q}</span>
-              <svg class="w-5 h-5 text-brand-primary/50 group-open:text-brand-primary shrink-0 ml-4 transition-all duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </summary>
-            <div class="px-6 pb-6 text-sm text-slate-600 leading-relaxed">
-              <p>{faq.a}</p>
-            </div>
-          </details>
-        ))}
-      </div>
+      <FaqAccordion faqs={faqs} />
     </div>
   </section>
 </PageLayout>

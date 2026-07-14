@@ -1,6 +1,9 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import SnowflakeFeaturedListing from '../components/SnowflakeFeaturedListing.astro';
+import { Image } from 'astro:assets';
+import payersetLogoDark from '../assets/images/payerset-logo-dark.png';
+import snowflakeLogo from '../assets/images/snowflake-logo-transparent.png';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
@@ -24,40 +27,29 @@ const datasetSchema = {
   description="Access free samples of price transparency data for United Healthcare, Kaiser Permanente, Cigna, and more."
   extraSchema={[datasetSchema]}
 >
-  <!-- Hero Section -->
-  <section class="relative bg-brand-dark-deep overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-      <div class="max-w-3xl mx-auto text-center">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
-          Free Payer Price Transparency<br />
-          <span class="text-brand-primary">Sample Data Sets</span>
-        </h1>
-        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
-          Access free samples of price transparency data for United Healthcare, Kaiser Permanente, Cigna, &amp; more.
-        </p>
-        <div class="mt-8">
-          <a
-            href="/get-started"
-            class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
-          >
-            Get Data
-          </a>
-        </div>
+  <!-- Hero: Payerset Powered by Snowflake -->
+  <section class="bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-28 text-center">
+      <!-- Payerset × Snowflake co-brand lockup -->
+      <div class="flex items-center justify-center gap-3 sm:gap-4 mb-10">
+        <Image src={payersetLogoDark} alt="Payerset" class="h-7 sm:h-8 w-auto" width={301} height={72} loading="eager" />
+        <span class="text-slate-500 text-2xl font-light select-none">×</span>
+        <Image src={snowflakeLogo} alt="Snowflake" class="h-10 sm:h-12 w-auto" width={840} height={238} loading="eager" />
       </div>
-    </div>
-  </section>
 
-  <!-- Announcement Section -->
-  <section class="py-20 lg:py-28">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark mb-6">
-          Payerset Powered by Snowflake
-        </h2>
-        <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-          We are thrilled to announce that Payerset is now officially listed on the Snowflake marketplace. This collaboration aims to make payer price datasets more accessible, fostering improved decision-making processes within the healthcare industry.
-        </p>
+      <h1 class="text-4xl sm:text-5xl font-semibold text-brand-dark leading-tight">
+        Payerset Powered by Snowflake
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
+        We are thrilled to announce that Payerset is now officially listed on the Snowflake Marketplace. This collaboration makes payer price datasets more accessible, fostering improved decision-making across the healthcare industry.
+      </p>
+      <div class="mt-8">
+        <a
+          href="/get-started"
+          class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+        >
+          Get Data
+        </a>
       </div>
     </div>
   </section>

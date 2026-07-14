@@ -6,6 +6,7 @@ import RatesGridViz from '../components/RatesGridViz.astro';
 import NpiTinViz from '../components/NpiTinViz.astro';
 import EmployerCoverageViz from '../components/EmployerCoverageViz.astro';
 import NetworkViz from '../components/NetworkViz.astro';
+import SnowflakeFeaturedListing from '../components/SnowflakeFeaturedListing.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { buildFaqSchema, type FaqItem } from '../utils/faq';
 
@@ -448,6 +449,9 @@ const faqs: FaqItem[] = [
       </div>
     </div>
   </section>
+
+  <!-- Featured Flagship Listing on Snowflake Marketplace -->
+  <SnowflakeFeaturedListing />
 
   <!-- Community Utility: Every MRF in a Single Location -->
   <section class="relative overflow-hidden bg-brand-dark-deep">

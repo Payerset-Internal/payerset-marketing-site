@@ -1,14 +1,14 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import SnowflakeFeaturedListing from '../components/SnowflakeFeaturedListing.astro';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
   '@type': 'Dataset',
-  name: 'Payerset Price Transparency Sample Data on Snowflake Marketplace',
+  name: 'Payerset Healthcare Price Transparency Data on Snowflake Marketplace',
   description:
-    'Free sample price transparency datasets for UnitedHealthcare, Kaiser Permanente, Cigna, and more, available on the Snowflake Marketplace.',
+    'Payerset Healthcare Price Transparency — Full Dataset: commercial payer-negotiated in-network rates from the federal Transparency in Coverage machine-readable files, parsed and normalized into query-ready tables on the Snowflake Marketplace. Free per-payer sample datasets are also available.',
   url: 'https://www.payerset.com/snowflakemarketplace',
-  isAccessibleForFree: true,
   keywords: [
     'price transparency',
     'Transparency in Coverage',
@@ -62,15 +62,18 @@ const datasetSchema = {
     </div>
   </section>
 
+  <!-- Featured Flagship Listing -->
+  <SnowflakeFeaturedListing />
+
   <!-- Dataset Cards Section -->
   <section class="py-20 lg:py-28 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-bold text-brand-dark">
-          Available Sample Datasets
+          Free Sample Datasets
         </h2>
         <p class="mt-4 text-lg text-slate-600">
-          Explore free sample datasets from top payers on the Snowflake Marketplace.
+          Prefer to try before you buy? Explore free per-payer sample datasets from top payers on the Snowflake Marketplace.
         </p>
       </div>
 

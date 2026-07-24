@@ -1,10 +1,10 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
-import HeroRateExplorer from '../components/HeroRateExplorer.astro';
-import InsightsCarousel from '../components/InsightsCarousel.astro';
-import FeatureShowcase from '../components/FeatureShowcase.astro';
-import FaqAccordion from '../components/FaqAccordion.astro';
-import { buildFaqSchema, type FaqItem } from '../utils/faq';
+import PageLayout from '../../layouts/PageLayout.astro';
+import HeroRateExplorer from '../../components/HeroRateExplorer.astro';
+import InsightsCarousel from '../../components/InsightsCarousel.astro';
+import FeatureShowcase from '../../components/FeatureShowcase.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../../utils/faq';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -14,7 +14,7 @@ const softwareSchema = {
   operatingSystem: 'Web',
   description:
     'Self-service tool to analyze every negotiated commercial rate by payer, provider, and procedure, fueling smarter pricing strategies and contract negotiations.',
-  url: 'https://www.payerset.com/rateexplorer',
+  url: 'https://www.payerset.com/platform/rate-explorer',
   offers: { '@type': 'Offer', url: 'https://www.payerset.com/get-started' },
   provider: { '@id': 'https://www.payerset.com/#organization' },
 };

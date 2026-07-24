@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const persona = 'Health Systems';
+const subhead =
+  'Benchmark reimbursement against peers, prepare for managed care negotiations, and see where you stand in your market.';
+---
+
+<PageLayout
+  title={`Price Transparency for ${persona} - Payerset`}
+  description={subhead}
+>
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
+        Solutions
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight max-w-3xl">
+        {persona}
+      </h1>
+      <p class="mt-6 text-lg text-slate-300 max-w-2xl font-light">
+        {subhead}
+      </p>
+      <p class="mt-8 inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-light text-slate-300">
+        This page is coming soon.
+      </p>
+      <div class="mt-10">
+        <a
+          href="/get-started"
+          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-brand-primary hover:bg-brand-secondary rounded-lg transition-colors"
+        >
+          Get started
+        </a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

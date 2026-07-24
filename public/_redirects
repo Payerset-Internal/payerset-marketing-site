@@ -15,6 +15,10 @@
 # 2026 report renamed to the 2026 Field Guide
 /pricetransparencyproject/2026-transparency-report/*  /pricetransparencyproject/2026-field-guide/:splat  301
 
+# Platform IA: product pages moved under /platform/*
+/rateexplorer  /platform/rate-explorer  301
+/datalake      /platform/data-lake      301
+
 # Wix URL redirects
 /getstarted  /get-started  301
 

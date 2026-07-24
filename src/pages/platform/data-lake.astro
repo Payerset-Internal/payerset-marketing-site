@@ -1,14 +1,14 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
-import InsightsCarousel from '../components/InsightsCarousel.astro';
-import DataLakeViz from '../components/DataLakeViz.astro';
-import RatesGridViz from '../components/RatesGridViz.astro';
-import NpiTinViz from '../components/NpiTinViz.astro';
-import EmployerCoverageViz from '../components/EmployerCoverageViz.astro';
-import NetworkViz from '../components/NetworkViz.astro';
-import SnowflakeFeaturedListing from '../components/SnowflakeFeaturedListing.astro';
-import FaqAccordion from '../components/FaqAccordion.astro';
-import { buildFaqSchema, type FaqItem } from '../utils/faq';
+import PageLayout from '../../layouts/PageLayout.astro';
+import InsightsCarousel from '../../components/InsightsCarousel.astro';
+import DataLakeViz from '../../components/DataLakeViz.astro';
+import RatesGridViz from '../../components/RatesGridViz.astro';
+import NpiTinViz from '../../components/NpiTinViz.astro';
+import EmployerCoverageViz from '../../components/EmployerCoverageViz.astro';
+import NetworkViz from '../../components/NetworkViz.astro';
+import SnowflakeFeaturedListing from '../../components/SnowflakeFeaturedListing.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { buildFaqSchema, type FaqItem } from '../../utils/faq';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
@@ -16,7 +16,7 @@ const datasetSchema = {
   name: 'Payerset Data Lake',
   description:
     'Enriched payer and provider price transparency (MRF) data — contracted rates and claims — delivered in analytics-ready formats for custom tools and analysis.',
-  url: 'https://www.payerset.com/datalake',
+  url: 'https://www.payerset.com/platform/data-lake',
   keywords: [
     'price transparency',
     'machine-readable files',

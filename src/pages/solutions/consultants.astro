@@ -1,38 +1,79 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import AnalysisActionViz from '../../components/AnalysisActionViz.astro';
+import type { FaqItem } from '../../utils/faq';
 
-const persona = 'Consultants';
-const subhead =
-  'Benchmark clients at scale, build advisory deliverables, and bring multi-market rate intelligence to every engagement.';
+const pains = [
+  {
+    title: 'Every client is a new data lift',
+    desc: 'Sourcing, cleaning, and normalizing MRFs for each engagement burns the hours you’d rather spend on analysis and recommendations.',
+  },
+  {
+    title: 'Benchmarking doesn’t scale',
+    desc: 'Advising across markets and clients means comparing rates everywhere at once — hard to do when the data lives in disconnected, inconsistent files.',
+  },
+  {
+    title: 'Deliverables need defensible numbers',
+    desc: 'Your recommendations only carry weight if the underlying rates are clean, current, and traceable back to the source payer file.',
+  },
+  {
+    title: 'Speed is the differentiator',
+    desc: 'Clients expect answers in days, not quarters. Building a pipeline per engagement means you’re slow exactly when responsiveness wins the work.',
+  },
+];
+
+const helps = [
+  {
+    title: 'Benchmark clients at scale',
+    desc: 'Compare rates across payers, providers, markets, and codes from one normalized dataset, so multi-client and multi-market analysis stops being a data project.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Build defensible deliverables',
+    desc: 'Every rate benchmarks against Medicare and the wider market and traces back to the source MRF, giving your advisory work numbers clients can trust.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Power your own models and tools',
+    desc: 'Pull enriched, normalized rate data straight into your environment via Data Lake to feed proprietary models, dashboards, and client deliverables.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'Can we use Payerset across multiple clients and markets?',
+    a: 'Yes. Payerset covers every payer MRF and compliant hospital nationwide, so you can benchmark any client in any market from a single normalized dataset instead of building a pipeline per engagement.',
+  },
+  {
+    q: 'Can we feed Payerset data into our own models and deliverables?',
+    a: 'Yes. <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> delivers enriched, normalized rate data directly to your environment — via API or data share — so your team can build proprietary analytics and client-facing tools on top of it.',
+  },
+  {
+    q: 'How current and defensible is the data?',
+    a: 'Data is refreshed quarterly with full historical depth, and every rate traces back to the source payer file. That gives your recommendations numbers that are both current and defensible.',
+  },
+  {
+    q: 'Do rates come benchmarked against Medicare?',
+    a: 'Yes. Negotiated rates can be benchmarked against Medicare fee schedules directly within your analysis, so you can frame commercial rates as a percentage of Medicare in client deliverables.',
+  },
+];
 ---
 
-<PageLayout
-  title={`Price Transparency for ${persona} - Payerset`}
-  description={subhead}
+<SolutionLayout
+  title="Price Transparency for Healthcare Consultants & Advisors - Payerset"
+  description="Benchmark clients across markets, build defensible deliverables, and power your own models with normalized negotiated-rate data from Payerset."
+  persona="Consultants"
+  headline="Client-ready rate intelligence, without the data lift"
+  subhead="Benchmark any client in any market from one normalized dataset — and build advisory deliverables on numbers that trace back to the source."
+  secondaryCta={{ label: 'Explore Data Lake', href: '/platform/data-lake' }}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Analysis to action"
+  vizHeading="From raw rates to a defensible recommendation"
+  vizSubhead="Benchmark a code against Medicare and the market in seconds, and turn the spread into an insight your client can act on."
+  faqs={faqs}
+  ctaHeadline="Deliver answers in days, not quarters"
 >
-  <section class="relative bg-brand-dark-deep overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-      <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
-        Solutions
-      </p>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight max-w-3xl">
-        {persona}
-      </h1>
-      <p class="mt-6 text-lg text-slate-300 max-w-2xl font-light">
-        {subhead}
-      </p>
-      <p class="mt-8 inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-light text-slate-300">
-        This page is coming soon.
-      </p>
-      <div class="mt-10">
-        <a
-          href="/get-started"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-brand-primary hover:bg-brand-secondary rounded-lg transition-colors"
-        >
-          Get started
-        </a>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+  <AnalysisActionViz slot="viz" />
+</SolutionLayout>

@@ -1,38 +1,79 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import ClaimsDataViz from '../../components/ClaimsDataViz.astro';
+import type { FaqItem } from '../../utils/faq';
 
-const persona = 'Med Device';
-const subhead =
-  'Understand reimbursement by procedure and code, sharpen market access, and track site-of-care shifts across markets.';
+const pains = [
+  {
+    title: 'Reimbursement drives adoption',
+    desc: 'A device lives or dies on how well its procedure is reimbursed. Without rate visibility by code, market access is flying blind on the number that matters most.',
+  },
+  {
+    title: 'Site of care is shifting under you',
+    desc: 'Procedures are moving from hospital outpatient to ASCs and offices. If you can’t see the rate difference by setting, you can’t position for where volume is going.',
+  },
+  {
+    title: 'Payer coverage varies market to market',
+    desc: 'What a payer reimburses for your procedure in one region rarely matches another. National averages hide the local reality your field teams face.',
+  },
+  {
+    title: 'Economic value stories need real numbers',
+    desc: 'Making the reimbursement case to providers and payers takes actual contracted rates and claims — not list prices or manufacturer estimates.',
+  },
+];
+
+const helps = [
+  {
+    title: 'Track reimbursement by procedure',
+    desc: 'See negotiated rates for the CPT/HCPCS codes tied to your device across payers and markets, so market access decisions rest on real reimbursement.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Follow the site-of-care shift',
+    desc: 'Compare rates across hospital outpatient, ASC, and office settings to see where a procedure pays best and where volume is heading.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Build the value story with claims',
+    desc: 'Pair contracted rates with all-payer claims to show what’s actually paid and performed, and power your own market-access models via Data Lake.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'Can we see reimbursement for the specific codes tied to our device?',
+    a: 'Yes. <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you analyze negotiated rates by any CPT or HCPCS code across payers, providers, and geographies, so you can track exactly how your procedure is reimbursed.',
+  },
+  {
+    q: 'Does Payerset show rate differences by site of care?',
+    a: 'Yes. Because the data covers both payer and hospital transparency files, you can compare reimbursement across hospital outpatient, ASC, and office settings to follow the site-of-care shift.',
+  },
+  {
+    q: 'Can we combine rate data with claims to build a value story?',
+    a: 'Yes. Payerset links negotiated rates to all-payer claims, so you can show what is actually paid and performed — a stronger economic value story than list prices or estimates.',
+  },
+  {
+    q: 'Can our analytics team access the raw data?',
+    a: 'Yes. <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> delivers enriched, normalized rate and claims data directly to your environment via API or data share to power your own market-access models.',
+  },
+];
 ---
 
-<PageLayout
-  title={`Price Transparency for ${persona} - Payerset`}
-  description={subhead}
+<SolutionLayout
+  title="Price Transparency for Medical Device & MedTech - Payerset"
+  description="Track reimbursement by procedure code, follow the site-of-care shift, and build market-access value stories with negotiated-rate and claims data from Payerset."
+  persona="Med Device"
+  headline="See the reimbursement behind every procedure"
+  subhead="Track negotiated rates by code and site of care, follow the shift to ASCs, and build market-access strategy on the number that drives adoption."
+  secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Reimbursement by code"
+  vizHeading="Follow the procedure across settings and payers"
+  vizSubhead="See how a procedure is reimbursed by payer and site of care, backed by real claims — the intelligence market access runs on."
+  faqs={faqs}
+  ctaHeadline="Position for where reimbursement is heading"
 >
-  <section class="relative bg-brand-dark-deep overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-      <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
-        Solutions
-      </p>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight max-w-3xl">
-        {persona}
-      </h1>
-      <p class="mt-6 text-lg text-slate-300 max-w-2xl font-light">
-        {subhead}
-      </p>
-      <p class="mt-8 inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-light text-slate-300">
-        This page is coming soon.
-      </p>
-      <div class="mt-10">
-        <a
-          href="/get-started"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-brand-primary hover:bg-brand-secondary rounded-lg transition-colors"
-        >
-          Get started
-        </a>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+  <ClaimsDataViz slot="viz" />
+</SolutionLayout>

@@ -1,0 +1,96 @@
+---
+import PlatformLayout from '../../layouts/PlatformLayout.astro';
+import type { FaqItem } from '../../utils/faq';
+
+const capabilities = [
+  {
+    title: 'Connect your AI tools',
+    desc: 'Expose Payerset’s rate and claims data to Claude and other MCP-compatible assistants and agents through a standard, secure interface.',
+  },
+  {
+    title: 'Query rates programmatically',
+    desc: 'Let agents pull negotiated rates, claims, and benchmarks by payer, provider, and billing code — no bespoke integration to build or maintain.',
+  },
+  {
+    title: 'The full enriched dataset',
+    desc: 'The server speaks to the same normalized data behind Rate Explorer and Data Lake, complete with NPI-to-TIN mapping and HCO affiliations.',
+  },
+  {
+    title: 'Built for agentic workflows',
+    desc: 'Chain rate lookups, cohort building, and benchmarking into automated analyses that run without a human assembling each query.',
+  },
+  {
+    title: 'Governed access',
+    desc: 'Programmatic access respects the same entitlements as the rest of the platform, so your data stays governed as you automate.',
+  },
+  {
+    title: 'Skip the plumbing',
+    desc: 'Point your agent at the MCP server and start asking questions of the data — no ETL, schema wrangling, or data pipeline required.',
+  },
+];
+
+const audiences = [
+  {
+    label: 'Consultants',
+    href: '/solutions/consultants',
+    desc: 'Wire rate data into your own tools and agents to scale analysis across clients.',
+  },
+  {
+    label: 'Med Device',
+    href: '/solutions/medical-device',
+    desc: 'Feed reimbursement data into market-access models and automated workflows.',
+  },
+  {
+    label: 'Health Systems',
+    href: '/solutions/providers',
+    desc: 'Let internal analysts automate peer benchmarking against live market data.',
+  },
+  {
+    label: 'Employers',
+    href: '/solutions/employers',
+    desc: 'Pull independent network rate data straight into your benefits analytics stack.',
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What is the Payerset MCP server?',
+    a: 'It’s a server that exposes Payerset’s price transparency data over the Model Context Protocol (MCP) — an open standard for connecting AI assistants and agents to external data and tools. It lets tools like Claude query negotiated rates and claims directly.',
+  },
+  {
+    q: 'What can I do with it?',
+    a: 'Ask AI assistants and agents to pull rates, build peer cohorts, and benchmark against Medicare and the market programmatically — chaining those steps into automated analyses instead of running each query by hand.',
+  },
+  {
+    q: 'What data is accessible through it?',
+    a: 'The same enriched, normalized dataset behind <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> and <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span>, including NPI-to-TIN mapping and HCO affiliations, subject to your entitlements.',
+  },
+  {
+    q: 'How is access secured?',
+    a: 'Programmatic access respects the same entitlements and governance as the rest of the platform, so automating your workflows doesn’t change who can see what.',
+  },
+  {
+    q: 'Is the MCP server available today?',
+    a: 'The MCP server is rolling out to customers. Request a demo and we’ll walk you through access and how it fits your stack.',
+  },
+];
+---
+
+<PlatformLayout
+  title="Payerset MCP Server — Programmatic Access for AI Agents"
+  description="Connect AI assistants and agents to Payerset's price transparency data over the Model Context Protocol. Query negotiated rates and claims programmatically."
+  product="MCP"
+  badge="In preview"
+  headline="Connect your AI agents to price transparency data"
+  subhead="The Payerset MCP server gives AI assistants and agents secure, programmatic access to negotiated rates and claims — over an open standard, with no pipeline to build."
+  secondaryCta={{ label: 'Explore Data Lake', href: '/platform/data-lake' }}
+  intro={{
+    heading: 'Price transparency data, agent-ready',
+    body: 'The Model Context Protocol (MCP) is an open standard for connecting AI tools to external data. The Payerset MCP server puts our enriched rate and claims data behind that interface, so assistants like Claude — and your own agents — can query the market’s rates directly and fold the answers into automated analysis.',
+  }}
+  capabilities={capabilities}
+  audiences={audiences}
+  faqs={faqs}
+  ctaHeadline="Put price transparency data in your agents"
+  ctaBody="The MCP server is rolling out to customers. Request a demo and we'll walk you through access and how it fits your stack."
+/>

@@ -1,38 +1,79 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import EmployerCoverageViz from '../../components/EmployerCoverageViz.astro';
+import type { FaqItem } from '../../utils/faq';
 
-const persona = 'Employers';
-const subhead =
-  'Benchmark plan costs, evaluate network steerage, and hold TPAs accountable with independent rate data.';
+const pains = [
+  {
+    title: 'Your TPA controls the data',
+    desc: 'Self-insured plans pay the claims but rarely see the negotiated rates behind them. Without independent data you can’t tell a good network deal from a bad one.',
+  },
+  {
+    title: 'No way to benchmark plan cost',
+    desc: 'You know your total spend, but not whether the rates your network pays are competitive versus other payers and plans in the same market.',
+  },
+  {
+    title: 'Steerage decisions made blind',
+    desc: 'Point solutions and centers-of-excellence promise savings, but you can’t verify the price difference between sites of care before you steer members.',
+  },
+  {
+    title: 'Renewals arrive without leverage',
+    desc: 'When it’s time to evaluate a network or TPA, you’re negotiating on trust instead of the actual contracted rates your members are billed against.',
+  },
+];
+
+const helps = [
+  {
+    title: 'Benchmark your network’s rates',
+    desc: 'Compare the negotiated rates behind your plan against every other payer and plan in the market, down to the billing code and facility.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Quantify steerage opportunities',
+    desc: 'See the real price gap between hospitals, ASCs, and sites of care so you can build steerage and COE programs on evidence, not vendor claims.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Hold TPAs and networks accountable',
+    desc: 'Map employers to health plans and inspect the rates your members are actually billed against, so vendor oversight rests on independent data.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'We’re self-insured but our TPA won’t share rate detail. Can Payerset help?',
+    a: 'Yes. Payerset is built entirely from the payers’ own published machine-readable files, so it is independent of your TPA. You can see the negotiated rates behind your network without waiting on a data request that may never come.',
+  },
+  {
+    q: 'Can we compare our plan’s rates against other plans in our market?',
+    a: 'Yes. <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you benchmark any payer-plan-provider combination against the full market for the same billing codes, so you can see exactly where your network sits.',
+  },
+  {
+    q: 'Does Payerset map employers to the health plans covering them?',
+    a: 'Yes. Payerset enriches the transparency data with full employer-to-health-plan coverage, so you can trace which plans and networks your members are enrolled in and inspect the rates behind them.',
+  },
+  {
+    q: 'Do we need a data team to use this?',
+    a: 'No. <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> is a no-code, self-service platform your benefits team can use directly. If your analysts want the raw data, <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> delivers it straight to your environment.',
+  },
+];
 ---
 
-<PageLayout
-  title={`Price Transparency for ${persona} - Payerset`}
-  description={subhead}
+<SolutionLayout
+  title="Price Transparency for Employers & Benefits Teams - Payerset"
+  description="Benchmark plan costs, evaluate network steerage, and hold TPAs accountable with independent negotiated-rate data built from payer MRFs."
+  persona="Employers"
+  headline="Independent rate data for the plans you actually pay for"
+  subhead="Benchmark plan costs, evaluate network steerage, and hold TPAs accountable — with negotiated-rate data that doesn’t come from your vendor."
+  secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Employer → plan coverage"
+  vizHeading="See the plans behind your members"
+  vizSubhead="Payerset maps employers to the health plans covering them, then links each plan to the negotiated rates your members are billed against."
+  faqs={faqs}
+  ctaHeadline="Stop negotiating benefits in the dark"
 >
-  <section class="relative bg-brand-dark-deep overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-      <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
-        Solutions
-      </p>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight max-w-3xl">
-        {persona}
-      </h1>
-      <p class="mt-6 text-lg text-slate-300 max-w-2xl font-light">
-        {subhead}
-      </p>
-      <p class="mt-8 inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-light text-slate-300">
-        This page is coming soon.
-      </p>
-      <div class="mt-10">
-        <a
-          href="/get-started"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-brand-primary hover:bg-brand-secondary rounded-lg transition-colors"
-        >
-          Get started
-        </a>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+  <EmployerCoverageViz slot="viz" />
+</SolutionLayout>

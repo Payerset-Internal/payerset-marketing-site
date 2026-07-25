@@ -45,6 +45,33 @@ const faqs: FaqItem[] = [
     a: 'Data is refreshed quarterly across both Rate Explorer&trade; and Data Lake&trade;. Updates are automatically made available to customers as they are published, and full historical data remains accessible so you can track rate trends over time.',
   },
 ];
+
+const personas = [
+  {
+    name: 'Health Systems',
+    href: '/solutions/providers',
+    desc: 'Benchmark your rates and negotiate with the whole market.',
+    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 21h19.5M4.5 21V6.75A2.25 2.25 0 0 1 6.75 4.5h6a2.25 2.25 0 0 1 2.25 2.25V21M15.75 21V11.25a1.5 1.5 0 0 1 1.5-1.5h1.5a1.5 1.5 0 0 1 1.5 1.5V21M8.25 9h.75M8.25 12h.75M8.25 15h.75M11.25 9h.75M11.25 12h.75" /></svg>',
+  },
+  {
+    name: 'Consultants',
+    href: '/solutions/consultants',
+    desc: 'Benchmark clients across markets without the data lift.',
+    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>',
+  },
+  {
+    name: 'Med Device',
+    href: '/solutions/medical-device',
+    desc: 'Track reimbursement by procedure and site of care.',
+    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.75 6.75h10.5v10.5H6.75zM9 3v1.5m3-1.5v1.5m3-1.5v1.5M9 19.5V21m3-1.5V21m3-1.5V21M4.5 9H3m1.5 3H3m1.5 3H3M21 9h-1.5M21 12h-1.5M21 15h-1.5" /></svg>',
+  },
+  {
+    name: 'Employers',
+    href: '/solutions/employers',
+    desc: 'Independent rate data for the plans you pay for.',
+    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.75 7.5V6A2.25 2.25 0 0 1 9 3.75h6A2.25 2.25 0 0 1 17.25 6v1.5M3.75 7.5h16.5A1.5 1.5 0 0 1 21.75 9v9a1.5 1.5 0 0 1-1.5 1.5H3.75A1.5 1.5 0 0 1 2.25 18V9a1.5 1.5 0 0 1 1.5-1.5ZM3 12h18" /></svg>',
+  },
+];
 ---
 
 <PageLayout
@@ -537,6 +564,44 @@ const faqs: FaqItem[] = [
   </section>
 
   <InsightsCarousel />
+
+  <!-- By Persona — divided list on-ramp into Solutions pages -->
+  <section class="relative py-20 lg:py-28 overflow-hidden bg-white">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Find your solution</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-text-primary">
+          Built for the way you work
+        </h2>
+      </div>
+
+      <div class="border-t border-slate-200/70">
+        {personas.map((persona, i) => (
+          <a
+            href={persona.href}
+            class="group flex items-center gap-5 px-2 -mx-2 py-6 border-b border-slate-200/70 rounded-lg hover:bg-slate-50/70 transition-colors"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <span
+              class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-brand-primary/15 to-brand-secondary/10 text-brand-primary ring-1 ring-brand-primary/10 shrink-0"
+              set:html={persona.icon}
+            ></span>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-text-primary group-hover:text-brand-primary transition-colors">
+                {persona.name}
+              </h3>
+              <p class="text-sm text-text-secondary font-light mt-0.5">{persona.desc}</p>
+            </div>
+            <svg class="w-5 h-5 text-brand-primary shrink-0 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- CTA Section — Dark Bookend -->
   <section class="relative overflow-hidden bg-brand-dark-deep">

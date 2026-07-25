@@ -1,0 +1,92 @@
+---
+import PlatformLayout from '../../layouts/PlatformLayout.astro';
+import type { FaqItem } from '../../utils/faq';
+
+const capabilities = [
+  {
+    title: 'Ask in plain language',
+    desc: 'Pose the question the way you’d ask a colleague — “How does our knee replacement rate compare to peers at Aetna?” — and get an answer grounded in the data.',
+  },
+  {
+    title: 'Automated benchmarking',
+    desc: 'The analyst assembles peer cohorts, pulls the relevant rates and claims, and frames the result against Medicare and the market for you.',
+  },
+  {
+    title: 'Answers you can trace',
+    desc: 'Every response points back to the underlying negotiated rates and source files, so you can verify the numbers before you act on them.',
+  },
+  {
+    title: 'The full Payerset dataset',
+    desc: 'Works across every payer MRF, compliant hospital, and all-payer claims — the same enriched, normalized data behind Rate Explorer and Data Lake.',
+  },
+  {
+    title: 'From question to deliverable',
+    desc: 'Turn an ad-hoc question into a chart or table you can drop into a negotiation prep, board deck, or client deliverable.',
+  },
+  {
+    title: 'No query language required',
+    desc: 'Skip the pivot tables and SQL. Anyone on your team can interrogate the market’s rate data without waiting on an analyst.',
+  },
+];
+
+const audiences = [
+  {
+    label: 'Health Systems',
+    href: '/solutions/providers',
+    desc: 'Prep for negotiations by asking how your rates stack up against peers, instantly.',
+  },
+  {
+    label: 'Consultants',
+    href: '/solutions/consultants',
+    desc: 'Answer client questions across markets in minutes, with numbers you can defend.',
+  },
+  {
+    label: 'Med Device',
+    href: '/solutions/medical-device',
+    desc: 'Explore reimbursement by code and site of care without building a data pipeline.',
+  },
+  {
+    label: 'Employers',
+    href: '/solutions/employers',
+    desc: 'Interrogate your plan’s network rates without a data team to run the analysis.',
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What is the Payerset AI Analyst?',
+    a: 'It’s an AI layer over Payerset’s price transparency data. You ask questions in plain language and it retrieves, benchmarks, and explains the relevant negotiated rates and claims — no query language or pivot tables required.',
+  },
+  {
+    q: 'What data does it draw on?',
+    a: 'The same enriched, normalized dataset that powers <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> and <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> — every payer MRF, compliant hospital, and all-payer claims, refreshed quarterly with full history.',
+  },
+  {
+    q: 'Can I trust the answers?',
+    a: 'Answers trace back to the underlying rates and source files so you can verify them. The AI Analyst is built to surface the data and its provenance, not to replace your judgment.',
+  },
+  {
+    q: 'Is the AI Analyst available today?',
+    a: 'The AI Analyst is in active development. Request a demo and we’ll walk you through the current capabilities and give you early access as it rolls out.',
+  },
+];
+---
+
+<PlatformLayout
+  title="Payerset AI Analyst — Ask Your Price Transparency Data"
+  description="An AI layer over Payerset's price transparency data. Ask questions in plain language and get benchmarked, traceable answers from negotiated rates and claims."
+  product="AI Analyst"
+  badge="Coming soon"
+  headline="Ask your price transparency data anything"
+  subhead="An AI analyst that turns plain-language questions into benchmarked, traceable answers — built on the most complete negotiated-rate dataset available."
+  secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
+  intro={{
+    heading: 'Your market’s rate data, on demand',
+    body: 'The AI Analyst sits on top of Payerset’s enriched transparency data and answers the questions you’d otherwise hand to an analyst. Ask how a rate compares, where the outliers are, or what a payer pays your peers — and get a benchmarked answer in seconds, with the source data behind it.',
+  }}
+  capabilities={capabilities}
+  audiences={audiences}
+  faqs={faqs}
+  ctaHeadline="Get early access to the AI Analyst"
+  ctaBody="The AI Analyst is in active development. Request a demo and we'll give you a first look and early access as it rolls out."
+/>

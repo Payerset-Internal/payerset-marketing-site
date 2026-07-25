@@ -1,38 +1,79 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import RatesGridViz from '../../components/RatesGridViz.astro';
+import type { FaqItem } from '../../utils/faq';
 
-const persona = 'Health Systems';
-const subhead =
-  'Benchmark reimbursement against peers, prepare for managed care negotiations, and see where you stand in your market.';
+const pains = [
+  {
+    title: 'You negotiate without the market',
+    desc: 'Payers walk into every negotiation knowing what your competitors are paid. Without the same data, you’re arguing from anecdotes while they argue from the whole market.',
+  },
+  {
+    title: 'No peer benchmark for your rates',
+    desc: 'You can’t tell whether a proposed rate is strong or weak until you can compare it to what comparable systems are actually paid for the same services.',
+  },
+  {
+    title: 'Ghost rates cloud the picture',
+    desc: 'Raw MRFs are full of rates for services a provider never performs. Benchmarking against noise leads to the wrong conclusions at the negotiating table.',
+  },
+  {
+    title: 'Service-line strategy runs on guesswork',
+    desc: 'Deciding where to invest or grow means knowing the reimbursement landscape by payer, code, and site of care — not last year’s internal averages.',
+  },
+];
+
+const helps = [
+  {
+    title: 'Benchmark rates against your peers',
+    desc: 'Compare your reimbursement to competitors across payers, services, and geographies so you know exactly where you stand before you sit down.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Walk in armed with market data',
+    desc: 'Know what every payer pays comparable systems for the same codes, and turn the negotiation from guesswork into an evidence-backed conversation.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Model service-line economics',
+    desc: 'See reimbursement by payer, billing code, and site of care — enriched with claims and HCO affiliations — to guide where you grow and invest.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'How can we benchmark our rates against comparable health systems?',
+    a: '<span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you compare your negotiated rates to peers and competitors across payers, services, and geographies. You build the cohort — by market, ownership, or affiliation — and see exactly where your rates land.',
+  },
+  {
+    q: 'Do you filter out ghost rates and non-performed services?',
+    a: 'Yes. Payerset links negotiated rates to all-payer claims so you can distinguish real, performed services from ghost or “zombie” rates that would otherwise skew a benchmark.',
+  },
+  {
+    q: 'Does Payerset account for ownership and affiliations?',
+    a: 'Yes. We enrich the data with healthcare organization (HCO) ownership and affiliations and NPI-to-TIN mapping, so you can build accurate peer cohorts instead of comparing against unrelated facilities.',
+  },
+  {
+    q: 'Is historical data available for trending?',
+    a: 'Yes. Full historical data is available for every payer MRF so you can track how rates move over time and see the trajectory of a payer’s contracting before a renewal.',
+  },
+];
 ---
 
-<PageLayout
-  title={`Price Transparency for ${persona} - Payerset`}
-  description={subhead}
+<SolutionLayout
+  title="Price Transparency for Health Systems & Providers - Payerset"
+  description="Benchmark your negotiated rates against peers and walk into every payer negotiation armed with the whole market — powered by Payerset."
+  persona="Health Systems"
+  headline="Flip the negotiation. Know what the market pays."
+  subhead="Benchmark your reimbursement against peers, expose ghost rates, and walk into every payer conversation with the same market data they have."
+  secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Rate benchmarking"
+  vizHeading="See where your rates land in the market"
+  vizSubhead="Compare negotiated rates across payers and peers for the same billing codes, so every negotiation starts from evidence — not anecdotes."
+  faqs={faqs}
+  ctaHeadline="Negotiate from a position of strength"
 >
-  <section class="relative bg-brand-dark-deep overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-      <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
-        Solutions
-      </p>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight max-w-3xl">
-        {persona}
-      </h1>
-      <p class="mt-6 text-lg text-slate-300 max-w-2xl font-light">
-        {subhead}
-      </p>
-      <p class="mt-8 inline-flex items-center rounded-full border border-white/20 px-4 py-1.5 text-sm font-light text-slate-300">
-        This page is coming soon.
-      </p>
-      <div class="mt-10">
-        <a
-          href="/get-started"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white bg-brand-primary hover:bg-brand-secondary rounded-lg transition-colors"
-        >
-          Get started
-        </a>
-      </div>
-    </div>
-  </section>
-</PageLayout>
+  <RatesGridViz slot="viz" />
+</SolutionLayout>

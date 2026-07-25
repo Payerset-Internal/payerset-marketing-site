@@ -68,7 +68,7 @@ Price Transparency Project   (unchanged)
 About Us       (unchanged)
 ```
 
-**Open decision:** whether Platform/Solutions get index/landing pages (`/platform`, `/solutions`) or exist only as nav dropdowns. Recommend building lightweight index pages for SEO + a mega-menu fallback.
+**Decision (resolved 2026-07-25):** dropdown-only nav — **no** `/platform` or `/solutions` index/landing pages.
 
 ---
 
@@ -142,7 +142,7 @@ Moving `/rateexplorer` → `/platform/rate-explorer` etc. requires 301s or we lo
 ## 8. Open questions (resolve in Phase 0)
 
 - **AI Analyst / MCP:** how much product detail is firm enough to publish now vs. placeholder?
-- Do we want `/platform` and `/solutions` index pages, or dropdown-only nav?
+- ~~Do we want `/platform` and `/solutions` index pages, or dropdown-only nav?~~ **Resolved 2026-07-25: dropdown-only, no index pages.**
 - Any persona-specific proof assets (logos, testimonials, stats) available for Health Systems / Consultants / Med Device? (Employers has LunaJoy on the homepage.)
 - Final URL slugs (`health-systems` vs. `providers`, `med-device` vs. `medical-device`/`medtech`).
 - Mega-menu vs. two dropdowns in the header.

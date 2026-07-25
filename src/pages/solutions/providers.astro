@@ -5,38 +5,34 @@ import type { FaqItem } from '../../utils/faq';
 
 const pains = [
   {
-    title: 'You negotiate without the market',
-    desc: 'Payers walk into every negotiation knowing what your competitors are paid. Without the same data, you’re arguing from anecdotes while they argue from the whole market.',
+    title: 'They see the whole market. You see your own contracts.',
+    desc: 'Payers benchmark you against every system they contract with. You’ve never had the same view of what your peers are actually paid.',
   },
   {
-    title: 'No peer benchmark for your rates',
-    desc: 'You can’t tell whether a proposed rate is strong or weak until you can compare it to what comparable systems are actually paid for the same services.',
+    title: 'Leverage follows information',
+    desc: 'Every renewal, the side with more data sets the terms. For decades, that side hasn’t been you.',
   },
   {
-    title: 'Ghost rates cloud the picture',
-    desc: 'Raw MRFs are full of rates for services a provider never performs. Benchmarking against noise leads to the wrong conclusions at the negotiating table.',
-  },
-  {
-    title: 'Service-line strategy runs on guesswork',
-    desc: 'Deciding where to invest or grow means knowing the reimbursement landscape by payer, code, and site of care — not last year’s internal averages.',
+    title: 'The data is public now — but raw MRFs are unusable',
+    desc: 'Terabytes of files, inconsistent schemas, and ghost rates for services no provider performs. Open doesn’t mean usable.',
   },
 ];
 
 const helps = [
   {
-    title: 'Benchmark rates against your peers',
-    desc: 'Compare your reimbursement to competitors across payers, services, and geographies so you know exactly where you stand before you sit down.',
-    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
-  },
-  {
-    title: 'Walk in armed with market data',
-    desc: 'Know what every payer pays comparable systems for the same codes, and turn the negotiation from guesswork into an evidence-backed conversation.',
-    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
-  },
-  {
-    title: 'Model service-line economics',
-    desc: 'See reimbursement by payer, billing code, and site of care — enriched with claims and HCO affiliations — to guide where you grow and invest.',
+    title: 'The most complete, detailed rate data available',
+    desc: 'Every payer’s MRF, parsed and standardized, ghost rates filtered out, and enriched with claims and HCO ownership and affiliations — the whole market, made usable.',
     product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'Benchmark against the peers you choose',
+    desc: 'Build the exact cohort you compete with — by market, ownership, or affiliation — and compare your rates across payers, services, and geographies.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Negotiate from the whole market',
+    desc: 'Walk into every renewal knowing what each payer pays comparable systems for the same codes, and turn the conversation from guesswork into evidence.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
   },
 ];
 
@@ -61,16 +57,16 @@ const faqs: FaqItem[] = [
 ---
 
 <SolutionLayout
-  title="Price Transparency for Health Systems & Providers - Payerset"
-  description="Benchmark your negotiated rates against peers and walk into every payer negotiation armed with the whole market — powered by Payerset."
-  persona="Health Systems"
-  headline="Flip the negotiation. Know what the market pays."
-  subhead="Benchmark your reimbursement against peers, expose ghost rates, and walk into every payer conversation with the same market data they have."
+  title="Price Transparency for Provider Negotiations - Payerset"
+  description="Managed care and finance teams benchmark reimbursement against peer systems with the most complete negotiated-rate data available — and negotiate as equals."
+  persona="Providers"
+  headline="Price transparency for the next era of negotiations"
+  subhead="For years the payers held the data — and the leverage. Now managed care and finance teams benchmark reimbursement against their peers with the most complete negotiated-rate data available, and negotiate as equals."
   secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
   pains={pains}
   helps={helps}
   vizEyebrow="Rate benchmarking"
-  vizHeading="See where your rates land in the market"
+  vizHeading="See where your rates land against your peers"
   vizSubhead="Compare negotiated rates across payers and peers for the same billing codes, so every negotiation starts from evidence — not anecdotes."
   faqs={faqs}
   ctaHeadline="Negotiate from a position of strength"

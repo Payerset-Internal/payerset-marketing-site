@@ -25,9 +25,11 @@ Solutions pages have had a design/conversion pass. All committed on the branch.
 | Nav label | Route |
 |---|---|
 | Providers | `/solutions/providers` |
-| Consultants | `/solutions/consultants` |
 | Med Device | `/solutions/medical-device` |
 | Employers | `/solutions/employers` |
+
+**Consultants persona was removed entirely** (page deleted, dropped from nav/footer/personas +
+platform-page audience lists). Three personas remain. No redirect added (page was never pushed/live).
 
 Persona was renamed **Health Systems → "Providers"** everywhere in nav/labels. "Health systems"
 survives only as descriptive prose (e.g. "managed care and finance teams").
@@ -65,25 +67,44 @@ one inline CTA form all confirmed across pages (incl. a no-heroViz page, Med Dev
 
 ---
 
+## Med Device refined (uncommitted — this session)
+
+Reworked `/solutions/medical-device` around the **market-access** messaging (per the dictation:
+market access, not negotiation). Full hero treatment now matches Providers.
+
+- **Copy:** one narrative pain — *reimbursement blindness* — as 3 beats (adoption is decided by
+  reimbursement you can't see / field team calls accounts blind / volume shifting between sites of
+  care). 4 helps lead with data completeness, then prove-the-market + VAC/budget-impact, account
+  targeting, site-of-care shift. Audience named = **market-access & commercial teams**. Headline
+  "See the reimbursement that decides adoption"; `heroStats` added; FAQ reworked (adds account
+  targeting + budget-impact/cost-effectiveness Qs).
+- **Two new self-activating viz** (IntersectionObserver, same design language as
+  `HeroBenchmarkViz`/`RatesGridViz`; illustrative placeholder numbers):
+  - `components/SiteOfCareViz.astro` (**heroViz**) — reimbursement-by-site-of-care bars for CPT 64483
+    across HOPD/ASC/office, HOPD highlighted, "~3× more across settings" footnote.
+  - `components/AccountTargetViz.astro` (**main viz**) — account-targeting list with negotiated rate
+    per account + Target/Below-bar pills against an $800 reimbursement threshold.
+- **Bug fixed:** the old main viz was `ClaimsDataViz`, which only activates via a `viz:activate`
+  event from `FeatureShowcase` — never dispatched by `SolutionLayout`, so it rendered at opacity:0
+  (invisible) on this page. Replaced with `AccountTargetViz` (self-activating). *(Note: Consultants
+  had the same trap with `AnalysisActionViz` — mooted by deleting that page; see below.)*
+
+**Verified:** clean `npm run build`; dev server, no console errors; hero renders with blue CTA + 3
+stats + SiteOfCareViz bars (screenshot); AccountTargetViz DOM-confirmed all 5 rows reveal with
+correct pills. (Mid-page screenshots flaky — screenshot pipeline re-renders from top; DOM-verified.)
+
 ## Next up
 
-1. **Refine Med Device** (`/solutions/medical-device`) — the immediate next task.
-   - Give it the same hero treatment: a market-access / site-of-care **heroViz** + `heroStats`.
-   - Rework copy around the Med Device messaging (per dictation): use cases are **market access**,
-     not contract negotiation — prove product viability / go-to-market, educate customers on
-     reimbursement, **sales targeting** (call on accounts with adequate reimbursement for the
-     relevant codes), budget-impact & cost-effectiveness models, hospital **VAC** (value analysis
-     committee) contracting, tracking adoption of own tech, and **site-of-care shift** analysis.
-   - Source: `~/Downloads/solution transcripts/Medical Device Market Strategy_transcript.txt`.
-2. **Employers** — messaging not yet nailed; needs web research first.
-3. **Consultants** — later.
-4. **Phase 5 (Polish)** — SEO/`llms.txt`, mobile QA, per-persona analytics. Deferred to its own plan;
+1. **Employers** — messaging not yet nailed; needs web research first.
+2. **Phase 5 (Polish)** — SEO/`llms.txt`, mobile QA, per-persona analytics. Deferred to its own plan;
    needs the persona pages fleshed out first.
+
+(Consultants persona dropped — no longer on the roadmap.)
 
 ## Decisions pending from the user (do not assume)
 - Push branch / open PR?
 - Keep provisional AI Analyst / MCP pages in live nav, or hide until content firms up?
-- Persona **proof assets** (logos/testimonials/stats) for Providers / Consultants / Med Device?
+- Persona **proof assets** (logos/testimonials/stats) for Providers / Med Device?
   (Employers has LunaJoy on the homepage — not yet wired into the persona page; `proof` is an
   optional named slot in `SolutionLayout`, omitted on all four for now.)
 

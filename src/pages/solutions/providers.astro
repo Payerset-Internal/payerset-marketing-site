@@ -1,6 +1,7 @@
 ---
 import SolutionLayout from '../../layouts/SolutionLayout.astro';
 import RatesGridViz from '../../components/RatesGridViz.astro';
+import HeroBenchmarkViz from '../../components/HeroBenchmarkViz.astro';
 import type { FaqItem } from '../../utils/faq';
 
 const pains = [
@@ -61,8 +62,8 @@ const faqs: FaqItem[] = [
   description="Managed care and finance teams benchmark reimbursement against peer systems with the most complete negotiated-rate data available — and negotiate as equals."
   persona="Providers"
   headline="Price transparency for the next era of negotiations"
-  subhead="For years the payers held the data — and the leverage. Now managed care and finance teams benchmark reimbursement against their peers with the most complete negotiated-rate data available, and negotiate as equals."
-  secondaryCta={{ label: 'Explore Rate Explorer', href: '/platform/rate-explorer' }}
+  subhead="Payers have always held the data — and the leverage. Now managed care and finance teams benchmark against peer systems on the most complete negotiated-rate data available, and negotiate as equals."
+  heroStats={['Every payer, full rate history', 'Enriched with all-payer claims', 'Peer cohorts by ownership & market']}
   pains={pains}
   helps={helps}
   vizEyebrow="Rate benchmarking"
@@ -71,5 +72,6 @@ const faqs: FaqItem[] = [
   faqs={faqs}
   ctaHeadline="Negotiate from a position of strength"
 >
+  <HeroBenchmarkViz slot="heroViz" />
   <RatesGridViz slot="viz" />
 </SolutionLayout>

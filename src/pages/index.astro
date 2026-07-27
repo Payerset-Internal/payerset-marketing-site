@@ -6,7 +6,9 @@ import InsightCards from '../components/InsightCards.astro';
 import ExploreRatesViz from '../components/ExploreRatesViz.astro';
 import DataLakeViz from '../components/DataLakeViz.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import ContactFormCTA from '../components/ContactFormCTA.astro';
 import { buildFaqSchema, type FaqItem } from '../utils/faq';
+import { personas } from '../utils/personas';
 import { Image } from 'astro:assets';
 import lunaJoyLogo from '../assets/images/lunajoylogo.png';
 import shamaRathi from '../assets/images/shama-rathi.png';
@@ -46,32 +48,6 @@ const faqs: FaqItem[] = [
   },
 ];
 
-const personas = [
-  {
-    name: 'Providers',
-    href: '/solutions/providers',
-    desc: 'Benchmark your rates and negotiate with the whole market.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 21h19.5M4.5 21V6.75A2.25 2.25 0 0 1 6.75 4.5h6a2.25 2.25 0 0 1 2.25 2.25V21M15.75 21V11.25a1.5 1.5 0 0 1 1.5-1.5h1.5a1.5 1.5 0 0 1 1.5 1.5V21M8.25 9h.75M8.25 12h.75M8.25 15h.75M11.25 9h.75M11.25 12h.75" /></svg>',
-  },
-  {
-    name: 'Consultants',
-    href: '/solutions/consultants',
-    desc: 'Benchmark clients across markets without the data lift.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>',
-  },
-  {
-    name: 'Med Device',
-    href: '/solutions/medical-device',
-    desc: 'Track reimbursement by procedure and site of care.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.75 6.75h10.5v10.5H6.75zM9 3v1.5m3-1.5v1.5m3-1.5v1.5M9 19.5V21m3-1.5V21m3-1.5V21M4.5 9H3m1.5 3H3m1.5 3H3M21 9h-1.5M21 12h-1.5M21 15h-1.5" /></svg>',
-  },
-  {
-    name: 'Employers',
-    href: '/solutions/employers',
-    desc: 'Independent rate data for the plans you pay for.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.75 7.5V6A2.25 2.25 0 0 1 9 3.75h6A2.25 2.25 0 0 1 17.25 6v1.5M3.75 7.5h16.5A1.5 1.5 0 0 1 21.75 9v9a1.5 1.5 0 0 1-1.5 1.5H3.75A1.5 1.5 0 0 1 2.25 18V9a1.5 1.5 0 0 1 1.5-1.5ZM3 12h18" /></svg>',
-  },
-];
 ---
 
 <PageLayout
@@ -203,22 +179,6 @@ const personas = [
 
     .animate-scroll:hover {
       animation-play-state: paused;
-    }
-  </style>
-
-  <!-- CTA form card gradient border -->
-  <style is:global>
-    .cta-form-card::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 1rem;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 183, 253, 0.2), rgba(0, 146, 202, 0.05), rgba(0, 183, 253, 0.2));
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      -webkit-mask-composite: xor;
-      pointer-events: none;
     }
   </style>
 
@@ -603,86 +563,11 @@ const personas = [
     </div>
   </section>
 
-  <!-- CTA Section — Dark Bookend -->
-  <section class="relative overflow-hidden bg-brand-dark-deep">
-    <div class="absolute inset-0 bg-gradient-to-tl from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
-
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-      <div class="grid lg:grid-cols-2 gap-12 items-start">
-        <div data-reveal="left">
-          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
-            Start Leveraging Price Transparency Data Today
-          </h2>
-          <p class="text-lg text-white mb-8 font-light">
-            Request your demo &amp; learn how healthcare price transparency can transform your pricing strategy &amp; contract negotiations.
-          </p>
-          <ul class="space-y-3">
-            {[
-              'All payer-provider negotiated rates with claims',
-              'Access every health plan with historical rates',
-              'Self-service platform or direct data integration',
-            ].map((item) => (
-              <li class="flex items-start gap-3 text-white font-light">
-                <svg class="w-5 h-5 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="cta-form-card relative bg-white rounded-xl shadow-lg p-8" data-reveal="right" data-reveal-delay="200">
-          <h3 class="text-xl font-semibold text-text-primary mb-6">
-            Contact our team
-          </h3>
-          <form id="home-form" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
-                <input type="text" name="firstname" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
-                <input type="text" name="lastname" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-              </div>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
-              <input type="email" name="email" required placeholder="Work email" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
-              <input type="tel" name="phone" placeholder="Phone number" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
-              <select name="role" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]">
-                <option value="">What is your role?</option>
-                <option value="Healthcare provider">Healthcare provider</option>
-                <option value="Healthcare solution">Healthcare solution</option>
-                <option value="Consultant">Consultant</option>
-                <option value="Health plan">Health plan</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
-              <textarea name="usecase" rows="3" placeholder="Describe your use case..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"></textarea>
-            </div>
-            <button
-              type="button"
-              class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Request a demo
-            </button>
-            <p id="home-form-error" class="text-sm text-red-600 hidden"></p>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- CTA Section — Dark Bookend (shared inline lead form) -->
+  <ContactFormCTA
+    headline="Start Leveraging Price Transparency Data Today"
+    description="Request your demo &amp; learn how healthcare price transparency can transform your pricing strategy &amp; contract negotiations."
+  />
 
   <!-- FAQ Section -->
   <section class="relative py-20 lg:py-28 bg-white">
@@ -699,66 +584,3 @@ const personas = [
     </div>
   </section>
 </PageLayout>
-
-<script is:inline>
-  (function() {
-    var form = document.getElementById('home-form');
-    if (!form) return;
-
-    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
-
-    var btn = form.querySelector('button[type="button"]');
-    btn.addEventListener('click', function() {
-      var errorEl = document.getElementById('home-form-error');
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      var email = form.querySelector('[name="email"]').value.toLowerCase();
-      var domain = email.split('@')[1] || '';
-      if (blockedDomains.indexOf(domain) !== -1) {
-        errorEl.textContent = 'Please use your work email address.';
-        errorEl.classList.remove('hidden');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-      errorEl.classList.add('hidden');
-
-      var payload = {
-        fields: [
-          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
-          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
-          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
-          { objectTypeId: '0-1', name: 'phone', value: form.querySelector('[name="phone"]').value || '' },
-          { objectTypeId: '0-1', name: 'jobtitle', value: form.querySelector('[name="role"]').value || '' },
-          { objectTypeId: '0-1', name: 'message', value: form.querySelector('[name="usecase"]').value || '' },
-        ],
-        context: {
-          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
-          pageUri: window.location.href,
-          pageName: document.title,
-        },
-      };
-
-      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('Submission failed');
-        window.location.href = '/thank-you';
-      })
-      .catch(function() {
-        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
-        errorEl.classList.remove('hidden');
-        btn.disabled = false;
-        btn.textContent = 'Request a demo';
-      });
-    });
-  })();
-</script>

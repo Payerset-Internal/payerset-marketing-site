@@ -1,0 +1,187 @@
+---
+/**
+ * ContactFormCTA.astro
+ *
+ * Shared closing CTA bookend: dark section with a left value column and an
+ * inline HubSpot lead form on the right. Single source of truth so every page
+ * (homepage + Solutions persona pages) presents the same low-friction form.
+ *
+ * The submit script is a bundled (processed) module script — included once per
+ * page regardless of how many instances render — and wires every
+ * `form.cta-contact-form` on the page, so multiple instances are safe.
+ */
+interface Props {
+  /** Left-column headline. */
+  headline: string;
+  /** Left-column supporting sentence (may contain HTML entities). */
+  description: string;
+  /** Value bullets shown under the description. */
+  bullets?: string[];
+  /** Form card heading. */
+  formHeading?: string;
+}
+
+const {
+  headline,
+  description,
+  bullets = [
+    'All payer-provider negotiated rates with claims',
+    'Access every health plan with historical rates',
+    'Self-service platform or direct data integration',
+  ],
+  formHeading = 'Contact our team',
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-brand-dark-deep">
+  <div class="absolute inset-0 bg-gradient-to-tl from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+      <div data-reveal="left">
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+          {headline}
+        </h2>
+        <p class="text-lg text-white mb-8 font-light" set:html={description}></p>
+        <ul class="space-y-3">
+          {bullets.map((item) => (
+            <li class="flex items-start gap-3 text-white font-light">
+              <svg class="w-5 h-5 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="cta-form-card relative bg-white rounded-xl shadow-lg p-8" data-reveal="right" data-reveal-delay="200">
+        <h3 class="text-xl font-semibold text-text-primary mb-6">
+          {formHeading}
+        </h3>
+        <form class="cta-contact-form space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
+              <input type="text" name="firstname" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
+              <input type="text" name="lastname" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
+            <input type="email" name="email" required placeholder="Work email" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
+            <input type="tel" name="phone" placeholder="Phone number" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
+            <select name="role" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]">
+              <option value="">What is your role?</option>
+              <option value="Healthcare provider">Healthcare provider</option>
+              <option value="Healthcare solution">Healthcare solution</option>
+              <option value="Consultant">Consultant</option>
+              <option value="Health plan">Health plan</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
+            <textarea name="usecase" rows="3" placeholder="Describe your use case..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"></textarea>
+          </div>
+          <button
+            type="button"
+            class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Request a demo
+          </button>
+          <p class="cta-form-error text-sm text-red-600 hidden"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .cta-form-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0, 183, 253, 0.2), rgba(0, 146, 202, 0.05), rgba(0, 183, 253, 0.2));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const BLOCKED_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
+  const HUBSPOT_ENDPOINT = 'https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409';
+
+  document.querySelectorAll<HTMLFormElement>('form.cta-contact-form').forEach((form) => {
+    const btn = form.querySelector<HTMLButtonElement>('button[type="button"]');
+    const errorEl = form.querySelector<HTMLParagraphElement>('.cta-form-error');
+    if (!btn || !errorEl) return;
+
+    const val = (name: string) =>
+      (form.querySelector<HTMLInputElement>(`[name="${name}"]`)?.value ?? '');
+
+    btn.addEventListener('click', () => {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const domain = val('email').toLowerCase().split('@')[1] || '';
+      if (BLOCKED_DOMAINS.indexOf(domain) !== -1) {
+        errorEl.textContent = 'Please use your work email address.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      errorEl.classList.add('hidden');
+
+      const payload = {
+        fields: [
+          { objectTypeId: '0-1', name: 'firstname', value: val('firstname') },
+          { objectTypeId: '0-1', name: 'lastname', value: val('lastname') },
+          { objectTypeId: '0-1', name: 'email', value: val('email') },
+          { objectTypeId: '0-1', name: 'phone', value: val('phone') },
+          { objectTypeId: '0-1', name: 'jobtitle', value: val('role') },
+          { objectTypeId: '0-1', name: 'message', value: val('usecase') },
+        ],
+        context: {
+          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
+          pageUri: window.location.href,
+          pageName: document.title,
+        },
+      };
+
+      fetch(HUBSPOT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Submission failed');
+          window.location.href = '/thank-you';
+        })
+        .catch(() => {
+          errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
+          errorEl.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = 'Request a demo';
+        });
+    });
+  });
+</script>

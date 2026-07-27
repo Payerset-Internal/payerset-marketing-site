@@ -1,0 +1,257 @@
+---
+/**
+ * PlanRateSpreadViz.astro
+ *
+ * "What employers pay" visualization for the Employers solution hero.
+ * A dark glass card showing what four self-funded employers in the same market
+ * pay for the same procedure, with "Your plan" as the subject row — the
+ * peer-employer benchmark that only exists because Payerset carries every
+ * self-funded employer plan across every payer and network.
+ *
+ * Deliberately non-technical: this is a VP Benefits / CFO conversation, so the
+ * card shows the money, not the plumbing (EIN → reporting plan → in-network
+ * file). The mechanism lives in EmployerCoverageViz lower on the page.
+ *
+ * The spread here is driven by payer/network choice — the lever the employer
+ * actually controls — not by the same network pricing two employers
+ * differently.
+ *
+ * Self-activates via IntersectionObserver. Design language matches
+ * HeroBenchmarkViz / SiteOfCareViz (dark card, cyan accents, glow).
+ * Single-instance (fixed DOM id) — use once per page.
+ *
+ * Numbers and payer/network pairings are illustrative placeholders; payer names
+ * follow the convention set by EmployerCoverageViz.
+ *
+ * Dependencies: None (vanilla JS + CSS animations)
+ */
+
+// CPT 73721 (MRI lower extremity joint, without contrast) — a high-volume,
+// highly shoppable outpatient scan where network choice moves the price the
+// most. Widths are percentages of the highest rate so the layout is
+// self-contained.
+const rows = [
+  { label: 'Your plan', network: 'Anthem PPO', rate: '$2,140', pct: 100, you: true },
+  { label: 'Peer employer', network: 'Cigna Open Access', rate: '$1,680', pct: 79 },
+  { label: 'Peer employer', network: 'UHC Choice Plus', rate: '$1,315', pct: 61 },
+  { label: 'Peer employer', network: 'Aetna &middot; narrow network', rate: '$612', pct: 29, floor: true },
+];
+---
+
+<div class="prs-viz" id="planRateSpreadViz">
+  <div class="prs-viz__card">
+    <div class="prs-viz__header">
+      <span class="prs-viz__title">What employers pay</span>
+      <span class="prs-viz__code">CPT 73721 &middot; MRI knee</span>
+    </div>
+
+    <div class="prs-viz__chart">
+      {rows.map((row, i) => (
+        <div class={`prs-viz__row${row.you ? ' prs-viz__row--you' : ''}${row.floor ? ' prs-viz__row--floor' : ''}`}>
+          <div class="prs-viz__meta">
+            <span class="prs-viz__label">{row.label}</span>
+            <span class="prs-viz__network" set:html={row.network}></span>
+          </div>
+          <span class="prs-viz__track">
+            <span class="prs-viz__bar" data-bar={String(i)} style={`--w:${row.pct}%`}></span>
+          </span>
+          <span class="prs-viz__rate">{row.rate}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="prs-viz__footnote">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M8 3L4 7M8 3l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Same scan, same market. Your network choice is a <strong>3.5&times; decision</strong>.</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .prs-viz {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .prs-viz__card {
+    width: 100%;
+    max-width: 460px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .prs-viz__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .prs-viz__title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .prs-viz__code {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 10.5px;
+    color: var(--color-brand-secondary);
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  .prs-viz__chart {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .prs-viz__row {
+    display: grid;
+    grid-template-columns: 128px 1fr 54px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .prs-viz__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .prs-viz__label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .prs-viz__network {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .prs-viz__row--you .prs-viz__label {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .prs-viz__row--you .prs-viz__network {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .prs-viz__row--floor .prs-viz__network {
+    color: rgba(0, 183, 253, 0.75);
+  }
+
+  .prs-viz__track {
+    position: relative;
+    height: 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .prs-viz__bar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.22));
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* "Your plan" is the subject of the chart, not the winner — give it the
+     brand treatment so the eye lands there first. */
+  .prs-viz__row--you .prs-viz__bar {
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary));
+    box-shadow: 0 0 16px rgba(0, 183, 253, 0.35);
+  }
+
+  .prs-viz.is-visible .prs-viz__bar {
+    width: var(--w);
+  }
+
+  .prs-viz.is-visible .prs-viz__bar[data-bar='1'] { transition-delay: 0.12s; }
+  .prs-viz.is-visible .prs-viz__bar[data-bar='2'] { transition-delay: 0.24s; }
+  .prs-viz.is-visible .prs-viz__bar[data-bar='3'] { transition-delay: 0.36s; }
+
+  .prs-viz__rate {
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .prs-viz__row--you .prs-viz__rate {
+    color: #fff;
+  }
+
+  .prs-viz__footnote {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 11px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .prs-viz__footnote svg {
+    color: var(--color-brand-secondary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .prs-viz__footnote strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+  }
+
+  @media (max-width: 480px) {
+    .prs-viz__row {
+      grid-template-columns: 116px 1fr 50px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prs-viz__bar {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const prsViz = document.getElementById('planRateSpreadViz');
+  if (prsViz) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          prsViz.classList.add('is-visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(prsViz);
+  }
+</script>

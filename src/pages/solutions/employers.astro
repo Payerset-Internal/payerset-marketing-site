@@ -1,42 +1,46 @@
 ---
 import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import PlanRateSpreadViz from '../../components/PlanRateSpreadViz.astro';
 import EmployerCoverageViz from '../../components/EmployerCoverageViz.astro';
 import type { FaqItem } from '../../utils/faq';
 
+// One narrative pain — healthcare is enormous, growing, and the only major
+// line item you can't see prices on — told as three beats.
 const pains = [
   {
-    title: 'Your TPA controls the data',
-    desc: 'Self-insured plans pay the claims but rarely see the negotiated rates behind them. Without independent data you can’t tell a good network deal from a bad one.',
+    title: 'After payroll, nothing costs you more',
+    desc: 'And it’s the only major line item you buy without seeing prices. You know it to the dollar in total, and not at all in detail — one renewal number, with no way to see what sits underneath it.',
   },
   {
-    title: 'No way to benchmark plan cost',
-    desc: 'You know your total spend, but not whether the rates your network pays are competitive versus other payers and plans in the same market.',
+    title: 'The increases keep coming, and the usual levers are spent',
+    desc: 'Large employers are bracing for the steepest cost increases in more than a decade. Shifting more to employees and trimming plan design buys you a year — the price of the care itself is where the real money sits.',
   },
   {
-    title: 'Steerage decisions made blind',
-    desc: 'Point solutions and centers-of-excellence promise savings, but you can’t verify the price difference between sites of care before you steer members.',
-  },
-  {
-    title: 'Renewals arrive without leverage',
-    desc: 'When it’s time to evaluate a network or TPA, you’re negotiating on trust instead of the actual contracted rates your members are billed against.',
+    title: 'You can’t manage a price you’ve never seen',
+    desc: 'Which network, which TPA, where to steer, whether to contract direct — every lever that actually moves cost is a pricing decision. Your vendor holds those prices, and has little reason to hand them over.',
   },
 ];
 
 const helps = [
   {
-    title: 'Benchmark your network’s rates',
-    desc: 'Compare the negotiated rates behind your plan against every other payer and plan in the market, down to the billing code and facility.',
-    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
-  },
-  {
-    title: 'Quantify steerage opportunities',
-    desc: 'See the real price gap between hospitals, ASCs, and sites of care so you can build steerage and COE programs on evidence, not vendor claims.',
-    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
-  },
-  {
-    title: 'Hold TPAs and networks accountable',
-    desc: 'Map employers to health plans and inspect the rates your members are actually billed against, so vendor oversight rests on independent data.',
+    title: 'Every self-funded employer plan, not just yours',
+    desc: 'Payerset carries the negotiated rates behind self-funded employer plans across every payer and every network — so you can see your own plan, and what the companies you compete with are paying for the same care.',
     product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'The most complete, detailed rate data available',
+    desc: 'Every payer’s files, parsed and standardized, ghost rates filtered out, and enriched with all-payer claims — so you’re looking at real prices for care that’s actually delivered, not published noise.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'Find the money inside your own network',
+    desc: 'See what the same procedure costs across the facilities your members already use, so steerage, centers of excellence, and navigation programs are built on price gaps you can prove and size.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Price the alternative before you commit',
+    desc: 'Weigh a new TPA, a narrower network, or a direct contract against what every other employer in your market actually pays — and walk into the decision knowing what fair looks like.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
   },
 ];
 
@@ -46,12 +50,16 @@ const faqs: FaqItem[] = [
     a: 'Yes. Payerset is built entirely from the payers’ own published machine-readable files, so it is independent of your TPA. You can see the negotiated rates behind your network without waiting on a data request that may never come.',
   },
   {
-    q: 'Can we compare our plan’s rates against other plans in our market?',
-    a: 'Yes. <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you benchmark any payer-plan-provider combination against the full market for the same billing codes, so you can see exactly where your network sits.',
+    q: 'Can we see what other employers pay for the same care?',
+    a: 'Yes — this is the part most benefits and finance leaders don’t realize is possible. Payerset carries self-funded employer plans across every payer and network, so you can compare your plan against peer employers in your market for the same procedures at the same facilities.',
   },
   {
-    q: 'Does Payerset map employers to the health plans covering them?',
-    a: 'Yes. Payerset enriches the transparency data with full employer-to-health-plan coverage, so you can trace which plans and networks your members are enrolled in and inspect the rates behind them.',
+    q: 'Are these the rates actually paid, or just published rates?',
+    a: 'The transparency files publish negotiated rates, and a large share of what payers post is for services a provider never performs. Payerset filters those ghost rates out and links the remaining rates to all-payer claims, so what you see reflects prices for care that is actually delivered.',
+  },
+  {
+    q: 'How do we use this to evaluate a new network, TPA, or direct contract?',
+    a: 'Compare what each payer and network pays for the procedures that drive your spend, in the markets where your members live. You can size the difference between your current arrangement and the alternative before you go to market — and price a direct contract against what the rest of the market pays.',
   },
   {
     q: 'Do we need a data team to use this?',
@@ -61,18 +69,20 @@ const faqs: FaqItem[] = [
 ---
 
 <SolutionLayout
-  title="Price Transparency for Employers & Benefits Teams - Payerset"
-  description="Benchmark plan costs, evaluate network steerage, and hold TPAs accountable with independent negotiated-rate data built from payer MRFs."
+  title="Price Transparency for Self-Funded Employers - Payerset"
+  description="Benefits and finance leaders see the negotiated rates behind their health plan — and every other self-funded employer's — across every payer and network."
   persona="Employers"
-  headline="Independent rate data for the plans you actually pay for"
-  subhead="Benchmark plan costs, evaluate network steerage, and hold TPAs accountable — with negotiated-rate data that doesn’t come from your vendor."
+  headline="Manage healthcare spend like the rest of your business"
+  subhead="See the negotiated rates behind your plan — and your competitors’ — across every payer and network."
+  heroStats={['Every self-funded employer plan', 'Every payer, every network', 'Independent of your TPA']}
   pains={pains}
   helps={helps}
   vizEyebrow="Employer → plan coverage"
-  vizHeading="See the plans behind your members"
-  vizSubhead="Payerset maps employers to the health plans covering them, then links each plan to the negotiated rates your members are billed against."
+  vizHeading="Every employer plan, mapped to its rates"
+  vizSubhead="Payerset connects self-funded employers to the health plans covering them — so you can pull up your own plan’s rates, or a peer employer’s, and see exactly what each one pays."
   faqs={faqs}
-  ctaHeadline="Stop negotiating benefits in the dark"
+  ctaHeadline="See what your plan actually pays"
 >
+  <PlanRateSpreadViz slot="heroViz" />
   <EmployerCoverageViz slot="viz" />
 </SolutionLayout>

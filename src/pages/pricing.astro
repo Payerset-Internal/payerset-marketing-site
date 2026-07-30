@@ -6,23 +6,27 @@ import { buildFaqSchema, type FaqItem } from '../utils/faq';
 const faqs: FaqItem[] = [
   {
     q: 'What data is included in every plan?',
-    a: 'Every plan includes payer price transparency data (all published MRFs), all-payer claims and remits, full historical rate data, and quarterly refreshes. The difference between tiers is based on your organization\'s bed count.',
+    a: 'Every Rate Explorer plan includes payer price transparency data (all published MRFs), all-payer claims and remits, full historical rate data, and quarterly refreshes. We don\'t sell partial datasets or charge per query.',
   },
   {
-    q: 'How do you determine which tier I fall into?',
-    a: 'Tiers are based on the number of licensed beds at your facility or across your system. Tier 1 covers 300–999 beds, Tier 2 covers 1,000–2,999 beds, and Tier 3 is for systems with 3,000+ beds. Not sure where you fall? Our team can help you determine the best fit.',
+    q: 'Why aren\'t prices listed on this page?',
+    a: 'Pricing depends on the size of your organization, how many people need access, and — for the Data Lake — how much of the data asset you need. Rather than force-fit you into a tier, we scope a package to your use case. Reach out and we\'ll get you a quote quickly.',
   },
   {
-    q: 'Can I add more user seats to my plan?',
-    a: 'Yes. All plans support add-on user seats beyond the base allocation. Reach out and we\'ll build the right package for your team.',
+    q: 'How is Rate Explorer™ priced?',
+    a: 'Rate Explorer is licensed annually based on the size of your organization and the number of user seats your team needs. All plans support additional seats beyond the base allocation.',
+  },
+  {
+    q: 'How is the Payerset Data Lake™ priced?',
+    a: 'Data Lake packages are licensed annually and scoped to the data you need — which billing codes, which geographies, and whether you need commercial plans, employer-level plans, Type 1 NPIs, Type 2 NPIs, or the complete data asset.',
   },
   {
     q: 'What is the Payerset Data Lake™?',
-    a: 'The Data Lake is our enterprise-grade API and data integration product. It allows you to pipe price transparency and claims data directly into your own analytics, BI tools, or applications. It\'s available as an add-on to any tier.',
+    a: 'The Data Lake is our enterprise-grade API and data integration product. It allows you to pipe price transparency and claims data directly into your own analytics, BI tools, or applications. It can be licensed on its own or alongside Rate Explorer.',
   },
   {
     q: "I'm not a hospital. Can I still use Payerset?",
-    a: 'Absolutely. We work with healthcare consulting firms, medical device companies, health tech platforms, health plans, and more. Our bed-based pricing tiers are specifically designed for hospitals and health systems, but we build custom packages for other organizations. Reach out and we\'ll scope something for your needs.',
+    a: 'Absolutely. We work with healthcare consulting firms, medical device companies, health tech platforms, health plans, and more. Reach out and we\'ll scope a package for your needs.',
   },
   {
     q: 'How often is the data refreshed?',
@@ -44,19 +48,22 @@ const faqs: FaqItem[] = [
 
     <div class="relative max-w-3xl mx-auto">
       <h1 class="text-4xl sm:text-5xl font-semibold text-white leading-tight tracking-tight mb-3">
-        Price Transparency Deserves<br />
-        <span class="text-brand-primary">Transparent Pricing.</span>
+        Plans Scoped to<br />
+        <span class="text-brand-primary">Your Organization.</span>
       </h1>
-      <p class="text-lg text-white/60 max-w-xl mx-auto leading-relaxed">
-        Understand every contracted rate in your market.
+      <p class="text-lg text-white/60 max-w-xl mx-auto leading-relaxed mb-8">
+        Tell us what you're working on and we'll put together a package.
       </p>
+      <a href="/get-started" class="inline-block bg-brand-primary hover:bg-brand-primary-hover text-white font-semibold text-base px-8 py-3.5 rounded-lg transition-all shadow-[0_4px_16px_rgba(0,146,202,0.35)] hover:shadow-[0_6px_24px_rgba(0,146,202,0.45)] hover:-translate-y-0.5">
+        Let's Talk
+      </a>
     </div>
   </section>
 
   <!-- ── PRODUCT SELECTOR ── -->
   <section class="bg-slate-50 border-y border-slate-200/60 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-sm font-semibold uppercase tracking-[2px] text-slate-400 mb-6">Choose your product</p>
+    <p class="text-center text-sm font-semibold uppercase tracking-[2px] text-slate-400 mb-6">Two ways to work with our data</p>
     <div class="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
       <!-- Rate Explorer -->
       <a href="#rate-explorer-pricing" class="group relative bg-white border border-slate-200 rounded-xl p-8 text-center shadow-sm hover:border-brand-primary/40 hover:shadow-lg transition-all duration-300">
@@ -68,7 +75,7 @@ const faqs: FaqItem[] = [
         <h3 class="text-lg font-semibold text-slate-900 mb-2">Rate Explorer™</h3>
         <p class="text-sm text-slate-500 leading-relaxed mb-4">Self-service rate intelligence platform to understand every reimbursement rate.</p>
         <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary group-hover:gap-2.5 transition-all">
-          View pricing tiers
+          See what's included
           <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
@@ -85,7 +92,7 @@ const faqs: FaqItem[] = [
         <h3 class="text-lg font-semibold text-slate-900 mb-2">Payerset Data Lake™</h3>
         <p class="text-sm text-slate-500 leading-relaxed mb-4">Curated transparency data delivered directly to you to power your solutions.</p>
         <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-dark group-hover:gap-2.5 transition-all">
-          View data plans
+          See what's included
           <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
@@ -98,7 +105,7 @@ const faqs: FaqItem[] = [
   <!-- ── RATE EXPLORER PRICING TABLE ── -->
   <section id="rate-explorer-pricing" class="relative z-10 bg-slate-50/70 border-y border-slate-100 pt-16 pb-16 scroll-mt-8">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-8">
+    <div class="text-center">
       <div class="inline-flex items-center gap-2 bg-brand-primary/10 rounded-full px-4 py-1.5 mb-4">
         <svg class="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
@@ -106,64 +113,17 @@ const faqs: FaqItem[] = [
         <span class="text-xs font-semibold uppercase tracking-[2px] text-brand-primary">Rate Explorer™</span>
       </div>
       <h2 class="text-3xl font-semibold text-slate-900 tracking-tight mb-3">Price Intelligence Platform</h2>
-      <p class="text-base text-slate-500 max-w-lg mx-auto">Simple, transparent tiers for hospitals and health systems.</p>
-    </div>
-    <div class="max-w-3xl mx-auto bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <!-- Header row -->
-      <div class="hidden sm:grid grid-cols-[1fr_auto_auto] items-center gap-4 px-8 py-4 bg-slate-50 border-b border-slate-200">
-        <span class="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400">Organization Size</span>
-        <span class="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400 text-right w-32">Annual Rate</span>
-        <span class="w-32"></span>
+      <p class="text-base text-slate-500 max-w-lg mx-auto">Self-service rate intelligence for hospitals and health systems.</p>
+      <div class="mt-7 flex justify-center">
+        <a href="/get-started" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-semibold bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)] transition-colors">
+          Let's Talk
+        </a>
       </div>
-
-      {[
-        { tier: 'Tier 1', beds: '300 – 999 Beds', price: '95', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
-        { tier: 'Tier 2', beds: '1,000 – 2,999 Beds', price: '195', label: 'K/yr', pricePrefix: null, cta: 'Get Started', ctaStyle: 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-[0_2px_8px_rgba(0,146,202,0.3)]' },
-        { tier: 'Tier 3', beds: '3,000+ Beds', price: '350', label: 'K+/yr', pricePrefix: 'Starting At', cta: 'Talk to Sales', ctaStyle: 'bg-brand-dark hover:bg-brand-dark-deeper text-white shadow-[0_2px_8px_rgba(0,31,41,0.2)]' },
-      ].map(({ tier, beds, price, label, pricePrefix, cta, ctaStyle }, i) => (
-        <div class:list={[
-          "sm:grid grid-cols-[1fr_auto_auto] items-center gap-4 px-8 py-5 transition-colors hover:bg-slate-50/80",
-          i < 2 ? "border-b border-slate-100" : "",
-        ]}>
-          <div class="mb-3 sm:mb-0">
-            <p class="text-[10px] font-bold uppercase tracking-[2px] text-slate-400 mb-0.5">{tier}</p>
-            <p class="text-lg font-bold text-slate-900 leading-tight">{beds}</p>
-          </div>
-          <div class="flex flex-col items-end font-heading w-32 mb-3 sm:mb-0">
-            {pricePrefix && (
-              <span class="text-[10px] font-bold uppercase tracking-[1.5px] text-slate-400 mb-0.5">{pricePrefix}</span>
-            )}
-            <div class="flex items-baseline">
-              <span class="text-sm font-semibold text-slate-900 self-start pt-1">$</span>
-              <span class="text-4xl font-extrabold text-slate-900 leading-none tracking-tight">{price}</span>
-              <span class="text-sm font-medium text-slate-500 ml-0.5">{label}</span>
-            </div>
-          </div>
-          <a href="/get-started" class:list={["block w-32 text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors", ctaStyle]}>
-            {cta}
-          </a>
-        </div>
-      ))}
     </div>
-    <!-- ── NOT A HEALTH SYSTEM LINK ── -->
-    <div class="flex justify-center mt-6">
-      <a href="#other-organizations" class="group inline-flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-full pl-5 pr-4 py-3 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all duration-200">
-        <span class="text-sm text-slate-600">
-          <strong class="font-semibold text-slate-800">Not a health system?</strong> We work with consulting firms, med device, health tech, and more.
-        </span>
-        <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand-primary whitespace-nowrap shrink-0">
-          Learn more
-          <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </span>
-      </a>
-    </div>
-
     <!-- ── EVERY PLAN INCLUDES ── -->
-    <div class="mt-16">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl font-semibold text-slate-900 tracking-tight">Every Rate Explorer Plan Includes</h2>
+    <div class="mt-14">
+    <div class="text-center mb-6">
+      <h3 class="text-sm font-semibold uppercase tracking-[2px] text-slate-400">Every plan includes</h3>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {[
@@ -217,7 +177,7 @@ const faqs: FaqItem[] = [
     <div class="absolute bottom-[-150px] right-[-80px] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(0,146,202,0.06)_0%,transparent_65%)] pointer-events-none"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-8">
+      <div class="text-center">
         <div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 mb-4">
           <svg class="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
@@ -235,68 +195,18 @@ const faqs: FaqItem[] = [
             </>
           ))}
         </p>
-      </div>
-
-      <div class="max-w-3xl mx-auto bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-        <!-- Header row -->
-        <div class="hidden sm:grid grid-cols-[1fr_auto_auto] items-center gap-4 px-8 py-4 bg-white/5 border-b border-white/10">
-          <span class="text-[11px] font-bold uppercase tracking-[1.5px] text-white/40">Price Transparency Algorithm (PTA)</span>
-          <span class="text-[11px] font-bold uppercase tracking-[1.5px] text-white/40 text-right w-32">Starting At</span>
-          <span class="w-32"></span>
-        </div>
-        <div class="px-8 py-2 border-b border-white/10">
-          <a href="https://docs.payerset.com/data-lake/payerset-price-transparency-algorithm" class="inline-flex items-center gap-1 text-xs font-medium text-brand-primary hover:text-brand-primary-hover">
-            View PTA documentation <span class="text-[10px]">↗</span>
+        <a href="https://docs.payerset.com/data-lake/payerset-price-transparency-algorithm" class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-brand-primary hover:text-brand-primary-hover transition-colors">
+          View PTA documentation <span class="text-[10px]">↗</span>
+        </a>
+        <div class="mt-7 flex justify-center">
+          <a href="/get-started" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-semibold bg-white hover:bg-slate-100 text-brand-dark shadow-[0_4px_16px_rgba(255,255,255,0.1)] transition-colors">
+            Let's Talk
           </a>
         </div>
-
-        {[
-          { tier: 'Tier 1', name: 'Up to 100 Billing Codes', desc: 'Nationwide coverage', price: '75', label: 'K/yr', cta: 'Get Started', ctaStyle: 'bg-white hover:bg-slate-100 text-brand-dark shadow-[0_4px_16px_rgba(255,255,255,0.1)]', link: null },
-          { tier: 'Tier 2', name: 'Up to 500 Billing Codes', desc: 'Nationwide coverage', price: '150', label: 'K/yr', cta: 'Get Started', ctaStyle: 'bg-white hover:bg-slate-100 text-brand-dark shadow-[0_4px_16px_rgba(255,255,255,0.1)]', link: null },
-          { tier: 'Tier 3', name: 'All Billing Codes', desc: 'Nationwide coverage', price: '288', label: 'K/yr', cta: 'Get Started', ctaStyle: 'bg-white hover:bg-slate-100 text-brand-dark shadow-[0_4px_16px_rgba(255,255,255,0.1)]', link: null },
-        ].map(({ tier, name, desc, price, label, cta, ctaStyle, link }, i) => (
-          <div class:list={[
-            "sm:grid grid-cols-[1fr_auto_auto] items-center gap-4 px-8 py-5 transition-colors hover:bg-white/[0.03]",
-            i < 2 ? "border-b border-white/10" : "",
-          ]}>
-            <div class="mb-3 sm:mb-0">
-              <p class="text-[10px] font-bold uppercase tracking-[2px] text-white/40 mb-0.5">{tier}</p>
-              <p class="text-lg font-bold text-white leading-tight">{name}</p>
-              <p class="text-xs text-white/50">{desc}</p>
-              {link && (
-                <a href={link.href} class="inline-flex items-center gap-1 text-xs font-medium text-brand-primary hover:text-brand-primary-hover mt-1">
-                  {link.text} <span class="text-[10px]">↗</span>
-                </a>
-              )}
-            </div>
-            <div class="flex items-baseline font-heading w-32 justify-end mb-3 sm:mb-0">
-              <span class="text-sm font-semibold text-white self-start pt-1">$</span>
-              <span class="text-4xl font-extrabold text-white leading-none tracking-tight">{price}</span>
-              <span class="text-sm font-medium text-white/50 ml-0.5">{label}</span>
-            </div>
-            <a href="/get-started" class:list={["block w-32 text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors", ctaStyle]}>
-              {cta}
-            </a>
-          </div>
-        ))}
       </div>
-
-      <!-- Employer plans callout -->
-      <div class="max-w-3xl mx-auto mt-4 bg-white/5 border border-white/10 rounded-xl px-8 py-5">
-        <div class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-brand-primary mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-          </svg>
-          <p class="text-sm text-white/60">
-            All tiers above include commercial plans and Type 2 NPI data. Need employer-level plans, individual (Type 1) NPI coverage, or a package that doesn't quite fit the tiers above? <a href="/get-started" class="text-brand-primary hover:text-brand-primary-lighter underline underline-offset-2">Contact us</a> and we'll build a custom package for you.
-          </p>
-        </div>
-      </div>
-
-      <p class="text-center text-xs text-white/30 mt-4">All prices billed annually. Pricing scoped to your use case.</p>
 
       <!-- Enterprise Data Syndication -->
-      <div class="max-w-3xl mx-auto mt-10 bg-gradient-to-r from-brand-primary/10 to-brand-primary/5 border border-brand-primary/20 rounded-xl p-8">
+      <div class="max-w-3xl mx-auto mt-14 bg-gradient-to-r from-brand-primary/10 to-brand-primary/5 border border-brand-primary/20 rounded-xl p-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
             <div class="inline-flex items-center gap-2 bg-brand-primary/15 rounded-full px-3 py-1 mb-3">
@@ -312,9 +222,9 @@ const faqs: FaqItem[] = [
       </div>
 
       <!-- ── EVERY DATA LAKE PLAN INCLUDES ── -->
-      <div class="mt-16">
-        <div class="text-center mb-10">
-          <h2 class="text-3xl font-semibold text-white tracking-tight">Every Data Lake Plan Includes</h2>
+      <div class="mt-14">
+        <div class="text-center mb-6">
+          <h3 class="text-sm font-semibold uppercase tracking-[2px] text-white/40">Every plan includes</h3>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
@@ -369,7 +279,7 @@ const faqs: FaqItem[] = [
         <h2 class="text-3xl font-semibold text-slate-900 tracking-tight mb-3">Not a Practice or Health System?</h2>
         <p class="text-base text-slate-500 max-w-md mx-auto">We partner with teams across the healthcare ecosystem. Let's discuss what you need.</p>
       </div>
-      <div class="grid sm:grid-cols-3 gap-5">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {[
           {
             pill: 'Consulting',
@@ -388,6 +298,12 @@ const faqs: FaqItem[] = [
             pillClass: 'bg-brand-primary/10 text-brand-primary',
             title: 'Health Tech',
             desc: 'Integrate price transparency data directly into your platform via the Payerset Data Lake™. Build pricing tools, cost estimators, and analytics features at scale.',
+          },
+          {
+            pill: 'Employers',
+            pillClass: 'bg-brand-primary/10 text-brand-primary',
+            title: 'Employers & Brokers',
+            desc: 'See the negotiated rates behind your own plan — and every other self-funded employer\'s. Build steerage, centers of excellence, and direct contracting on prices you can prove.',
           },
         ].map(({ pill, pillClass, title, desc }) => (
           <div class="bg-white border border-slate-200 rounded-xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300">

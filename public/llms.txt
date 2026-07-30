@@ -15,9 +15,9 @@ playbooks on putting this data to work.
 Full text of our glossary and all articles, in one file:
 https://www.payerset.com/llms-full.txt
 
-## Products
-- [Rate Explorer](https://www.payerset.com/rateexplorer): Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies and flip the negotiation dynamic.
-- [Data Lake](https://www.payerset.com/datalake): Enriched payer and provider MRF data delivered in analytics-ready formats so teams can build, innovate, and scale faster.
+## Platform
+- [Rate Explorer](https://www.payerset.com/platform/rate-explorer): Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies and flip the negotiation dynamic.
+- [Data Lake](https://www.payerset.com/platform/data-lake): Enriched payer and provider MRF data delivered in analytics-ready formats so teams can build, innovate, and scale faster.
 - [Snowflake Marketplace](https://www.payerset.com/snowflakemarketplace): Access price transparency data for UnitedHealthcare, Kaiser Permanente, Cigna, and more, directly in Snowflake.
 - [Research](https://www.payerset.com/research): Free access to payer-sourced price transparency data through the Rate Explorer portal for academic research.
 - [Pricing](https://www.payerset.com/pricing): Price transparency and claims data built for hospital finance teams — one platform, every contracted rate in your market.

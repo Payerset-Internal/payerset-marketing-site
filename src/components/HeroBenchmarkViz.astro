@@ -1,0 +1,265 @@
+---
+/**
+ * HeroBenchmarkViz.astro
+ *
+ * Compact peer-benchmark visualization for the Providers solution hero.
+ * A dark glass card showing horizontal rate bars for a single procedure,
+ * with "Your system" highlighted against peers and a median reference line —
+ * the "see where your rate lands" story, complementing the raw rate table
+ * (RatesGridViz) shown lower on the page.
+ *
+ * Self-activates via IntersectionObserver. Design language matches
+ * RatesGridViz / HeroRateExplorer (dark card, cyan accents, glow).
+ *
+ * Dependencies: None (vanilla JS + CSS animations)
+ */
+
+// Rate bars for DRG 470 (major joint replacement, lower extremity — the
+// highest-volume inpatient DRG). Widths are percentages of the widest peer
+// so the layout is self-contained.
+const rows = [
+  { label: 'Peer A', rate: '$38,400', pct: 100, you: false },
+  { label: 'Peer B', rate: '$34,900', pct: 91, you: false },
+  { label: 'Peer C', rate: '$31,600', pct: 82, you: false },
+  { label: 'Your system', rate: '$27,800', pct: 72, you: true },
+  { label: 'Peer D', rate: '$25,300', pct: 66, you: false },
+];
+// Peer median line as a % of the widest bar (median of the four peers ≈ $33,250).
+const medianPct = 87;
+---
+
+<div class="hb-viz" id="heroBenchmarkViz">
+  <div class="hb-viz__card">
+    <div class="hb-viz__header">
+      <span class="hb-viz__title">Peer benchmark</span>
+      <span class="hb-viz__code">DRG 470 &middot; Major joint replacement</span>
+    </div>
+
+    <div class="hb-viz__chart">
+      <!-- Peer median reference line -->
+      <div class="hb-viz__median" style={`left:${medianPct}%`} aria-hidden="true">
+        <span class="hb-viz__median-label">Peer median</span>
+      </div>
+
+      {rows.map((row, i) => (
+        <div class={`hb-viz__row${row.you ? ' hb-viz__row--you' : ''}`}>
+          <span class="hb-viz__label">{row.label}</span>
+          <span class="hb-viz__track">
+            <span class="hb-viz__bar" data-bar={String(i)} style={`--w:${row.pct}%`}></span>
+          </span>
+          <span class="hb-viz__rate">{row.rate}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="hb-viz__footnote">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M8 3L4 7M8 3l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Your rate sits <strong>16% below</strong> the peer median &mdash; leverage for the next renewal.</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hb-viz {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hb-viz__card {
+    width: 100%;
+    max-width: 460px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .hb-viz__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .hb-viz__title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .hb-viz__code {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 10.5px;
+    color: var(--color-brand-secondary);
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  .hb-viz__chart {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    padding-top: 6px;
+  }
+
+  /* Median line spans the bar tracks. Label column is 84px, so the
+     line is positioned inside the track area via a wrapper offset. */
+  .hb-viz__median {
+    position: absolute;
+    top: 0;
+    bottom: 22px;
+    /* left is set inline as a % of the track; offset by the label column */
+    margin-left: calc(84px + 10px);
+    width: 1px;
+    border-left: 1px dashed rgba(0, 183, 253, 0.45);
+    z-index: 2;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transform-origin: top;
+    animation: hb-median-in 0.5s ease 0.2s both;
+  }
+
+  .hb-viz__median-label {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: rgba(0, 183, 253, 0.7);
+    white-space: nowrap;
+  }
+
+  .hb-viz__row {
+    display: grid;
+    grid-template-columns: 84px 1fr 58px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hb-viz__label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hb-viz__row--you .hb-viz__label {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .hb-viz__track {
+    position: relative;
+    height: 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .hb-viz__bar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.22));
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hb-viz__row--you .hb-viz__bar {
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary));
+    box-shadow: 0 0 16px rgba(0, 183, 253, 0.35);
+  }
+
+  .hb-viz.is-visible .hb-viz__bar {
+    width: var(--w);
+  }
+
+  .hb-viz__rate {
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .hb-viz__row--you .hb-viz__rate {
+    color: #fff;
+  }
+
+  .hb-viz__footnote {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 11px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .hb-viz__footnote svg {
+    color: var(--color-brand-secondary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .hb-viz__footnote strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+  }
+
+  @keyframes hb-median-in {
+    from { opacity: 0; transform: translateX(-50%) scaleY(0); }
+    to { opacity: 1; transform: translateX(-50%) scaleY(1); }
+  }
+
+  @media (max-width: 480px) {
+    .hb-viz__row {
+      grid-template-columns: 72px 1fr 54px;
+    }
+    .hb-viz__median {
+      margin-left: calc(72px + 10px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hb-viz__bar {
+      transition: none;
+    }
+    .hb-viz__median {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const hbViz = document.getElementById('heroBenchmarkViz');
+  if (hbViz) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          hbViz.classList.add('is-visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(hbViz);
+  }
+</script>

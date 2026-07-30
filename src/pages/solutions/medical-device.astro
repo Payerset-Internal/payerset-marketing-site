@@ -1,0 +1,87 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import SiteOfCareViz from '../../components/SiteOfCareViz.astro';
+import AccountTargetViz from '../../components/AccountTargetViz.astro';
+import type { FaqItem } from '../../utils/faq';
+
+// One narrative pain — reimbursement blindness — told as three beats.
+const pains = [
+  {
+    title: 'Reimbursement decides adoption — and you’re guessing at it',
+    desc: 'Whether a device gets adopted comes down to how well its procedure pays. Yet market-access teams build the case on list prices and manufacturer estimates, never the negotiated rates payers actually pay.',
+  },
+  {
+    title: 'Your field team calls accounts blind',
+    desc: 'Reps have no way to know which accounts clear the reimbursement bar for your codes, so effort scatters across territories — including the ones where the economics can’t support adoption.',
+  },
+  {
+    title: 'Volume is shifting between sites of care',
+    desc: 'Procedures keep moving from hospital outpatient to ASCs and offices, and reimbursement moves with them. Without rate visibility by setting, you can’t position for where the volume — and the margin — is heading.',
+  },
+];
+
+const helps = [
+  {
+    title: 'The most complete view of what your procedure pays',
+    desc: 'Every payer’s negotiated rates for the CPT, HCPCS, and DRG codes tied to your device — parsed, standardized, and enriched with all-payer claims across markets and sites of care. Real reimbursement, not list prices or estimates.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'Prove the market and make the reimbursement case',
+    desc: 'Ground go-to-market, budget-impact, and cost-effectiveness models in actual contracted rates — and show customers and value analysis committees exactly what your procedure reimburses.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'Point the field team at accounts that can adopt',
+    desc: 'See the reimbursement each account and market gets for your codes, so reps call on providers where the economics support adoption — not territories that can’t afford it.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Position for the site-of-care shift',
+    desc: 'Compare reimbursement across hospital outpatient, ASC, and office settings to steer volume and messaging to where your procedure pays best.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'Can we see reimbursement for the specific codes tied to our device?',
+    a: 'Yes. <span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you analyze negotiated rates by any CPT, HCPCS, or DRG code across payers, providers, and geographies, so you can see exactly how your procedure is reimbursed before you build the market-access case.',
+  },
+  {
+    q: 'How does this help our field team with account targeting?',
+    a: 'You can see the reimbursement each provider and market receives for your codes, so your commercial team focuses on accounts whose economics support adoption — and stops spending cycles on territories that can’t afford to adopt.',
+  },
+  {
+    q: 'Does Payerset show rate differences by site of care?',
+    a: 'Yes. Because the data covers both payer and hospital transparency files, you can compare reimbursement across hospital outpatient, ASC, and office settings to run site-of-care shift analysis and position for where volume is heading.',
+  },
+  {
+    q: 'Can we use this data in budget-impact and cost-effectiveness models?',
+    a: 'Yes. Payerset delivers real contracted rates and all-payer claims, so your HEOR and market-access teams can build budget-impact, cost-effectiveness, and value-analysis-committee materials on the numbers payers actually pay — not list prices or estimates.',
+  },
+  {
+    q: 'Can our analytics team access the raw data?',
+    a: 'Yes. <span class="whitespace-nowrap">Data Lake<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> delivers enriched, normalized rate and claims data directly to your environment via API or data share to power your own market-access and commercial models.',
+  },
+];
+---
+
+<SolutionLayout
+  title="Price Transparency for Medical Device & MedTech - Payerset"
+  description="Market-access and commercial teams prove the market, target accounts that can adopt, and follow the site-of-care shift — on the negotiated rates payers actually pay for the codes tied to your device."
+  persona="Med Device"
+  headline="Know what providers get reimbursed for your device"
+  subhead="For the first time, see the negotiated rates behind every procedure tied to your device, across every payer and market."
+  heroStats={['Negotiated rates by CPT, HCPCS & DRG', 'Every payer, every market', 'Reimbursement by site of care']}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Account targeting"
+  vizHeading="Point the field team where the reimbursement is"
+  vizSubhead="See what each account is reimbursed for your codes, and focus selling on the providers whose economics support adoption."
+  faqs={faqs}
+  ctaHeadline="Build market access on real reimbursement"
+>
+  <SiteOfCareViz slot="heroViz" />
+  <AccountTargetViz slot="viz" />
+</SolutionLayout>

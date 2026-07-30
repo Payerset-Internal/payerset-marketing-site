@@ -1,0 +1,316 @@
+---
+/**
+ * SolutionLayout.astro
+ *
+ * Shared template for the persona ("Solutions") pages so the four pages read as
+ * one family. Each page supplies structured copy via props and drops its
+ * persona-specific visualization into the `viz` named slot.
+ *
+ * Template shape (see docs/site-expansion-plan.md §4a):
+ *   Hero → Pains → How Payerset helps → Viz → (optional proof slot) → FAQ → CTA
+ */
+import PageLayout from './PageLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import ContactFormCTA from '../components/ContactFormCTA.astro';
+import PlatformHighlights from '../components/PlatformHighlights.astro';
+import { buildFaqSchema, type FaqItem } from '../utils/faq';
+import { personas } from '../utils/personas';
+
+export interface HelpItem {
+  /** Capability headline (how Payerset addresses a pain). */
+  title: string;
+  /** Supporting sentence. */
+  desc: string;
+  /** Platform product that delivers it — deep-links into /platform/*. */
+  product: { label: string; href: string };
+}
+
+interface Props {
+  /** SEO */
+  title: string;
+  description: string;
+  /** Persona name, e.g. "Employers". */
+  persona: string;
+  /** Hero headline + subhead. */
+  headline: string;
+  subhead: string;
+  /** Secondary hero CTA (primary is always Get started). */
+  secondaryCta?: { label: string; href: string };
+  /** Optional trust markers shown as a strip beneath the hero CTAs. */
+  heroStats?: string[];
+  /** 3–4 problems framed in the persona's language. */
+  pains: { title: string; desc: string }[];
+  /** How Payerset helps — each maps a capability to a platform product. */
+  helps: HelpItem[];
+  /** Viz section copy (the visualization itself goes in the `viz` slot). */
+  vizEyebrow?: string;
+  vizHeading: string;
+  vizSubhead?: string;
+  /** Persona-scoped FAQ (also feeds FAQPage schema). */
+  faqs: FaqItem[];
+  /** Closing CTA copy. */
+  ctaHeadline?: string;
+  ctaBullets?: string[];
+}
+
+const {
+  title,
+  description,
+  persona,
+  headline,
+  subhead,
+  secondaryCta,
+  heroStats,
+  pains,
+  helps,
+  vizEyebrow = 'See it in action',
+  vizHeading,
+  vizSubhead,
+  faqs,
+  ctaHeadline = 'Put market rate data to work',
+  ctaBullets = [
+    'All payer-provider negotiated rates with claims',
+    'Every health plan with full historical rates',
+    'Self-service platform or direct data integration',
+  ],
+} = Astro.props;
+
+const hasProof = Astro.slots.has('proof');
+const hasHeroViz = Astro.slots.has('heroViz');
+
+// Cross-link to sibling Solutions pages (exclude the current persona).
+const otherPersonas = personas.filter((p) => p.name !== persona);
+---
+
+<PageLayout title={title} description={description} extraSchema={[buildFaqSchema(faqs)]}>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class={hasHeroViz ? 'grid lg:grid-cols-2 gap-12 lg:gap-16 items-center' : ''}>
+        <div class={hasHeroViz ? '' : 'max-w-3xl'} data-reveal={hasHeroViz ? 'left' : undefined}>
+          <p class="text-sm font-semibold text-brand-secondary uppercase tracking-wider mb-3">
+            Solutions &mdash; {persona}
+          </p>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
+            {headline}
+          </h1>
+          <h2 class="mt-6 text-lg text-slate-100 max-w-2xl font-light">
+            {subhead}
+          </h2>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href="/get-started"
+              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
+            >
+              Request your demo today
+            </a>
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white border border-white/30 hover:border-white/60 hover:bg-white/5 rounded-lg transition-colors"
+              >
+                {secondaryCta.label}
+              </a>
+            )}
+          </div>
+          {heroStats && heroStats.length > 0 && (
+            <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6">
+              {heroStats.map((stat) => (
+                <li class="flex items-center gap-2 text-sm text-slate-300 font-light">
+                  <svg class="w-4 h-4 text-brand-secondary shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>{stat}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        {hasHeroViz && (
+          <div class="homepage-viz" data-reveal="right">
+            <slot name="heroViz" />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pains -->
+  <section class="relative py-20 lg:py-28 overflow-hidden bg-slate-50">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">The challenge</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-text-primary">
+          What gets in the way
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {pains.map((pain, i) => (
+          <div
+            class="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm p-6 hover:shadow-lg hover:shadow-brand-primary/5 hover:border-brand-primary/20 transition-all duration-300"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-brand-secondary/15 to-brand-primary/10 mb-4">
+              <span class="text-xs font-bold text-brand-primary" style="font-family: ui-monospace, SFMono-Regular, monospace;">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">{pain.title}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed font-light">{pain.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How Payerset helps -->
+  <section class="relative py-20 lg:py-28 overflow-hidden bg-white">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(0,146,202,0.04),transparent_60%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">How Payerset helps</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-text-primary">
+          Turn transparency data into leverage
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {helps.map((help, i) => (
+          <div
+            class="group flex flex-col bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 shadow-sm p-6 hover:shadow-lg hover:shadow-brand-primary/5 hover:border-brand-primary/25 transition-all duration-300"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-brand-primary/15 to-brand-secondary/10 text-brand-primary mb-4 ring-1 ring-brand-primary/10">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">{help.title}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed font-light flex-1">{help.desc}</p>
+            <a
+              href={help.product.href}
+              class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary hover:text-brand-primary-hover transition-colors"
+            >
+              {help.product.label}
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Viz -->
+  <section class="relative py-24 lg:py-32 overflow-clip bg-brand-dark-deep">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,146,202,0.12),transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,183,253,0.06),transparent_50%)]"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-reveal="left">
+          <p class="text-xs font-semibold text-brand-secondary uppercase tracking-[2px] mb-3">
+            {vizEyebrow}
+          </p>
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
+            {vizHeading}
+          </h2>
+          {vizSubhead && (
+            <p class="text-lg text-slate-400 font-light">{vizSubhead}</p>
+          )}
+          <a
+            href="/get-started"
+            class="mt-8 inline-flex items-center gap-2 font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 px-5 py-2.5 rounded-lg transition-colors"
+          >
+            See it in action
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+        <div class="homepage-viz" data-reveal="right">
+          <slot name="viz" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore the platform — product showcase into /platform/* pages -->
+  <PlatformHighlights />
+
+  <!-- Explore other solutions — cross-link strip into sibling persona pages -->
+  <section class="relative py-20 lg:py-28 overflow-hidden bg-white">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Explore other solutions</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-text-primary">
+          Built for the way you work
+        </h2>
+      </div>
+
+      <div class="border-t border-slate-200/70">
+        {otherPersonas.map((p, i) => (
+          <a
+            href={p.href}
+            class="group flex items-center gap-5 px-2 -mx-2 py-6 border-b border-slate-200/70 rounded-lg hover:bg-slate-50/70 transition-colors"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <span
+              class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-brand-primary/15 to-brand-secondary/10 text-brand-primary ring-1 ring-brand-primary/10 shrink-0"
+              set:html={p.icon}
+            ></span>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-text-primary group-hover:text-brand-primary transition-colors">
+                {p.name}
+              </h3>
+              <p class="text-sm text-text-secondary font-light mt-0.5">{p.desc}</p>
+            </div>
+            <svg class="w-5 h-5 text-brand-primary shrink-0 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {hasProof && (
+    <section class="relative py-20 lg:py-28 overflow-hidden bg-slate-50">
+      <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <slot name="proof" />
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  <section class="relative py-20 lg:py-28 bg-white">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Common questions</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-brand-dark">
+          Frequently Asked Questions
+        </h2>
+      </div>
+      <FaqAccordion faqs={faqs} reveal />
+    </div>
+  </section>
+
+  <!-- CTA bookend — shared inline lead form -->
+  <ContactFormCTA
+    headline={ctaHeadline}
+    description={`Request your demo &amp; see how Payerset gives ${persona.toLowerCase()} the market data to act with confidence.`}
+    bullets={ctaBullets}
+  />
+</PageLayout>

@@ -5,10 +5,15 @@ import payersetLogoWhite from '../assets/images/payerset-logo-white.png';
 const currentYear = new Date().getFullYear();
 
 const footerLinks = {
-  Solutions: [
-    { label: 'Rate Explorer', href: '/rateexplorer' },
-    { label: 'Data Lake', href: '/datalake' },
+  Platform: [
+    { label: 'Rate Explorer', href: '/platform/rate-explorer' },
+    { label: 'Data Lake', href: '/platform/data-lake' },
     { label: 'Snowflake Marketplace', href: '/snowflakemarketplace' },
+  ],
+  Solutions: [
+    { label: 'Providers', href: '/solutions/providers' },
+    { label: 'Med Device', href: '/solutions/medical-device' },
+    { label: 'Employers', href: '/solutions/employers' },
   ],
   Resources: [
     { label: 'News', href: '/insights' },
@@ -31,7 +36,7 @@ const footerLinks = {
 
 <footer class="bg-brand-dark-deep text-slate-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
         <a href="/">

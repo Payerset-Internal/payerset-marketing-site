@@ -1,0 +1,77 @@
+---
+import SolutionLayout from '../../layouts/SolutionLayout.astro';
+import RatesGridViz from '../../components/RatesGridViz.astro';
+import HeroBenchmarkViz from '../../components/HeroBenchmarkViz.astro';
+import type { FaqItem } from '../../utils/faq';
+
+const pains = [
+  {
+    title: 'They see the whole market. You see your own contracts.',
+    desc: 'Payers benchmark you against every system they contract with. You’ve never had the same view of what your peers are actually paid.',
+  },
+  {
+    title: 'Leverage follows information',
+    desc: 'Every renewal, the side with more data sets the terms. For decades, that side hasn’t been you.',
+  },
+  {
+    title: 'The data is public now — but raw MRFs are unusable',
+    desc: 'Terabytes of files, inconsistent schemas, and ghost rates for services no provider performs. Open doesn’t mean usable.',
+  },
+];
+
+const helps = [
+  {
+    title: 'The most complete, detailed rate data available',
+    desc: 'Every payer’s MRF, parsed and standardized, ghost rates filtered out, and enriched with claims and HCO ownership and affiliations — the whole market, made usable.',
+    product: { label: 'Explore Data Lake', href: '/platform/data-lake' },
+  },
+  {
+    title: 'Benchmark against the peers you choose',
+    desc: 'Build the exact cohort you compete with — by market, ownership, or affiliation — and compare your rates across payers, services, and geographies.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+  {
+    title: 'Negotiate from the whole market',
+    desc: 'Walk into every renewal knowing what each payer pays comparable systems for the same codes, and turn the conversation from guesswork into evidence.',
+    product: { label: 'Explore Rate Explorer', href: '/platform/rate-explorer' },
+  },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: 'How can we benchmark our rates against comparable health systems?',
+    a: '<span class="whitespace-nowrap">Rate Explorer<sup class="text-[0.45em] align-super font-normal">&trade;</sup></span> lets you compare your negotiated rates to peers and competitors across payers, services, and geographies. You build the cohort — by market, ownership, or affiliation — and see exactly where your rates land.',
+  },
+  {
+    q: 'Do you filter out ghost rates and non-performed services?',
+    a: 'Yes. Payerset links negotiated rates to all-payer claims so you can distinguish real, performed services from ghost or “zombie” rates that would otherwise skew a benchmark.',
+  },
+  {
+    q: 'Does Payerset account for ownership and affiliations?',
+    a: 'Yes. We enrich the data with healthcare organization (HCO) ownership and affiliations and NPI-to-TIN mapping, so you can build accurate peer cohorts instead of comparing against unrelated facilities.',
+  },
+  {
+    q: 'Is historical data available for trending?',
+    a: 'Yes. Full historical data is available for every payer MRF so you can track how rates move over time and see the trajectory of a payer’s contracting before a renewal.',
+  },
+];
+---
+
+<SolutionLayout
+  title="Price Transparency for Provider Negotiations - Payerset"
+  description="Managed care and finance teams benchmark reimbursement against peer systems with the most complete negotiated-rate data available — and negotiate as equals."
+  persona="Providers"
+  headline="Price transparency for the next era of negotiations"
+  subhead="Payers have always held the data — and the leverage. Now managed care and finance teams benchmark against peer systems on the most complete negotiated-rate data available, and negotiate as equals."
+  heroStats={['Every payer, full rate history', 'Enriched with all-payer claims', 'Peer cohorts by ownership & market']}
+  pains={pains}
+  helps={helps}
+  vizEyebrow="Rate benchmarking"
+  vizHeading="See where your rates land against your peers"
+  vizSubhead="Compare negotiated rates across payers and peers for the same billing codes, so every negotiation starts from evidence — not anecdotes."
+  faqs={faqs}
+  ctaHeadline="Negotiate from a position of strength"
+>
+  <HeroBenchmarkViz slot="heroViz" />
+  <RatesGridViz slot="viz" />
+</SolutionLayout>

@@ -6,7 +6,9 @@ import InsightCards from '../components/InsightCards.astro';
 import ExploreRatesViz from '../components/ExploreRatesViz.astro';
 import DataLakeViz from '../components/DataLakeViz.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import ContactFormCTA from '../components/ContactFormCTA.astro';
 import { buildFaqSchema, type FaqItem } from '../utils/faq';
+import { personas } from '../utils/personas';
 import { Image } from 'astro:assets';
 import lunaJoyLogo from '../assets/images/lunajoylogo.png';
 import shamaRathi from '../assets/images/shama-rathi.png';
@@ -45,6 +47,7 @@ const faqs: FaqItem[] = [
     a: 'Data is refreshed quarterly across both Rate Explorer&trade; and Data Lake&trade;. Updates are automatically made available to customers as they are published, and full historical data remains accessible so you can track rate trends over time.',
   },
 ];
+
 ---
 
 <PageLayout
@@ -72,7 +75,7 @@ const faqs: FaqItem[] = [
           <div class="mt-8 flex flex-col sm:flex-row gap-4">
             <a
               href="/get-started"
-              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 rounded-lg transition-colors"
+              class="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors"
             >
               Request your demo today
             </a>
@@ -176,22 +179,6 @@ const faqs: FaqItem[] = [
 
     .animate-scroll:hover {
       animation-play-state: paused;
-    }
-  </style>
-
-  <!-- CTA form card gradient border -->
-  <style is:global>
-    .cta-form-card::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 1rem;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 183, 253, 0.2), rgba(0, 146, 202, 0.05), rgba(0, 183, 253, 0.2));
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      -webkit-mask-composite: xor;
-      pointer-events: none;
     }
   </style>
 
@@ -302,8 +289,8 @@ const faqs: FaqItem[] = [
             ))}
           </ul>
           <a
-            href="/rateexplorer"
-            class="inline-flex items-center gap-2 font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 px-5 py-2.5 rounded-lg transition-colors"
+            href="/platform/rate-explorer"
+            class="inline-flex items-center gap-2 font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover px-5 py-2.5 rounded-lg transition-colors"
           >
             Explore more
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -357,8 +344,8 @@ const faqs: FaqItem[] = [
             ))}
           </ul>
           <a
-            href="/datalake"
-            class="inline-flex items-center gap-2 font-semibold text-brand-dark-deep bg-white hover:bg-slate-100 px-5 py-2.5 rounded-lg transition-colors"
+            href="/platform/data-lake"
+            class="inline-flex items-center gap-2 font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover px-5 py-2.5 rounded-lg transition-colors"
           >
             Explore more
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -538,86 +525,49 @@ const faqs: FaqItem[] = [
 
   <InsightsCarousel />
 
-  <!-- CTA Section — Dark Bookend -->
-  <section class="relative overflow-hidden bg-brand-dark-deep">
-    <div class="absolute inset-0 bg-gradient-to-tl from-brand-dark-deep via-brand-dark to-brand-dark-deeper"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,146,202,0.15),transparent_60%)]"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(0,183,253,0.08),transparent_50%)]"></div>
+  <!-- By Persona — divided list on-ramp into Solutions pages -->
+  <section class="relative py-20 lg:py-28 overflow-hidden bg-white">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/20 to-transparent"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-[2.5px] text-brand-primary mb-4">Find your solution</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-text-primary">
+          Built for the way you work
+        </h2>
+      </div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-      <div class="grid lg:grid-cols-2 gap-12 items-start">
-        <div data-reveal="left">
-          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4">
-            Start Leveraging Price Transparency Data Today
-          </h2>
-          <p class="text-lg text-white mb-8 font-light">
-            Request your demo &amp; learn how healthcare price transparency can transform your pricing strategy &amp; contract negotiations.
-          </p>
-          <ul class="space-y-3">
-            {[
-              'All payer-provider negotiated rates with claims',
-              'Access every health plan with historical rates',
-              'Self-service platform or direct data integration',
-            ].map((item) => (
-              <li class="flex items-start gap-3 text-white font-light">
-                <svg class="w-5 h-5 text-brand-secondary mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="cta-form-card relative bg-white rounded-xl shadow-lg p-8" data-reveal="right" data-reveal-delay="200">
-          <h3 class="text-xl font-semibold text-text-primary mb-6">
-            Contact our team
-          </h3>
-          <form id="home-form" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-text-secondary mb-1">First name*</label>
-                <input type="text" name="firstname" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-text-secondary mb-1">Last name*</label>
-                <input type="text" name="lastname" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-              </div>
+      <div class="border-t border-slate-200/70">
+        {personas.map((persona, i) => (
+          <a
+            href={persona.href}
+            class="group flex items-center gap-5 px-2 -mx-2 py-6 border-b border-slate-200/70 rounded-lg hover:bg-slate-50/70 transition-colors"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <span
+              class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-brand-primary/15 to-brand-secondary/10 text-brand-primary ring-1 ring-brand-primary/10 shrink-0"
+              set:html={persona.icon}
+            ></span>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-text-primary group-hover:text-brand-primary transition-colors">
+                {persona.name}
+              </h3>
+              <p class="text-sm text-text-secondary font-light mt-0.5">{persona.desc}</p>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">Work email*</label>
-              <input type="email" name="email" required placeholder="Work email" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">Phone number</label>
-              <input type="tel" name="phone" placeholder="Phone number" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">What is your role?</label>
-              <select name="role" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)]">
-                <option value="">What is your role?</option>
-                <option value="Healthcare provider">Healthcare provider</option>
-                <option value="Healthcare solution">Healthcare solution</option>
-                <option value="Consultant">Consultant</option>
-                <option value="Health plan">Health plan</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-secondary mb-1">What do you want to do with price transparency data?</label>
-              <textarea name="usecase" rows="3" placeholder="Describe your use case..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary focus:shadow-[0_0_0_3px_rgba(0,146,202,0.08)] resize-none"></textarea>
-            </div>
-            <button
-              type="button"
-              class="w-full px-6 py-3 text-base font-semibold text-white bg-brand-primary hover:bg-brand-primary-hover rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Request a demo
-            </button>
-            <p id="home-form-error" class="text-sm text-red-600 hidden"></p>
-          </form>
-        </div>
+            <svg class="w-5 h-5 text-brand-primary shrink-0 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        ))}
       </div>
     </div>
   </section>
+
+  <!-- CTA Section — Dark Bookend (shared inline lead form) -->
+  <ContactFormCTA
+    headline="Start Leveraging Price Transparency Data Today"
+    description="Request your demo &amp; learn how healthcare price transparency can transform your pricing strategy &amp; contract negotiations."
+  />
 
   <!-- FAQ Section -->
   <section class="relative py-20 lg:py-28 bg-white">
@@ -634,66 +584,3 @@ const faqs: FaqItem[] = [
     </div>
   </section>
 </PageLayout>
-
-<script is:inline>
-  (function() {
-    var form = document.getElementById('home-form');
-    if (!form) return;
-
-    var blockedDomains = ['gmail.com','yahoo.com','hotmail.com','outlook.com','aol.com','icloud.com','me.com','mac.com','protonmail.com','proton.me','zoho.com','yandex.com','mail.com','gmx.com','fastmail.com','hushmail.com','tutanota.com','inbox.com','live.com','msn.com','att.net','sbcglobal.net','bellsouth.net','comcast.net','verizon.net','cox.net','charter.net','earthlink.net','juno.com','rocketmail.com'];
-
-    var btn = form.querySelector('button[type="button"]');
-    btn.addEventListener('click', function() {
-      var errorEl = document.getElementById('home-form-error');
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      var email = form.querySelector('[name="email"]').value.toLowerCase();
-      var domain = email.split('@')[1] || '';
-      if (blockedDomains.indexOf(domain) !== -1) {
-        errorEl.textContent = 'Please use your work email address.';
-        errorEl.classList.remove('hidden');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-      errorEl.classList.add('hidden');
-
-      var payload = {
-        fields: [
-          { objectTypeId: '0-1', name: 'firstname', value: form.querySelector('[name="firstname"]').value },
-          { objectTypeId: '0-1', name: 'lastname', value: form.querySelector('[name="lastname"]').value },
-          { objectTypeId: '0-1', name: 'email', value: form.querySelector('[name="email"]').value },
-          { objectTypeId: '0-1', name: 'phone', value: form.querySelector('[name="phone"]').value || '' },
-          { objectTypeId: '0-1', name: 'jobtitle', value: form.querySelector('[name="role"]').value || '' },
-          { objectTypeId: '0-1', name: 'message', value: form.querySelector('[name="usecase"]').value || '' },
-        ],
-        context: {
-          hutk: document.cookie.match(/hubspotutk=([^;]*)/)?.[1] || '',
-          pageUri: window.location.href,
-          pageName: document.title,
-        },
-      };
-
-      fetch('https://api.hsforms.com/submissions/v3/integration/submit/39914009/9fe2f30d-3b32-4781-8d77-15d538597409', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('Submission failed');
-        window.location.href = '/thank-you';
-      })
-      .catch(function() {
-        errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
-        errorEl.classList.remove('hidden');
-        btn.disabled = false;
-        btn.textContent = 'Request a demo';
-      });
-    });
-  })();
-</script>

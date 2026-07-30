@@ -1,0 +1,268 @@
+---
+/**
+ * AccountTargetViz.astro
+ *
+ * Sales-targeting visualization for the Med Device solution page. A dark card
+ * listing accounts with the negotiated rate each is reimbursed for a procedure
+ * code, flagged Target / Below threshold against a reimbursement bar — the
+ * "point the field team at accounts that can actually adopt" story.
+ *
+ * Self-activates via IntersectionObserver with a staggered row reveal.
+ * Design language matches RatesGridViz (dark card, cyan accents, glow).
+ * Single-instance (fixed DOM id) — use once per page.
+ *
+ * Numbers and account names are illustrative placeholders.
+ *
+ * Dependencies: None (vanilla JS + CSS animations)
+ */
+
+// Reimbursement threshold the field team screens accounts against.
+const threshold = '$800';
+
+const accounts = [
+  { name: 'Summit Orthopedic Center', rate: '$1,240', target: true },
+  { name: 'Riverside Health System', rate: '$1,090', target: true },
+  { name: 'Valley Surgical Partners', rate: '$880', target: true },
+  { name: 'Metro Community Hospital', rate: '$620', target: false },
+  { name: 'Lakeside Physician Group', rate: '$470', target: false },
+];
+---
+
+<div class="acct-viz" id="accountTargetViz">
+  <div class="acct-viz__card">
+    <div class="acct-viz__header">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.1"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.1"/></svg>
+      <span>Account targeting</span>
+      <span class="acct-viz__code">CPT 64483</span>
+    </div>
+
+    <div class="acct-viz__list">
+      <div class="acct-viz__row acct-viz__row--head">
+        <span class="acct-viz__cell acct-viz__cell--name">Account</span>
+        <span class="acct-viz__cell acct-viz__cell--rate">Rate</span>
+        <span class="acct-viz__cell acct-viz__cell--status">Status</span>
+      </div>
+      {accounts.map((a, i) => (
+        <div class="acct-viz__row" data-row={String(i)}>
+          <span class="acct-viz__cell acct-viz__cell--name">
+            <span class={`acct-viz__dot${a.target ? ' acct-viz__dot--on' : ''}`}></span>{a.name}
+          </span>
+          <span class="acct-viz__cell acct-viz__cell--rate">{a.rate}</span>
+          <span class="acct-viz__cell acct-viz__cell--status">
+            <span class={`acct-viz__pill${a.target ? ' acct-viz__pill--target' : ' acct-viz__pill--below'}`}>
+              {a.target ? 'Target' : 'Below bar'}
+            </span>
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <div class="acct-viz__footnote">
+      <span class="acct-viz__threshold">Reimbursement threshold <strong>{threshold}</strong></span>
+      <span>Focus reps on accounts that clear the bar.</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .acct-viz {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .acct-viz__card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .acct-viz__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .acct-viz__header svg {
+    color: var(--color-brand-secondary);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .acct-viz__code {
+    margin-left: auto;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 10px;
+    color: var(--color-brand-secondary);
+    opacity: 0.7;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .acct-viz__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .acct-viz__row {
+    display: grid;
+    grid-template-columns: 1fr 66px 82px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.65);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s ease;
+  }
+
+  .acct-viz__row.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .acct-viz__row:not(.acct-viz__row--head):hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .acct-viz__row--head {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 2px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .acct-viz__cell--name {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .acct-viz__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .acct-viz__dot--on {
+    background: var(--color-brand-secondary);
+    box-shadow: 0 0 8px rgba(0, 183, 253, 0.6);
+  }
+
+  .acct-viz__cell--rate {
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .acct-viz__cell--status {
+    text-align: right;
+  }
+
+  .acct-viz__pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .acct-viz__pill--target {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+  }
+
+  .acct-viz__pill--below {
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .acct-viz__footnote {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .acct-viz__threshold strong {
+    color: var(--color-brand-secondary);
+    font-weight: 600;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+
+  @media (max-width: 480px) {
+    .acct-viz__row {
+      grid-template-columns: 1fr 56px 72px;
+      font-size: 10.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .acct-viz__row {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const acctViz = document.getElementById('accountTargetViz');
+  if (acctViz) {
+    const rows = acctViz.querySelectorAll('.acct-viz__row[data-row]');
+    let activated = false;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && !activated) {
+          activated = true;
+          rows.forEach((row, i) => {
+            setTimeout(() => row.classList.add('is-visible'), 200 + i * 150);
+          });
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(acctViz);
+  }
+</script>

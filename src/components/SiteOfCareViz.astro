@@ -1,0 +1,211 @@
+---
+/**
+ * SiteOfCareViz.astro
+ *
+ * Compact site-of-care reimbursement visualization for the Med Device
+ * solution hero. A dark glass card showing horizontal rate bars for a single
+ * procedure across care settings (hospital outpatient / ASC / office), with the
+ * best-reimbursed setting highlighted — the "the same code pays differently by
+ * setting" story that market-access teams use to position for the site-of-care
+ * shift.
+ *
+ * Self-activates via IntersectionObserver. Design language matches
+ * HeroBenchmarkViz / RatesGridViz (dark card, cyan accents, glow).
+ * Single-instance (fixed DOM id) — use once per page.
+ *
+ * Numbers are illustrative placeholders.
+ *
+ * Dependencies: None (vanilla JS + CSS animations)
+ */
+
+// Reimbursement for CPT 64483 (transforaminal epidural steroid injection) across
+// the three settings it's commonly performed in. Widths are percentages of the
+// highest-paying setting so the layout is self-contained.
+const rows = [
+  { label: 'Hospital outpatient', rate: '$1,120', pct: 100, best: true },
+  { label: 'Ambulatory surgery center', rate: '$760', pct: 68, best: false },
+  { label: 'Physician office', rate: '$410', pct: 37, best: false },
+];
+---
+
+<div class="soc-viz" id="siteOfCareViz">
+  <div class="soc-viz__card">
+    <div class="soc-viz__header">
+      <span class="soc-viz__title">Reimbursement by site of care</span>
+      <span class="soc-viz__code">CPT 64483 &middot; Epidural injection</span>
+    </div>
+
+    <div class="soc-viz__chart">
+      {rows.map((row, i) => (
+        <div class={`soc-viz__row${row.best ? ' soc-viz__row--best' : ''}`}>
+          <span class="soc-viz__label">{row.label}</span>
+          <span class="soc-viz__track">
+            <span class="soc-viz__bar" data-bar={String(i)} style={`--w:${row.pct}%`}></span>
+          </span>
+          <span class="soc-viz__rate">{row.rate}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="soc-viz__footnote">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M8 3L4 7M8 3l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>The same code reimburses <strong>~3&times; more</strong> across settings &mdash; position for where it pays.</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .soc-viz {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .soc-viz__card {
+    width: 100%;
+    max-width: 460px;
+    background: rgba(0, 31, 41, 0.95);
+    border: 1px solid rgba(0, 183, 253, 0.2);
+    border-radius: 16px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 0 60px rgba(0, 183, 253, 0.06), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .soc-viz__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .soc-viz__title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .soc-viz__code {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 10.5px;
+    color: var(--color-brand-secondary);
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  .soc-viz__chart {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 4px;
+  }
+
+  .soc-viz__row {
+    display: grid;
+    grid-template-columns: 1fr 58px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .soc-viz__label {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .soc-viz__row--best .soc-viz__label {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .soc-viz__track {
+    grid-column: 1;
+    position: relative;
+    height: 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .soc-viz__bar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.22));
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .soc-viz__row--best .soc-viz__bar {
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-secondary));
+    box-shadow: 0 0 16px rgba(0, 183, 253, 0.35);
+  }
+
+  .soc-viz.is-visible .soc-viz__bar {
+    width: var(--w);
+  }
+
+  .soc-viz__rate {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .soc-viz__row--best .soc-viz__rate {
+    color: #fff;
+  }
+
+  .soc-viz__footnote {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 11px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .soc-viz__footnote svg {
+    color: var(--color-brand-secondary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .soc-viz__footnote strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .soc-viz__bar {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const socViz = document.getElementById('siteOfCareViz');
+  if (socViz) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          socViz.classList.add('is-visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(socViz);
+  }
+</script>

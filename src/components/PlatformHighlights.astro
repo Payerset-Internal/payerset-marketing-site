@@ -3,10 +3,10 @@
  * PlatformHighlights.astro
  *
  * Reusable "explore the platform" showcase for the Solutions persona pages.
- * A 4-up product card grid pointing into each /platform/* page — visually
+ * A 2-up product card grid pointing into each /platform/* page — visually
  * distinct from the horizontal "Explore other solutions" persona list.
  *
- * Products are baked in (single source for the four platform pages). Optional
+ * Products are baked in (single source for the platform pages). Optional
  * eyebrow/heading props let a host page reframe the section.
  */
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 const {
   eyebrow = 'The platform',
   heading = 'Explore the full Payerset platform',
-  subhead = 'One dataset, four ways to work with it — from self-service analysis to direct integration and AI.',
+  subhead = 'One dataset, two ways to work with it — self-service analysis or delivered straight into your own environment.',
 } = Astro.props;
 
 const products = [
@@ -36,20 +36,6 @@ const products = [
     desc: 'Enriched, normalized rate and claims data delivered to your environment via API or data share.',
     icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M4 6c0 1.66 3.58 3 8 3s8-1.34 8-3-3.58-3-8-3-8 1.34-8 3z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" /></svg>',
   },
-  {
-    name: 'AI Analyst',
-    tm: true,
-    href: '/platform/ai-analyst',
-    desc: 'Ask in plain language and get benchmarked, traceable answers from rates and claims.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M9.75 4.5l1.06 2.69L13.5 8.25l-2.69 1.06L9.75 12l-1.06-2.69L6 8.25l2.69-1.06L9.75 4.5zM17.25 12l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z" /></svg>',
-  },
-  {
-    name: 'MCP',
-    tm: false,
-    href: '/platform/mcp',
-    desc: 'Connect AI assistants and agents to Payerset data over the Model Context Protocol.',
-    icon: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M6 9a3 3 0 100-6 3 3 0 000 6zm0 12a3 3 0 100-6 3 3 0 000 6zm12-6a3 3 0 100-6 3 3 0 000 6zM8.7 7.5l6.6 3.75M8.7 16.5l6.6-3.75" /></svg>',
-  },
 ];
 ---
 
@@ -63,7 +49,7 @@ const products = [
       {subhead && <p class="mt-4 text-lg text-text-secondary font-light">{subhead}</p>}
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid sm:grid-cols-2 gap-6 max-w-4xl">
       {products.map((product, i) => (
         <a
           href={product.href}

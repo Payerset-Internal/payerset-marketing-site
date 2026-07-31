@@ -6,7 +6,7 @@ author: "Joseph Tollison"
 category: "Industry Insights"
 tags: ["health insurance price transparency", "compliance"]
 readTime: "2 min read"
-image: "/images/blog/uncovering-the-future-of-price-transparency-a-2023-recap-and-2024-outlook/hero.png"
+image: "/images/blog/uncovering-the-future-of-price-transparency-a-2023-recap-and-2024-outlook/hero.webp"
 ---
 
 ## Price Transparency 2023 Recap

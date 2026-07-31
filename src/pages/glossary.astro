@@ -2,8 +2,9 @@
 import PageLayout from '../layouts/PageLayout.astro';
 
 import { glossaryTerms as terms } from '../data/glossary';
+import { SITE_URL, ORG_ID } from '../consts';
 
-const pageUrl = 'https://www.payerset.com/glossary';
+const pageUrl = `${SITE_URL}/glossary`;
 
 const glossarySchema = {
   '@context': 'https://schema.org',
@@ -13,7 +14,7 @@ const glossarySchema = {
   description:
     'Definitions of key healthcare price transparency terms — including machine-readable files (MRFs), Transparency in Coverage, negotiated rates, and reimbursement benchmarking.',
   url: pageUrl,
-  publisher: { '@id': 'https://www.payerset.com/#organization' },
+  publisher: { '@id': ORG_ID },
   hasDefinedTerm: terms.map((t) => ({
     '@type': 'DefinedTerm',
     '@id': `${pageUrl}#${t.id}`,

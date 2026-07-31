@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import PageLayout from '../../../layouts/PageLayout.astro';
 import TPBottomCta from '../../../components/transparency/TPBottomCta.astro';
 import { topics as allTopics } from '../../../config/transparency-topics';
+import { SITE_URL } from '../../../consts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('tp-blog');
@@ -42,9 +43,9 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.payerset.com/' },
-    { '@type': 'ListItem', position: 2, name: 'The Price Transparency Project', item: 'https://www.payerset.com/pricetransparencyproject' },
-    { '@type': 'ListItem', position: 3, name: post.data.title, item: `https://www.payerset.com/pricetransparencyproject/blog/${post.id}` },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+    { '@type': 'ListItem', position: 2, name: 'The Price Transparency Project', item: `${SITE_URL}/pricetransparencyproject` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: `${SITE_URL}/pricetransparencyproject/blog/${post.id}` },
   ],
 };
 ---
@@ -150,7 +151,7 @@ const breadcrumbSchema = {
               <h3 class="text-sm font-semibold text-text-primary uppercase tracking-wider mb-3">Share</h3>
               <div class="flex gap-3">
                 <a
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://www.payerset.com/pricetransparencyproject/blog/${post.id}`)}`}
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_URL}/pricetransparencyproject/blog/${post.id}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"
@@ -161,7 +162,7 @@ const breadcrumbSchema = {
                   </svg>
                 </a>
                 <a
-                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://www.payerset.com/pricetransparencyproject/blog/${post.id}`)}&text=${encodeURIComponent(post.data.title)}`}
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${SITE_URL}/pricetransparencyproject/blog/${post.id}`)}&text=${encodeURIComponent(post.data.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-slate-500 hover:text-brand-primary bg-slate-100 hover:bg-brand-primary/10 rounded-lg transition-colors"

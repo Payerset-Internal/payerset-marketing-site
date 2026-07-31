@@ -6,7 +6,7 @@ author: "Joseph Tollison"
 category: "Industry Insights"
 tags: ["price transparency", "contract negotiation"]
 readTime: "5 min read"
-image: "/images/blog/cfo-blueprint-healthcare-price-transparency-solutions/hero.png"
+image: "/images/blog/cfo-blueprint-healthcare-price-transparency-solutions/hero.webp"
 ---
 
 Price transparency solutions for healthcare aren't simply just another compliance checkbox. For hospital CFOs, managed care leaders, and finance directors, it's the difference between negotiating blind and negotiating with clarity. The right solution helps you cut through the noise, spot hidden opportunities and move with confidence in a market where every dollar counts.

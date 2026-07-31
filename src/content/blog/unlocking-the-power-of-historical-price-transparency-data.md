@@ -6,7 +6,7 @@ author: "Jerry DiMaso"
 category: "Industry Insights"
 tags: ["price transparency", "health insurance price transparency", "data access", "MRF", "contract negotiation", "machine readable file"]
 readTime: "2 min read"
-image: "/images/blog/unlocking-the-power-of-historical-price-transparency-data/hero.png"
+image: "/images/blog/unlocking-the-power-of-historical-price-transparency-data/hero.webp"
 ---
 
 ## Overview of Use Cases for Historical Price Transparency

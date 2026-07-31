@@ -29,4 +29,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.payerset.com/sitemap-index.xml
+Sitemap: https://payerset.com/sitemap-index.xml

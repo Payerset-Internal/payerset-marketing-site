@@ -7,7 +7,7 @@ author: "Joseph Tollison"
 category: "Parsing Payer MRFs"
 tags: []
 readTime: "3 min read"
-image: "/images/blog/and-then-there-was-humana/hero.jpg"
+image: "/images/blog/and-then-there-was-humana/hero.webp"
 ---
 
 As the quest for price transparency in the healthcare industry continues, as we've discussed before on the blog, there are some insurance companies that fall short in providing open access to their price transparency data. A notable case is Humana, a giant in the health insurance sector. Humana presents its own unique set of challenges when it comes to accessing its price transparency files, hindering efforts for data extraction and analysis. In this blog post, we will delve into the intricate hurdles Humana sets up, thwarting web scraping technologies, and consequently, obstructing data accessibility for consumers and other stakeholders.

@@ -7,7 +7,7 @@ author: "Joseph Tollison"
 category: "News"
 tags: ["price transparency", "Snowflake", "partnerships"]
 readTime: "2 min read"
-image: "/images/blog/payerset-and-snowflake-powering-data-transparency-in-healthcare/hero.png"
+image: "/images/blog/payerset-and-snowflake-powering-data-transparency-in-healthcare/hero.webp"
 ---
 
 ## Introduction

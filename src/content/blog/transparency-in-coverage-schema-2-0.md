@@ -7,7 +7,7 @@ author: "Jacob Little"
 category: "Industry Insights"
 tags: ["price transparency", "compliance", "MRF"]
 readTime: "5 min read"
-image: "/images/blog/transparency-in-coverage-schema-2-0/hero.png"
+image: "/images/blog/transparency-in-coverage-schema-2-0/hero.webp"
 ---
 
 ## Transparency in Coverage Schema 2.0: What Healthcare Leaders Need to Know

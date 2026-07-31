@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_URL, ORG_ID } from '../consts';
 
 interface Props {
   title: string;
@@ -35,10 +36,10 @@ const isArticle = type === 'article';
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': 'https://www.payerset.com/#organization',
+  '@id': ORG_ID,
   name: 'Payerset',
-  url: 'https://www.payerset.com',
-  logo: 'https://www.payerset.com/images/og-default.png',
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/og-default.png`,
   description:
     'Healthcare price transparency data company. Payerset turns payer Transparency in Coverage files and hospital machine-readable files into clean, analyzable contracted-rate and claims data for reimbursement benchmarking and managed care contract negotiations.',
   knowsAbout: [
@@ -53,7 +54,7 @@ const organizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
-    url: 'https://www.payerset.com/get-started',
+    url: `${SITE_URL}/get-started`,
   },
   sameAs: [
     'https://www.linkedin.com/company/payerset',
@@ -65,7 +66,7 @@ const websiteSchema = isHomepage ? {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Payerset',
-  url: 'https://www.payerset.com',
+  url: SITE_URL,
   description,
 } : null;
 
@@ -87,11 +88,11 @@ const blogPostingSchema = isArticle ? {
   },
   publisher: {
     '@type': 'Organization',
-    '@id': 'https://www.payerset.com/#organization',
+    '@id': ORG_ID,
     name: 'Payerset',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.payerset.com/images/og-default.png',
+      url: `${SITE_URL}/images/og-default.png`,
     },
   },
 } : null;

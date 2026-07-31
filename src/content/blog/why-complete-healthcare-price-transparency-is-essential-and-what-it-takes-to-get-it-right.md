@@ -6,7 +6,7 @@ author: "Jerry DiMaso"
 category: "Parsing Payer MRFs"
 tags: ["price transparency", "health insurance price transparency", "data access"]
 readTime: "4 min read"
-image: "/images/blog/why-complete-healthcare-price-transparency-is-essential-and-what-it-takes-to-get-it-right/hero.png"
+image: "/images/blog/why-complete-healthcare-price-transparency-is-essential-and-what-it-takes-to-get-it-right/hero.webp"
 ---
 
 Comprehensive healthcare price transparency data has become an essential input for providers, consultants, and healthcare systems alike, helping to support fair negotiations, data driven strategic planning, and stronger financial forecasts.

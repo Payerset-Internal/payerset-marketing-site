@@ -4,6 +4,7 @@ import SnowflakeFeaturedListing from '../components/SnowflakeFeaturedListing.ast
 import { Image } from 'astro:assets';
 import payersetLogoDark from '../assets/images/payerset-logo-dark.png';
 import snowflakeLogo from '../assets/images/snowflake-logo-transparent.png';
+import { SITE_URL, ORG_ID } from '../consts';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
@@ -11,14 +12,14 @@ const datasetSchema = {
   name: 'Payerset Healthcare Price Transparency Data on Snowflake Marketplace',
   description:
     'Payerset Healthcare Price Transparency — Full Dataset: commercial payer-negotiated in-network rates from the federal Transparency in Coverage machine-readable files, parsed and normalized into query-ready tables on the Snowflake Marketplace. Free per-payer sample datasets are also available.',
-  url: 'https://www.payerset.com/snowflakemarketplace',
+  url: `${SITE_URL}/snowflakemarketplace`,
   keywords: [
     'price transparency',
     'Transparency in Coverage',
     'payer negotiated rates',
     'Snowflake Marketplace',
   ],
-  creator: { '@id': 'https://www.payerset.com/#organization' },
+  creator: { '@id': ORG_ID },
 };
 ---
 

@@ -3,8 +3,11 @@
 
 @theme {
   /* Brand Colors - Payerset */
-  --color-brand-primary: #0092CA;
-  --color-brand-primary-hover: #007bb0;
+  /* Darkened from #0092CA to meet WCAG AA 4.5:1 for normal-size text.
+     #007BB0 = 4.71:1 on white and with white text; #0092CA was only 3.52:1.
+     The brighter cyan lives on in --color-brand-secondary for decorative use. */
+  --color-brand-primary: #007BB0;
+  --color-brand-primary-hover: #00658F;
   --color-brand-primary-light: rgba(0, 146, 202, 0.10);
   --color-brand-secondary: #00B7FD;
   --color-brand-dark: #044261;

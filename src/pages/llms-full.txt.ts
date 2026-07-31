@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { glossaryTerms } from '../data/glossary';
+import { SITE_URL } from '../consts';
 
 // Prerendered to a static /llms-full.txt at build time (regenerates on every
 // Netlify deploy, so it never goes stale). This is the full-text companion to
@@ -8,7 +9,7 @@ import { glossaryTerms } from '../data/glossary';
 // material and complete articles in a single fetch.
 export const prerender = true;
 
-const SITE = 'https://www.payerset.com';
+const SITE = SITE_URL;
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });

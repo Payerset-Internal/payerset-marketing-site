@@ -8,7 +8,9 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.payerset.com',
+  // Apex is canonical — Netlify 301-redirects www → apex.
+  // Keep in sync with SITE_URL in src/consts.ts.
+  site: 'https://payerset.com',
   vite: {
     plugins: [tailwindcss()],
   },

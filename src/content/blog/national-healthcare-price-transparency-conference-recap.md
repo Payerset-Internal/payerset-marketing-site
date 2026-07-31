@@ -54,7 +54,7 @@ Chris Whaley presented the findings from the RAND 5.0 study, which examined hosp
 - There is significant price variation across states and hospitals, not linked to quality.
 - Employers have a fiduciary obligation to manage healthcare costs effectively.
 
-![National Healthcare Price Transparency Conference](/images/blog/national-healthcare-price-transparency-conference-recap/inline-1.jpg)
+![National Healthcare Price Transparency Conference](/images/blog/national-healthcare-price-transparency-conference-recap/inline-1.webp)
 
 ## Session Highlights
 

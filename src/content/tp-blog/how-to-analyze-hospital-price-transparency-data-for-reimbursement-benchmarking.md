@@ -7,7 +7,7 @@ tags: ["price transparency", "contract negotiation", "reimbursement benchmarking
 readTime: "8 min read"
 topics: ["playbook", "analysis"]
 featured: false
-image: "/images/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking/hero.png"
+image: "/images/blog/how-to-analyze-hospital-price-transparency-data-for-reimbursement-benchmarking/hero.webp"
 ---
 
 Price transparency data is one of the most powerful tools to emerge in healthcare in recent years. It also, like so many aspects of healthcare, is full of nuance.

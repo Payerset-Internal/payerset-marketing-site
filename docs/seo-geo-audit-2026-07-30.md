@@ -397,6 +397,25 @@ Changed: `astro.config.mjs` (`site`), `BaseLayout.astro` (Organization `@id`/`ur
 
 Verified in `dist/`: sitemap **70/70 apex**, all canonicals apex, `robots.txt` sitemap line apex, `llms.txt` **18 apex / 0 www**, JSON-LD **25 blocks / 0 invalid / 0 www**.
 
+> ⚠️ **This fixed only half the problem — see §1.1b.** P0-1 had two independent causes of redirects (wrong host *and* missing trailing slash). The first deploy fixed the host; post-deploy verification showed 17 of 18 `llms.txt` links were still 301s.
+
+### 1.1b Trailing slashes on emitted absolute URLs ✅ (follow-up, commit `f1d97ea`)
+
+Production verification after the first deploy revealed the second cause. The site enforces trailing slashes (`/pricing` → 301 → `/pricing/`), so every absolute URL emitted without one still redirected — even on the correct host:
+
+| Surface | Before `f1d97ea` |
+|---|---|
+| `llms.txt` links | 17 of 18 → 301 |
+| `llms-full.txt` article URLs | ~40 → 301 |
+| JSON-LD `url` / `item` values | 8 of 51 missing slash after audit; all breadcrumbs, Dataset/SoftwareApplication urls, DefinedTerm anchors affected |
+| LinkedIn / X share URLs | all 4 → 301 |
+
+Added `pageUrl()` to [`src/consts.ts`](../src/consts.ts) — always returns a trailing-slashed absolute URL — and routed every page-URL construction through it. `SITE_URL` is still used directly where a trailing slash would be *wrong*: `ORG_ID`'s fragment, `og-default.png`, and `llms.txt`'s own path.
+
+Verified in `dist/`: **25 JSON-LD blocks, 0 invalid, 51 `url`/`item` values, 0 missing a trailing slash**; `llms.txt` and `llms-full.txt` both clean.
+
+**Lesson for future passes:** "canonical URL is wrong" can have more than one cause stacked on it. Check host *and* path form, and verify against production after deploy rather than trusting the build output — the build can't tell you what the CDN does with a path.
+
 **Deliberately left as `www`** — 2 instances of legal body copy (`terms-of-use.astro:116`, `datadestructionpolicy.astro:41`). These are visible URL labels inside legal documents whose actual `href`s are already relative. No SEO signal, and silently editing legal text isn't appropriate. **Your call whether to update them.**
 
 Also untouched: `scripts/*` (`scrape-blog-links.mjs`, `insert-blog-links.mjs`, `scrape-blog-images.mjs`, `blog-links-manifest.json`) — one-off Wix migration tooling, not part of the build.

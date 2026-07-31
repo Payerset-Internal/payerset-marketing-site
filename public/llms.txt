@@ -13,7 +13,7 @@ Price Transparency Project, publishes analysis, policy explainers, and practical
 playbooks on putting this data to work.
 
 Full text of our glossary and all articles, in one file:
-
+https://payerset.com/llms-full.txt
 
 ## Platform
 - [Rate Explorer](https://payerset.com/platform/rate-explorer/): Analyze every negotiated rate with self-service tools to fuel smarter pricing strategies and flip the negotiation dynamic.

@@ -12,3 +12,19 @@ export const SITE_URL = 'https://payerset.com';
 
 /** Stable @id for the Organization entity, referenced by other schema blocks. */
 export const ORG_ID = `${SITE_URL}/#organization`;
+
+/**
+ * Absolute URL for a page path, always with a trailing slash.
+ *
+ * Astro serves pages at /path/ and 301s /path → /path/, so any absolute URL we
+ * emit (JSON-LD, share links, llms.txt) must carry the slash or it points at a
+ * redirect. Use this instead of interpolating SITE_URL by hand.
+ *
+ *   pageUrl('pricing')        → https://payerset.com/pricing/
+ *   pageUrl('/platform/x/')   → https://payerset.com/platform/x/
+ *   pageUrl()                 → https://payerset.com/
+ */
+export const pageUrl = (path = ''): string => {
+  const trimmed = path.replace(/^\/+/, '').replace(/\/+$/, '');
+  return trimmed ? `${SITE_URL}/${trimmed}/` : `${SITE_URL}/`;
+};

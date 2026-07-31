@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { glossaryTerms } from '../data/glossary';
-import { SITE_URL } from '../consts';
+import { SITE_URL, pageUrl } from '../consts';
 
 // Prerendered to a static /llms-full.txt at build time (regenerates on every
 // Netlify deploy, so it never goes stale). This is the full-text companion to
@@ -68,7 +68,7 @@ every deploy.`;
     ...tpPosts.map((p) =>
       renderPost({
         title: p.data.title,
-        url: `${SITE}/pricetransparencyproject/blog/${p.id}`,
+        url: pageUrl(`pricetransparencyproject/blog/${p.id}`),
         date: p.data.date,
         author: p.data.author,
         context: 'The Price Transparency Project',
@@ -82,7 +82,7 @@ every deploy.`;
     ...legacyPosts.map((p) =>
       renderPost({
         title: p.data.title,
-        url: `${SITE}/post/${p.id.replace(/\.md$/, '')}`,
+        url: pageUrl(`post/${p.id.replace(/\.md$/, '')}`),
         date: p.data.date,
         author: p.data.author,
         context: p.data.category,

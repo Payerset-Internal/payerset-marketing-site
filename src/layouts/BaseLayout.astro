@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE_URL, ORG_ID } from '../consts';
+import { SITE_URL, ORG_ID, pageUrl } from '../consts';
 
 interface Props {
   title: string;
@@ -38,7 +38,7 @@ const organizationSchema = {
   '@type': 'Organization',
   '@id': ORG_ID,
   name: 'Payerset',
-  url: SITE_URL,
+  url: pageUrl(),
   logo: `${SITE_URL}/images/og-default.png`,
   description:
     'Healthcare price transparency data company. Payerset turns payer Transparency in Coverage files and hospital machine-readable files into clean, analyzable contracted-rate and claims data for reimbursement benchmarking and managed care contract negotiations.',
@@ -54,7 +54,7 @@ const organizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
-    url: `${SITE_URL}/get-started`,
+    url: pageUrl('get-started'),
   },
   sameAs: [
     'https://www.linkedin.com/company/payerset',
@@ -66,7 +66,7 @@ const websiteSchema = isHomepage ? {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Payerset',
-  url: SITE_URL,
+  url: pageUrl(),
   description,
 } : null;
 

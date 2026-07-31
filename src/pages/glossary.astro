@@ -2,26 +2,26 @@
 import PageLayout from '../layouts/PageLayout.astro';
 
 import { glossaryTerms as terms } from '../data/glossary';
-import { SITE_URL, ORG_ID } from '../consts';
+import { ORG_ID, pageUrl } from '../consts';
 
-const pageUrl = `${SITE_URL}/glossary`;
+const glossaryUrl = pageUrl('glossary');
 
 const glossarySchema = {
   '@context': 'https://schema.org',
   '@type': 'DefinedTermSet',
-  '@id': `${pageUrl}#termset`,
+  '@id': `${glossaryUrl}#termset`,
   name: 'Healthcare Price Transparency Glossary',
   description:
     'Definitions of key healthcare price transparency terms — including machine-readable files (MRFs), Transparency in Coverage, negotiated rates, and reimbursement benchmarking.',
-  url: pageUrl,
+  url: glossaryUrl,
   publisher: { '@id': ORG_ID },
   hasDefinedTerm: terms.map((t) => ({
     '@type': 'DefinedTerm',
-    '@id': `${pageUrl}#${t.id}`,
+    '@id': `${glossaryUrl}#${t.id}`,
     name: t.term,
     description: t.definition,
-    inDefinedTermSet: `${pageUrl}#termset`,
-    url: `${pageUrl}#${t.id}`,
+    inDefinedTermSet: `${glossaryUrl}#termset`,
+    url: `${glossaryUrl}#${t.id}`,
   })),
 };
 ---

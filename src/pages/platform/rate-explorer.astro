@@ -5,7 +5,7 @@ import InsightsCarousel from '../../components/InsightsCarousel.astro';
 import FeatureShowcase from '../../components/FeatureShowcase.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import { buildFaqSchema, type FaqItem } from '../../utils/faq';
-import { SITE_URL, ORG_ID } from '../../consts';
+import { ORG_ID, pageUrl } from '../../consts';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -15,8 +15,8 @@ const softwareSchema = {
   operatingSystem: 'Web',
   description:
     'Self-service tool to analyze every negotiated commercial rate by payer, provider, and procedure, fueling smarter pricing strategies and contract negotiations.',
-  url: `${SITE_URL}/platform/rate-explorer`,
-  offers: { '@type': 'Offer', url: `${SITE_URL}/get-started` },
+  url: pageUrl('platform/rate-explorer'),
+  offers: { '@type': 'Offer', url: pageUrl('get-started') },
   provider: { '@id': ORG_ID },
 };
 

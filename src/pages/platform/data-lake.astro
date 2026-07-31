@@ -9,7 +9,7 @@ import NetworkViz from '../../components/NetworkViz.astro';
 import SnowflakeFeaturedListing from '../../components/SnowflakeFeaturedListing.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import { buildFaqSchema, type FaqItem } from '../../utils/faq';
-import { SITE_URL, ORG_ID } from '../../consts';
+import { ORG_ID, pageUrl } from '../../consts';
 
 const datasetSchema = {
   '@context': 'https://schema.org',
@@ -17,7 +17,7 @@ const datasetSchema = {
   name: 'Payerset Data Lake',
   description:
     'Enriched payer and provider price transparency (MRF) data — contracted rates and claims — delivered in analytics-ready formats for custom tools and analysis.',
-  url: `${SITE_URL}/platform/data-lake`,
+  url: pageUrl('platform/data-lake'),
   keywords: [
     'price transparency',
     'machine-readable files',

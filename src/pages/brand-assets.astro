@@ -1,0 +1,228 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+/**
+ * Brand assets page — an unlisted-but-public hub for logos and colors.
+ *
+ * Intentionally NOT in the site nav. Share the URL directly with salespeople,
+ * partners, and conference organizers so everyone pulls the same up-to-date
+ * assets. Files live in /public/brand/ so they have stable, downloadable URLs
+ * (Astro's <Image> hashes filenames, which breaks "download this exact file").
+ */
+
+const logos = [
+  {
+    name: 'Primary logo',
+    note: 'Full-color wordmark for light backgrounds. Default choice.',
+    preview: '/brand/payerset-logo-dark-web.png',
+    background: 'light',
+    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-logo-dark.png' }],
+  },
+  {
+    name: 'Reversed logo',
+    note: 'White wordmark for dark or photographic backgrounds.',
+    preview: '/brand/payerset-logo-white-web.png',
+    background: 'dark',
+    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-logo-white.png' }],
+  },
+  {
+    name: 'Logo with tagline',
+    note: 'Wordmark plus "The Healthcare Price Transparency Solution." Use on light backgrounds.',
+    preview: '/brand/payerset-tagline-dark-web.png',
+    background: 'light',
+    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-tagline-dark.png' }],
+  },
+  {
+    name: 'Logo with tagline (reversed)',
+    note: 'Tagline lockup in white for dark or photographic backgrounds.',
+    preview: '/brand/payerset-tagline-white-web.png',
+    background: 'dark',
+    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-tagline-white.png' }],
+  },
+  {
+    name: 'Icon / mark',
+    note: 'The "P" symbol on its own. Use for avatars, favicons, and tight spaces.',
+    preview: '/brand/payerset-mark.svg',
+    background: 'mark',
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-mark.svg' },
+      { label: 'PNG (512px)', href: '/brand/payerset-mark-512.png' },
+    ],
+  },
+];
+
+const colorGroups = [
+  {
+    title: 'Primary',
+    colors: [
+      { name: 'Brand Primary', hex: '#007BB0', text: 'light' },
+      { name: 'Primary Hover', hex: '#00658F', text: 'light' },
+      { name: 'Brand Secondary', hex: '#00B7FD', text: 'dark' },
+    ],
+  },
+  {
+    title: 'Dark',
+    colors: [
+      { name: 'Brand Dark', hex: '#044261', text: 'light' },
+      { name: 'Dark Deeper', hex: '#032D44', text: 'light' },
+      { name: 'Dark Deep', hex: '#001F29', text: 'light' },
+    ],
+  },
+  {
+    title: 'Accent',
+    colors: [{ name: 'Accent Green', hex: '#479F79', text: 'light' }],
+  },
+  {
+    title: 'Text & Surface',
+    colors: [
+      { name: 'Text Primary', hex: '#2D2D2D', text: 'light' },
+      { name: 'Text Secondary', hex: '#464646', text: 'light' },
+      { name: 'Text Muted', hex: '#6D6D6D', text: 'light' },
+      { name: 'Surface Light', hex: '#F6F6F6', text: 'dark' },
+    ],
+  },
+];
+---
+
+<PageLayout
+  title="Brand Assets"
+  description="Download the latest Payerset logos and access our brand colors."
+>
+  <!-- Hero -->
+  <section class="relative bg-brand-dark-deep overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div class="max-w-3xl">
+        <p class="text-sm font-medium uppercase tracking-wider text-brand-secondary mb-4">Brand Assets</p>
+        <h1 class="text-4xl sm:text-5xl font-semibold text-white leading-tight">
+          The latest Payerset logos &amp; colors
+        </h1>
+        <p class="mt-6 text-lg text-slate-300 font-light">
+          One place to grab up-to-date brand assets for decks, events, and partner materials.
+          Please don't recolor, stretch, or add effects to the logo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="mb-10">
+      <h2 class="text-3xl font-semibold text-text-primary">Logos</h2>
+      <p class="mt-2 text-text-muted font-light">Use the primary logo whenever the background allows it.</p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-3">
+      {logos.map((logo) => (
+        <div class="rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+          <div
+            class:list={[
+              'flex items-center justify-center p-10 h-48',
+              logo.background === 'light' && 'bg-surface-light',
+              logo.background === 'dark' && 'bg-brand-dark-deep',
+              logo.background === 'mark' && 'bg-surface-light',
+            ]}
+          >
+            <img
+              src={logo.preview}
+              alt={`Payerset ${logo.name}`}
+              class:list={['object-contain', logo.background === 'mark' ? 'h-24 w-24' : 'max-h-16 w-auto']}
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-lg font-semibold text-text-primary">{logo.name}</h3>
+            <p class="mt-1 text-sm text-text-muted font-light flex-1">{logo.note}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {logo.downloads.map((d) => (
+                <a
+                  href={d.href}
+                  download
+                  class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-brand-dark-deep hover:bg-brand-dark rounded-lg transition-colors"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                  </svg>
+                  {d.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-6 text-sm text-text-muted font-light">
+      Need a vector wordmark (SVG/EPS) or a specific format for print? Email
+      <a href="mailto:hello@payerset.com" class="text-brand-primary hover:text-brand-primary-hover font-medium">hello@payerset.com</a>.
+    </p>
+  </section>
+
+  <!-- Colors -->
+  <section class="bg-surface-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div class="mb-10">
+        <h2 class="text-3xl font-semibold text-text-primary">Colors</h2>
+        <p class="mt-2 text-text-muted font-light">Click any swatch to copy its HEX value.</p>
+      </div>
+
+      <div class="space-y-10">
+        {colorGroups.map((group) => (
+          <div>
+            <h3 class="text-sm font-medium uppercase tracking-wider text-text-muted mb-4">{group.title}</h3>
+            <div class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+              {group.colors.map((color) => (
+                <button
+                  type="button"
+                  class="copy-swatch group text-left rounded-xl overflow-hidden border border-slate-200 bg-white transition-shadow hover:shadow-md"
+                  data-hex={color.hex}
+                >
+                  <div
+                    class="h-24 flex items-end justify-end p-2"
+                    style={`background-color: ${color.hex};`}
+                  >
+                    <span
+                      class:list={[
+                        'copy-hint text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity',
+                        color.text === 'light' ? 'text-white' : 'text-text-primary',
+                      ]}
+                    >
+                      Copy
+                    </span>
+                  </div>
+                  <div class="p-3">
+                    <div class="text-sm font-semibold text-text-primary">{color.name}</div>
+                    <div class="swatch-code mt-0.5 text-sm font-mono text-text-muted">{color.hex}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy-swatch').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const hex = btn.dataset.hex;
+      if (!hex) return;
+      try {
+        await navigator.clipboard.writeText(hex);
+        const code = btn.querySelector('.swatch-code');
+        const hint = btn.querySelector('.copy-hint');
+        const prev = code?.textContent;
+        if (code) code.textContent = 'Copied!';
+        if (hint) hint.textContent = 'Copied!';
+        setTimeout(() => {
+          if (code && prev) code.textContent = prev;
+          if (hint) hint.textContent = 'Copy';
+        }, 1200);
+      } catch {
+        /* clipboard unavailable — no-op */
+      }
+    });
+  });
+</script>

@@ -16,37 +16,69 @@ const logos = [
     note: 'Full-color wordmark for light backgrounds. Default choice.',
     preview: '/brand/payerset-logo-dark-web.png',
     background: 'light',
-    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-logo-dark.png' }],
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-logo-dark.svg' },
+      { label: 'PNG (high-res)', href: '/brand/payerset-logo-dark.png' },
+    ],
   },
   {
     name: 'Reversed logo',
     note: 'White wordmark for dark or photographic backgrounds.',
     preview: '/brand/payerset-logo-white-web.png',
     background: 'dark',
-    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-logo-white.png' }],
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-logo-white.svg' },
+      { label: 'PNG (high-res)', href: '/brand/payerset-logo-white.png' },
+    ],
   },
   {
     name: 'Logo with tagline',
     note: 'Wordmark plus "The Healthcare Price Transparency Solution." Use on light backgrounds.',
     preview: '/brand/payerset-tagline-dark-web.png',
     background: 'light',
-    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-tagline-dark.png' }],
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-tagline-dark.svg' },
+      { label: 'PNG (high-res)', href: '/brand/payerset-tagline-dark.png' },
+    ],
   },
   {
     name: 'Logo with tagline (reversed)',
     note: 'Tagline lockup in white for dark or photographic backgrounds.',
     preview: '/brand/payerset-tagline-white-web.png',
     background: 'dark',
-    downloads: [{ label: 'PNG (high-res)', href: '/brand/payerset-tagline-white.png' }],
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-tagline-white.svg' },
+      { label: 'PNG (high-res)', href: '/brand/payerset-tagline-white.png' },
+    ],
   },
   {
-    name: 'Icon / mark',
-    note: 'The "P" symbol on its own. Use for avatars, favicons, and tight spaces.',
-    preview: '/brand/payerset-mark.svg',
-    background: 'mark',
+    name: 'Submark — Primary',
+    note: 'White "p" on Payerset blue. The square mark for LinkedIn, avatars, and app tiles.',
+    preview: '/brand/payerset-submark-primary.svg',
+    background: 'submark',
     downloads: [
-      { label: 'SVG (vector)', href: '/brand/payerset-mark.svg' },
-      { label: 'PNG (512px)', href: '/brand/payerset-mark-512.png' },
+      { label: 'SVG (vector)', href: '/brand/payerset-submark-primary.svg' },
+      { label: 'PNG (1000px)', href: '/brand/payerset-submark-primary.png' },
+    ],
+  },
+  {
+    name: 'Submark — Navy',
+    note: 'White "p" on navy. Use where Payerset blue is too bright for the surrounding design.',
+    preview: '/brand/payerset-submark-navy.svg',
+    background: 'submark',
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-submark-navy.svg' },
+      { label: 'PNG (1000px)', href: '/brand/payerset-submark-navy.png' },
+    ],
+  },
+  {
+    name: 'Submark — Reversed',
+    note: 'Blue "p" on white. Use on dark or photographic backgrounds.',
+    preview: '/brand/payerset-submark-reversed.svg',
+    background: 'submark',
+    downloads: [
+      { label: 'SVG (vector)', href: '/brand/payerset-submark-reversed.svg' },
+      { label: 'PNG (1000px)', href: '/brand/payerset-submark-reversed.png' },
     ],
   },
 ];
@@ -121,12 +153,18 @@ const colorGroups = [
               logo.background === 'light' && 'bg-surface-light',
               logo.background === 'dark' && 'bg-brand-dark-deep',
               logo.background === 'mark' && 'bg-surface-light',
+              logo.background === 'submark' && 'bg-surface-light',
             ]}
           >
             <img
               src={logo.preview}
               alt={`Payerset ${logo.name}`}
-              class:list={['object-contain', logo.background === 'mark' ? 'h-24 w-24' : 'max-h-16 w-auto']}
+              class:list={[
+                'object-contain',
+                logo.background === 'mark' && 'h-24 w-24',
+                logo.background === 'submark' && 'h-24 w-24 rounded-2xl ring-1 ring-slate-200',
+                logo.background !== 'mark' && logo.background !== 'submark' && 'max-h-16 w-auto',
+              ]}
               loading="lazy"
             />
           </div>

@@ -1,0 +1,144 @@
+---
+/**
+ * Spotlight card — a recent piece led by its own graphic as a top banner,
+ * with a pulled stat under it. Two sit side by side beneath the featured
+ * story. The `scorecard` variant reuses the compliance matrix as its banner
+ * instead of a post image.
+ */
+interface Props {
+  variant?: 'image' | 'scorecard';
+  kicker: string;
+  seriesLabel?: string;
+  title: string;
+  description: string;
+  statNumber?: string;
+  statLabel?: string;
+  image?: string;
+  href: string;
+  ctaLabel?: string;
+}
+
+const {
+  variant = 'image',
+  kicker,
+  seriesLabel,
+  title,
+  description,
+  statNumber,
+  statLabel,
+  image,
+  href,
+  ctaLabel = 'Read more',
+} = Astro.props;
+
+// Compliance matrix preview for the scorecard variant — same traffic-light
+// system and representative payers as the standalone scorecard card.
+const statusColors: Record<string, string> = {
+  green: 'bg-emerald-500',
+  yellow: 'bg-amber-300',
+  orange: 'bg-orange-400',
+  red: 'bg-rose-500',
+};
+const samplePayers = [
+  { name: 'Aetna', cells: ['green', 'green', 'green'] },
+  { name: 'Blue Cross Blue Shield', cells: ['green', 'yellow', 'orange'] },
+  { name: 'Cigna', cells: ['green', 'green', 'yellow'] },
+  { name: 'UnitedHealthcare', cells: ['yellow', 'orange', 'red'] },
+  { name: 'Elevance', cells: ['green', 'yellow', 'yellow'] },
+  { name: 'Humana', cells: ['orange', 'red', 'red'] },
+];
+const scorecardDims = ['Table of contents', 'File accessibility', 'Data quality'];
+const scorecardLegend = [
+  { color: 'green', label: 'Strong' },
+  { color: 'yellow', label: 'Acceptable' },
+  { color: 'orange', label: 'Needs work' },
+  { color: 'red', label: 'Poor' },
+];
+---
+
+<a
+  class="group flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:border-brand-primary/30 no-underline text-inherit"
+  href={href}
+>
+  <!-- Banner: the piece's own graphic, or the scorecard matrix -->
+  {variant === 'image' ? (
+    <div class="relative aspect-[16/9] bg-surface-light overflow-hidden">
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          loading="lazy"
+        />
+      )}
+    </div>
+  ) : (
+    <div class="relative aspect-[16/9] bg-brand-dark-deep overflow-hidden flex flex-col justify-center p-7 sm:p-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-dark-deep pointer-events-none"></div>
+      <div class="absolute -top-16 -right-16 w-56 h-56 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Eyebrow -->
+      <div class="relative flex items-center justify-between mb-3.5">
+        <span class="text-[0.62rem] font-semibold uppercase tracking-[1.5px] text-brand-accent">Compliance by dimension</span>
+        <span class="text-[0.62rem] font-medium text-white/40">Q2 2026</span>
+      </div>
+
+      <!-- Full-width matrix -->
+      <div class="relative">
+        <div class="grid grid-cols-[1.5fr_repeat(3,1fr)] gap-x-3 items-end pb-2.5 border-b border-white/15">
+          <div></div>
+          {scorecardDims.map(d => (
+            <div class="text-[0.6rem] font-medium text-white/55 text-center leading-[1.25]">{d}</div>
+          ))}
+        </div>
+        {samplePayers.map(p => (
+          <div class="grid grid-cols-[1.5fr_repeat(3,1fr)] gap-x-3 items-center py-[0.34rem] border-b border-white/8 last:border-b-0">
+            <span class="text-[0.7rem] text-white/85 truncate pr-1">{p.name}</span>
+            {p.cells.map(c => (
+              <span class="flex justify-center"><span class:list={['w-2.5 h-2.5 rounded-full', statusColors[c]]}></span></span>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <!-- Legend -->
+      <div class="relative flex flex-wrap items-center gap-x-4 gap-y-1 mt-3.5 pt-3 border-t border-white/10">
+        {scorecardLegend.map(l => (
+          <span class="inline-flex items-center gap-1.5 text-[0.6rem] text-white/55">
+            <span class:list={['w-2 h-2 rounded-full', statusColors[l.color]]}></span>{l.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Body -->
+  <div class="p-6 flex flex-col flex-1">
+    <div class="flex flex-wrap items-center gap-2 mb-2.5 text-[0.72rem] font-medium">
+      <span class="text-brand-primary">{kicker}</span>
+      {seriesLabel && <span class="text-text-muted/50">·</span>}
+      {seriesLabel && <span class="text-text-muted">{seriesLabel}</span>}
+    </div>
+
+    <h3 class="font-heading text-lg font-semibold leading-snug tracking-tight text-text-primary mb-3">
+      {title}
+    </h3>
+
+    {statNumber ? (
+      <p class="text-sm text-text-secondary leading-snug mb-4">
+        <span class="font-heading text-2xl font-bold text-brand-accent align-baseline mr-1.5">{statNumber}</span>
+        {statLabel}
+      </p>
+    ) : (
+      <p class="text-sm text-text-muted leading-relaxed mb-4">{description}</p>
+    )}
+
+    <span class="mt-auto inline-flex items-center gap-2 text-sm font-medium text-brand-primary group-hover:gap-3 transition-all duration-200">
+      {ctaLabel}
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+</a>

@@ -8,6 +8,10 @@ readTime: "6 min read"
 topics: ["analysis", "playbook"]
 featured: true
 image: "/images/blog/gaining-leverage-uncovering-contract-structures/hero.jpg"
+cardImage: "/images/blog/gaining-leverage-uncovering-contract-structures/hero.jpg"
+statNumber: "94%"
+statLabel: "of a hospital's DRG grid priced off a single negotiated base rate"
+seriesLabel: "Series · Part 1"
 ---
 
 Data analysts and contracting experts understand price transparency data from opposite ends. Data teams can sift through the numbers fluently, but they don't live inside the contracts. Managed care veterans know the contract language cold but are not data analytics experts. Getting the most value out of price transparency data sits in the overlap, where a reader can pull contract logic straight out of the published data. Part one of a series on pulling contract structure out of price transparency data, starting with the inpatient DRG base rate.

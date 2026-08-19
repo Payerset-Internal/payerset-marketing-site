@@ -28,6 +28,11 @@ type FeedItem = {
   href: string;
   date: Date;
   topics: string[];
+  image?: string;
+  cardImage?: string;
+  statNumber?: string;
+  statLabel?: string;
+  seriesLabel?: string;
 };
 
 const feedItems: FeedItem[] = [
@@ -50,6 +55,11 @@ const feedItems: FeedItem[] = [
     href: `/pricetransparencyproject/blog/${b.id}`,
     date: b.data.date,
     topics: [...b.data.topics],
+    image: b.data.image,
+    cardImage: b.data.cardImage ?? b.data.image,
+    statNumber: b.data.statNumber,
+    statLabel: b.data.statLabel,
+    seriesLabel: b.data.seriesLabel,
   })),
   ...research.map(r => ({
     tag: 'Research',

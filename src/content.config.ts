@@ -37,6 +37,16 @@ const tpBlog = defineCollection({
     tags: z.array(z.string()).default([]),
     topics: z.array(tpTopicEnum).default([]),
     image: z.string().optional(),
+    // Optional graphic to feature on index cards. Points at a designed visual
+    // from inside the post (e.g. a chart) when it reads better than the article
+    // hero; falls back to `image` when unset.
+    cardImage: z.string().optional(),
+    // Optional pulled hook shown on featured/spotlight cards — a single headline
+    // figure and its descriptor (mirrors tp-research's statNumber/statLabel).
+    statNumber: z.string().optional(),
+    statLabel: z.string().optional(),
+    // Optional series kicker (e.g. "Series · Part 1").
+    seriesLabel: z.string().optional(),
   }),
 });
 

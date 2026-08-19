@@ -1,6 +1,6 @@
 ---
 import TPEmailCapture from './TPEmailCapture.astro';
-import TPReportPanel from './TPReportPanel.astro';
+import TPReportCover from './TPReportCover.astro';
 
 interface Props {
   /** Optional logo image shown above the title. Falls back to a placeholder. */
@@ -38,15 +38,15 @@ const {
        section below (scorecard tile + feed). The middle gap is eased by
        widening the report card (see TPReportPanel) rather than narrowing
        the whole hero, which would break that alignment. -->
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16" data-reveal>
-    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-6" data-reveal>
+    <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
       <!-- Left (also first on mobile): logo, copy, value props + email capture -->
-      <div class="lg:col-span-6">
+      <div class="lg:col-span-5">
         <!-- Logo carries the brand identity; the card carries the report
              title, so the left side leads with the logo (slightly larger)
              instead of repeating the report name in a big headline. -->
         {logo ? (
-          <img src={logo} alt="The Price Transparency Project — from the team at Payerset" class="w-full max-w-[260px] sm:max-w-[300px] h-auto mb-6" />
+          <img src={logo} alt="The Price Transparency Project — from the team at Payerset" class="w-full max-w-[210px] sm:max-w-[240px] h-auto mb-4" />
         ) : (
           <div class="inline-flex items-center justify-center h-11 px-5 mb-6 rounded-md border border-dashed border-white/25 text-white/40 text-[0.7rem] font-medium tracking-wide uppercase">
             Logo placeholder
@@ -55,7 +55,7 @@ const {
 
         {/* Thin accent rule bridges the logo into the supporting line and
             rhymes with the card's accent bar on the right. */}
-        <div class="w-12 h-[3px] rounded-full bg-brand-accent mb-7"></div>
+        <div class="w-12 h-[3px] rounded-full bg-brand-accent mb-4"></div>
 
         {/* If a title is supplied, render it as the big headline (legacy).
             Otherwise the framing line below stands in as the page's h1. */}
@@ -80,7 +80,7 @@ const {
         <!-- Action cluster: the report is the hook, so the release date and
              the "get the report" promise live right on the email CTA — not
              floated off on their own. The card is the visual of what you get. -->
-        <div class="mt-10">
+        <div class="mt-6">
           {releaseNote && (
             <div class="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-1.5 mb-5 max-w-lg">
               <span class="relative flex h-1.5 w-1.5 shrink-0">
@@ -101,9 +101,9 @@ const {
         </div>
       </div>
 
-      <!-- Right (also second/below on mobile): designed-in-browser report panel -->
-      <div class="lg:col-span-6">
-        <TPReportPanel />
+      <!-- Right (also second/below on mobile): designed-in-browser report cover -->
+      <div class="lg:col-span-7">
+        <TPReportCover />
       </div>
     </div>
 

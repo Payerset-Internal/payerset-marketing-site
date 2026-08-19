@@ -1,5 +1,7 @@
 ---
-import TPFeaturedCard from './TPFeaturedCard.astro';
+import { topics as topicConfig } from '../../config/transparency-topics';
+import TPFeaturedStory from './TPFeaturedStory.astro';
+import TPSpotlightCard from './TPSpotlightCard.astro';
 import TPFeedCard from './TPFeedCard.astro';
 
 interface FeedItem {
@@ -11,6 +13,11 @@ interface FeedItem {
   href: string;
   date: Date;
   topics: string[];
+  image?: string;
+  cardImage?: string;
+  statNumber?: string;
+  statLabel?: string;
+  seriesLabel?: string;
 }
 
 interface Props {
@@ -27,6 +34,18 @@ const { feedItems, scorecard } = Astro.props;
 
 const allItems = [...feedItems].sort((a, b) => b.date.getTime() - a.date.getTime());
 
+// Tier 1/2: the newest piece leads; the next fills the spotlight row beside
+// the evergreen scorecard.
+const featured = allItems[0];
+const spotlight = allItems[1];
+
+const monthYear = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+const topicLabel = (item?: FeedItem) =>
+  topicConfig.find(t => t.slug === item?.topics[0])?.shortLabel ?? 'Analysis';
+
+// A short scorecard title for the compact spotlight card.
+const scorecardTitle = scorecard.title.split(':')[0];
+
 const tabs = [
   { id: 'all',      label: 'All' },
   { id: 'analysis', label: 'Analysis' },
@@ -37,9 +56,7 @@ const tabs = [
 ];
 
 function getMatchingTabs(item: FeedItem): string[] {
-  const matched = ['all'];
-  item.topics.forEach(t => matched.push(t));
-  return matched;
+  return ['all', ...item.topics];
 }
 ---
 
@@ -61,19 +78,62 @@ function getMatchingTabs(item: FeedItem): string[] {
   </div>
 </div>
 
-<!-- Featured card — only shown in "All" tab -->
-<div id="tp-featured" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
-  <div class="text-[0.8rem] font-medium text-text-muted mb-5">Featured</div>
-  <TPFeaturedCard
-    tag={scorecard.tag}
-    title={scorecard.title}
-    description={scorecard.description}
-    href={scorecard.href}
-  />
+<!-- Highlights: featured story + spotlight row. Editorial promotion, only
+     shown in the "All" view; topic filters fall through to the full grid. -->
+<div id="tp-highlights" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+  {featured && (
+    <>
+      <div class="text-[0.8rem] font-medium text-text-muted mb-5">Latest Analysis</div>
+      <TPFeaturedStory
+        kicker={`New · ${monthYear(featured.date)}`}
+        seriesLabel={featured.seriesLabel}
+        title={featured.title}
+        description={featured.description}
+        statNumber={featured.statNumber}
+        statLabel={featured.statLabel}
+        image={featured.cardImage}
+        href={featured.href}
+      />
+    </>
+  )}
+
+  <div class="grid md:grid-cols-2 gap-5 mt-8">
+    {spotlight && (
+      <TPSpotlightCard
+        variant="image"
+        kicker={topicLabel(spotlight)}
+        seriesLabel={spotlight.seriesLabel}
+        title={spotlight.title}
+        description={spotlight.description}
+        statNumber={spotlight.statNumber}
+        statLabel={spotlight.statLabel}
+        image={spotlight.cardImage}
+        href={spotlight.href}
+      />
+    )}
+    <TPSpotlightCard
+      variant="scorecard"
+      kicker="Scorecard"
+      seriesLabel="Q2 2026"
+      title={scorecardTitle}
+      description={scorecard.description}
+      statNumber="100+"
+      statLabel="payers graded on three dimensions of their machine-readable files"
+      href={scorecard.href}
+      ctaLabel="Explore the scorecard"
+    />
+  </div>
 </div>
 
-<!-- Content grid -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-16">
+<!-- The full library -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-16">
+  <div class="flex items-baseline justify-between gap-4 mb-6 pt-4 border-t border-slate-100">
+    <h2 class="font-heading text-lg font-semibold text-text-primary">
+      The full library
+      <span id="tp-count" class="font-normal text-text-muted"></span>
+    </h2>
+  </div>
+
   <div id="tp-feed-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
     {allItems.map(item => (
       <div
@@ -85,6 +145,7 @@ function getMatchingTabs(item: FeedItem): string[] {
           description={item.description}
           meta={item.meta}
           href={item.href}
+          image={item.cardImage}
           topics={item.topics}
         />
       </div>
@@ -96,9 +157,10 @@ function getMatchingTabs(item: FeedItem): string[] {
 </section>
 
 <script>
-  const featured = document.getElementById('tp-featured');
+  const highlights = document.getElementById('tp-highlights');
   const feedGrid = document.getElementById('tp-feed-grid');
   const empty = document.getElementById('tp-empty');
+  const count = document.getElementById('tp-count');
   const tabBtns = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
   const cards = feedGrid?.querySelectorAll<HTMLElement>('.tp-card-wrapper');
 
@@ -107,8 +169,8 @@ function getMatchingTabs(item: FeedItem): string[] {
       btn.setAttribute('aria-selected', btn.dataset.tab === tabId ? 'true' : 'false');
     });
 
-    if (featured) {
-      featured.style.display = tabId === 'all' ? '' : 'none';
+    if (highlights) {
+      highlights.style.display = tabId === 'all' ? '' : 'none';
     }
 
     let visibleCount = 0;
@@ -118,6 +180,11 @@ function getMatchingTabs(item: FeedItem): string[] {
       card.style.display = show ? '' : 'none';
       if (show) visibleCount++;
     });
+
+    if (count) {
+      const noun = visibleCount === 1 ? 'piece' : 'pieces';
+      count.textContent = ` · ${visibleCount} ${noun}`;
+    }
 
     if (empty) {
       empty.classList.toggle('hidden', visibleCount > 0);
@@ -129,6 +196,8 @@ function getMatchingTabs(item: FeedItem): string[] {
       setTab(btn.dataset.tab ?? 'all');
     });
   });
+
+  setTab('all');
 </script>
 
 <style>

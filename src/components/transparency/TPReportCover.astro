@@ -1,0 +1,57 @@
+---
+/**
+ * TPReportCover.astro
+ *
+ * Hero-right visual for the Price Transparency Project landing page.
+ * Renders the ACTUAL 2026 Field Guide cover — page 1 of the published PDF,
+ * exported to an image — so the typography, photo, and layout match the
+ * printed guide exactly (no in-browser recreation to drift out of sync).
+ *
+ * Framed as a bound book: stacked page edges, a soft drop shadow, and an
+ * ambient accent glow so the light cover sits naturally in the dark hero.
+ *
+ * To refresh the cover, re-export page 1 of the guide PDF over
+ * /images/transparencyproject/field-guide-cover-full.jpg (kept at ~801×1030).
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+}
+
+const {
+  src = '/images/transparencyproject/field-guide-cover-full.jpg',
+  alt = 'The 2026 Price Transparency Field Guide — compiled by Payerset',
+} = Astro.props;
+---
+
+<div class="tp-cover relative w-full max-w-[224px] sm:max-w-[320px] lg:max-w-[380px] mx-auto">
+  <!-- Ambient glow so the light cover reads against the dark hero -->
+  <div class="absolute -inset-8 bg-brand-accent/12 blur-3xl rounded-[40%] pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -top-10 -right-6 w-40 h-40 bg-brand-primary/15 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Stacked page edges — reads as a bound, multi-page guide -->
+  <div class="absolute inset-y-2 right-0 left-3 rounded-r-lg bg-white/25 translate-x-[10px] pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-y-1 right-0 left-2 rounded-r-lg bg-white/50 translate-x-[5px] pointer-events-none" aria-hidden="true"></div>
+
+  <!-- The real cover -->
+  <img
+    src={src}
+    alt={alt}
+    width="801"
+    height="1030"
+    class="relative w-full h-auto rounded-r-xl rounded-l-md shadow-2xl shadow-black/50"
+    loading="eager"
+  />
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .tp-cover {
+      animation: tpCoverIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+  }
+  @keyframes tpCoverIn {
+    from { opacity: 0; transform: translateY(14px) rotate(-0.6deg); }
+    to   { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+</style>

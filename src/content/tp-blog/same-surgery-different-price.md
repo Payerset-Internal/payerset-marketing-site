@@ -8,6 +8,9 @@ readTime: "6 min read"
 topics: ["analysis"]
 featured: true
 image: "/images/blog/same-surgery-different-price/hero.jpg"
+cardImage: "/images/blog/same-surgery-different-price/ownership-premium-chart.jpg"
+statNumber: "73%"
+statLabel: "higher facility rates at system-owned surgery centers — for the same knee replacement"
 ---
 
 In metro Atlanta, the same total knee replacement, performed in the same kind of facility, carries very different prices depending on who owns the surgery center. Across the market's freestanding ambulatory surgery centers (ASCs), the average commercial institutional (facility) reimbursement for the procedure runs about $12,200 at independently owned centers, about $15,100 at private equity owned centers, and about $21,200 at system-owned centers. The operation is identical, the type of facility is identical, and the institutional rate is measured on the same procedure. **What moves the price is ownership.**

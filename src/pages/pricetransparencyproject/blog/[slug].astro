@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import PageLayout from '../../../layouts/PageLayout.astro';
 import TPBottomCta from '../../../components/transparency/TPBottomCta.astro';
+import TPFieldGuideCta from '../../../components/transparency/TPFieldGuideCta.astro';
 import { topics as allTopics } from '../../../config/transparency-topics';
 import { pageUrl } from '../../../consts';
 
@@ -211,6 +212,10 @@ const breadcrumbSchema = {
       </div>
     </div>
   </section>
+
+  <!-- Lead-magnet CTA: email-gated Field Guide download. Light card so it
+       doesn't clash with the dark newsletter banner directly below. -->
+  <TPFieldGuideCta />
 
   <TPBottomCta />
 </PageLayout>

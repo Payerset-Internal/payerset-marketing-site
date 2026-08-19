@@ -1,0 +1,72 @@
+---
+/**
+ * TPFieldGuideCta.astro
+ *
+ * In-article lead-magnet CTA for Price Transparency Project blog posts:
+ * an email-gated download of the 2026 Field Guide.
+ *
+ * Deliberately LIGHT (white card on the light article surface) so it
+ * doesn't clash with the dark, full-width newsletter banner
+ * (TPBottomCta) that closes every Project page. This reads as a
+ * contained card inside the reading column — the report cover on the
+ * left, the pitch + email form on the right — not a second full-bleed
+ * banner stacked on the first.
+ *
+ * The email form reuses TPEmailCapture (same MailChimp list + work-email
+ * gating). On success MailChimp redirects to the Field Guide
+ * thank-you/download page, so entering an email here delivers the guide.
+ */
+import TPEmailCapture from './TPEmailCapture.astro';
+
+interface Props {
+  coverSrc?: string;
+}
+
+const {
+  coverSrc = '/images/transparencyproject/field-guide-cover-full.jpg',
+} = Astro.props;
+---
+
+<section class="py-8 lg:py-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <!-- Accent rail so the card reads as a Project artifact, not a plain box -->
+      <div class="absolute inset-y-0 left-0 w-1 bg-brand-accent" aria-hidden="true"></div>
+
+      <div class="grid sm:grid-cols-[auto_1fr] gap-6 sm:gap-8 p-6 sm:p-8 pl-7 sm:pl-10">
+        <!-- Cover -->
+        <div class="hidden sm:block shrink-0 self-center">
+          <img
+            src={coverSrc}
+            alt="The 2026 Price Transparency Field Guide"
+            width="801"
+            height="1030"
+            class="w-32 lg:w-36 h-auto rounded-md shadow-lg shadow-black/15 rotate-[-1.5deg]"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Pitch + form -->
+        <div class="min-w-0">
+          <div class="text-[0.7rem] font-semibold uppercase tracking-wider text-brand-accent mb-2">
+            Free download
+          </div>
+          <h2 class="font-heading text-xl sm:text-2xl font-bold text-text-primary leading-tight tracking-tight mb-3">
+            Have you gotten your copy of The 2026 Price Transparency Field Guide?
+          </h2>
+          <p class="text-sm sm:text-base text-text-secondary leading-relaxed mb-5">
+            We designed this to be the single best, most up-to-date price
+            transparency resource, yet short enough to finish over a coffee.
+            Download your free copy and get instant access by entering your
+            email below.
+          </p>
+
+          <TPEmailCapture buttonLabel="Get the guide" />
+          <p class="text-xs text-text-muted mt-2">
+            No spam. Instant access, plus the monthly Project newsletter.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

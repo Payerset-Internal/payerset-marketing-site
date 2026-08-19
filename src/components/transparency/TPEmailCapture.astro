@@ -2,9 +2,12 @@
 interface Props {
   variant?: 'default' | 'dark';
   note?: string;
+  /** Submit-button label. Defaults to the newsletter "Subscribe"; lead
+   *  magnets (e.g. the Field Guide) can override with "Download", etc. */
+  buttonLabel?: string;
 }
 
-const { variant = 'default', note } = Astro.props;
+const { variant = 'default', note, buttonLabel = 'Subscribe' } = Astro.props;
 const isDark = variant === 'dark';
 
 /**
@@ -57,7 +60,7 @@ const MAILCHIMP_HONEYPOT_NAME = 'b_2993a043f5d216244c53d5c24_28c509fa94';
         'bg-brand-accent text-white hover:bg-brand-accent/90',
       ]}
     >
-      Subscribe
+      {buttonLabel}
     </button>
   </div>
 

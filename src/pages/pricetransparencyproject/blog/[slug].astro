@@ -125,7 +125,7 @@ const breadcrumbSchema = {
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-[1fr_300px] gap-12">
         <!-- Article Body -->
-        <article class="prose prose-slate max-w-none prose-headings:font-heading prose-headings:text-text-primary prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-brand-primary hover:prose-a:text-brand-primary-hover prose-strong:text-text-primary prose-li:leading-relaxed prose-img:rounded-xl prose-img:w-full prose-img:h-auto prose-img:object-contain">
+        <article class="tp-article-body prose prose-slate max-w-none prose-headings:font-heading prose-headings:text-text-primary prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-brand-primary hover:prose-a:text-brand-primary-hover prose-strong:text-text-primary prose-li:leading-relaxed prose-img:rounded-xl prose-img:w-full prose-img:h-auto prose-img:object-contain">
           <Content />
         </article>
 
@@ -214,6 +214,64 @@ const breadcrumbSchema = {
 
   <TPBottomCta />
 </PageLayout>
+
+<style is:global>
+  /* Branded data tables inside TP blog article bodies.
+     Scoped to .tp-article-body so only these posts are affected. */
+  .tp-article-body table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(4, 66, 97, 0.10), 0 1px 2px rgba(4, 66, 97, 0.06);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .tp-article-body thead th {
+    background: var(--color-brand-accent);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    padding: 0.85rem 1.1rem;
+    border: none;
+    white-space: nowrap;
+  }
+  .tp-article-body tbody td {
+    padding: 0.8rem 1.1rem;
+    color: var(--color-text-primary);
+    border: none;
+    vertical-align: top;
+  }
+  .tp-article-body tbody tr:nth-child(odd) td {
+    background: #ffffff;
+  }
+  .tp-article-body tbody tr:nth-child(even) td {
+    background: rgba(71, 159, 121, 0.08);
+  }
+  /* Emphasize the final column (the headline rate). */
+  .tp-article-body tbody td:last-child {
+    font-weight: 700;
+    color: var(--color-brand-accent);
+    white-space: nowrap;
+  }
+
+  /* Glossary variant: two-column term/definition table.
+     Emphasis moves to the first column (the term); definitions
+     read as normal body copy and wrap freely. */
+  .tp-article-body table.tp-glossary tbody td:first-child {
+    font-weight: 700;
+    color: var(--color-brand-dark);
+    width: 32%;
+    white-space: normal;
+  }
+  .tp-article-body table.tp-glossary tbody td:last-child {
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    white-space: normal;
+  }
+</style>
 
 <script>
   const copyBtn = document.getElementById('copy-link-btn');
